@@ -3,15 +3,17 @@ import GapCard from "../custom-components/GapCard";
 import Door_Icon from "../assets/icons/door.png";
 import House_Icon from "../assets/icons/house.png";
 import Kitchen from "../assets/icons/kitchen.png";
+
 export default function Intro() {
   return (
     <div className="intro h-[1024px] w-[1125px] flex flex-col items-center justify-center ">
       <div className="partOne">
         <TextPanel
-          text="We paint home interiors.  
-Fast, clean, professional work. 
-Boost curb appeal today.  
-"
+          text={[
+            "We paint home interiors.",
+            "Fast, clean, professional work.",
+            "Schedule your free estimate today.",
+          ]}
           color="#6F974B"
           width="w-[900px]"
           height="h-[296px]"

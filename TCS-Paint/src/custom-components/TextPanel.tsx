@@ -1,5 +1,5 @@
 type TextPanelProps = {
-  text: string;
+  text: string[];
   className?: string;
   width?: string;
   height?: string;
@@ -14,9 +14,17 @@ export default function TextPanel({
 }: TextPanelProps) {
   return (
     <div
-      className={`${width} ${height} bg-[${color}] flex flex-1 items-center justify-center rounded-[30px] text-6xl shadow-lg `}
+      style={{ backgroundColor: color }}
+      className={`${width} ${height} hover:scale-105 hover:drop-shadow-xl/45 transition-all duration-300 ease-in-out flex flex-1 items-center justify-center rounded-[30px] text-6xl shadow-lg `}
     >
-      <p className="text-center text-white">{text}</p>
+      <p className="text-center text-white">
+        {text.map((line, index) => (
+          <span key={index}>
+            {line}
+            <br />
+          </span>
+        ))}
+      </p>
     </div>
   );
 }

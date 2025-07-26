@@ -7,7 +7,7 @@ const links = ["/", "/about", "/contact"];
 export default function NavBar() {
   return (
     <>
-      <div className="w-full flex items-center justify-center h-[125px] bg-[#151313] text-white fixed top-0 z-50">
+      <div className="w-full flex items-center justify-center h-[120px] bg-[#151313] text-white fixed top-0 z-50">
         <div className="flex justify-center items-center w-[1125px] h-full">
           <div className="left flex items-center w-full h-full text-6xl">
             <img src={tcs_icon} width={130} height={130} alt="tcs icon" />
