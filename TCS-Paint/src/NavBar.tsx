@@ -7,14 +7,18 @@ const links = ["/", "/about", "/contact"];
 export default function NavBar() {
   return (
     <>
-      <div className="w-full flex items-center justify-center h-[120px] bg-[#151313] text-white fixed top-0 z-50">
+      <div className="w-full flex items-center justify-center  bg-[#151313] text-white fixed top-0 z-50   px-2  h-[80px] lg:h-[160px]">
         <div className="flex justify-center items-center w-[1125px] h-full">
-          <div className="left flex items-center w-full h-full text-6xl">
-            <img src={tcs_icon} width={130} height={130} alt="tcs icon" />
+          <div className="left flex  items-center w-full h-full            text-1xl sm:text-3xl md:text-5xl lg:text-6xl">
+            <img
+              className="   object-cover mb-2 inline-block w-[32.5px] h-[32.5px]       md:w-[130px] md:h-[130px]"
+              src={tcs_icon}
+              alt="tcs icon"
+            />
             <p className=" pb-8 text-center">TCS - Paints</p>
           </div>
-          <div className="right w-full h-full">
-            <ul className=" text-4xl flex justify-end gap-8 items-center h-full">
+          <div className="right flex-2 w-full h-full">
+            <ul className=" text-1xl sm:text-2xl md:text-4xl flex justify-end gap-8 items-center h-full ">
               {array.map((item, index) => (
                 <Link key={index} to={links[index]} className="hover:underline">
                   {item}

@@ -3,9 +3,13 @@ import { useState } from "react";
 export default function BeforeAfterCard({
   beforeSrc,
   afterSrc,
+  width,
+  height,
 }: {
   beforeSrc: string;
   afterSrc: string;
+  width: string;
+  height: string;
 }) {
   const MAX = 400;
   const [value, SetValue] = useState(MAX / 2); // start centered
@@ -17,7 +21,9 @@ export default function BeforeAfterCard({
   };
 
   return (
-    <div className="relative w-[400px] h-[400px] overflow-hidden rounded-2xl border-4 border-black">
+    <div
+      className={`relative flex items-center justify-center ${width} ${height} overflow-hidden rounded-2xl border-4 border-black`}
+    >
       {/* Before image */}
       <img
         src={beforeSrc}
@@ -30,12 +36,13 @@ export default function BeforeAfterCard({
           src={afterSrc}
           alt="After"
           className="absolute top-0 left-0 w-full h-full object-cover"
-          style={{ clipPath: `inset(0px ${MAX - value - 10}px 0px 0px)` }}
+          style={{ clipPath: `inset(0 calc(100% - ${value}px) 0 0)` }}
         />
 
+        {/* Dragger line */}
         <div
           className="absolute top-0 bottom-0 w-[2px] bg-black cursor-ew-resize"
-          style={{ left: `calc(${value}px)` }}
+          style={{ left: `${value}px` }}
         ></div>
       </div>
     </div>

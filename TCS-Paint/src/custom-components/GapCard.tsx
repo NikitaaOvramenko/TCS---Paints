@@ -3,5 +3,5 @@ interface GapCardProps {
 }
 
 export default function GapCard({ height }: GapCardProps) {
-  return <div style={{ height: `${height}px`, width: "100%" }} />;
+  return <div className={height} style={{ width: "100%" }} />;
 }

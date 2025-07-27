@@ -6,25 +6,34 @@ import Kitchen from "../assets/icons/kitchen.png";
 
 export default function Intro() {
   return (
-    <div className="intro h-[1024px] w-[1125px] flex flex-col items-center justify-center ">
-      <div className="partOne">
+    <div className="intro h-[512px] lg:h-[1024px] w-[1125px] flex flex-col items-center justify-center ">
+      <div className="partOne ">
         <TextPanel
           text={[
-            "We paint home interiors.",
-            "Fast, clean, professional work.",
-            "Schedule your free estimate today.",
+            "We Paint Home Exteriors.",
+            "Fast, Clean, Professional Work.",
+            "Schedule Your Free Estimate Today.",
           ]}
           color="#6F974B"
-          width="w-[900px]"
-          height="h-[296px]"
+          width="w-[300px] lg:w-[900px] "
+          height="h-[140px] lg:h-[300px]"
+          font="text-1xl sm:text-1xl lg:text-5xl"
         />
       </div>
       <div className="partTwo flex flex-row justify-center items-center gap-8 mt-8">
         <div className="left flex flex-col items-center justify-center">
-          <img src={Kitchen} width={460} alt="kitchen icon" />
+          <img
+            className="w-[150px] lg:w-[460px]"
+            src={Kitchen}
+            alt="kitchen icon"
+          />
         </div>
         <div className="right flex flex-col items-center justify-center">
-          <img src={House_Icon} width={460} alt="house icon" />
+          <img
+            className="w-[150px] lg:w-[460px] "
+            src={House_Icon}
+            alt="house icon"
+          />
         </div>
       </div>
     </div>
