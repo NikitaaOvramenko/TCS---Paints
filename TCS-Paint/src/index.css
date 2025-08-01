@@ -4,14 +4,14 @@
 
 
 
-/* Reset & box sizing */
+/* Reset & box sizing
 *,
 *::before,
 *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 /* Set base font and background */
 body {

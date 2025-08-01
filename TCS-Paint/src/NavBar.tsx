@@ -11,11 +11,11 @@ export default function NavBar() {
         <div className="flex justify-center items-center w-[1125px] h-full">
           <div className="left flex  items-center w-full h-full            text-1xl sm:text-3xl md:text-5xl lg:text-6xl">
             <img
-              className="   object-cover mb-2 inline-block w-[32.5px] h-[32.5px]       md:w-[130px] md:h-[130px]"
+              className="   object-cover mb-10  inline-block w-[32.5px] h-[32.5px]       md:w-[130px] md:h-[130px]"
               src={tcs_icon}
               alt="tcs icon"
             />
-            <p className=" pb-8 text-center">TCS - Paints</p>
+            <p className=" text-center">TCS - Paints</p>
           </div>
           <div className="right flex-2 w-full h-full">
             <ul className=" text-1xl sm:text-2xl md:text-4xl flex justify-end gap-8 items-center h-full ">
