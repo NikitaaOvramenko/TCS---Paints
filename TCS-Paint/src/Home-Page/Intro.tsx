@@ -1,6 +1,4 @@
 import TextPanel from "../custom-components/TextPanel";
-import GapCard from "../custom-components/GapCard";
-import Door_Icon from "../assets/icons/door.png";
 import House_Icon from "../assets/icons/house.png";
 import Kitchen from "../assets/icons/kitchen.png";
 

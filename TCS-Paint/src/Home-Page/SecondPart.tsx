@@ -6,8 +6,6 @@ import GarageBefore from "../assets/before/garage-before.jpg";
 import GarageAfter from "../assets/after/garage-after.jpg";
 
 export default function SecondPart() {
-  const sizes = {};
-
   return (
     <div className="intro h-[512px] md:h-[1024px] w-[1125px] flex flex-col items-center justify-center gap-8">
       <div className="partOne flex flex-row md:flex-row gap-8">
