@@ -1,11 +1,22 @@
-export default function Form() {
+interface FormProps {
+  height: string;
+  width: string;
+  background: string;
+  font: string;
+}
+
+export default function Form({ height, width, background, font }: FormProps) {
   return (
-    <form className="w-full sm:w-auto h-auto flex flex-col items-center justify-center text-white bg-black p-4 rounded-2xl">
+    <form
+      style={{ backgroundColor: background }}
+      className={`${height} ${width} ${font} flex flex-col items-center justify-center text-white p-4  rounded-2xl`}
+    >
       <div className="flex flex-col gap-3 mb-4">
         <label htmlFor="name" className="self-start">
           Name:
         </label>
         <input
+          style={{ backgroundColor: "inherit" }}
           id="name"
           name="name"
           placeholder="Enter your name"
@@ -20,11 +31,12 @@ export default function Form() {
           Email:
         </label>
         <input
+          style={{ backgroundColor: "inherit" }}
           id="email"
           name="email"
           placeholder="Enter your email"
           type="email"
-          className="w-[300px] h-8 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
+          className="w-[300px] h-8 border-b-2 px-2 border-white text-white focus:outline-none"
           required
         />
       </div>
@@ -34,9 +46,10 @@ export default function Form() {
           Message:
         </label>
         <textarea
+          style={{ backgroundColor: "inherit" }}
           id="message"
           name="message"
-          className="border-2 border-white bg-black text-white px-2 pt-1 focus:outline-none rounded resize-none"
+          className="border-2 border-white  text-white px-2 pt-1 focus:outline-none rounded resize-none"
           cols={33}
           rows={5}
           required
@@ -45,7 +58,7 @@ export default function Form() {
       </div>
 
       <button
-        className="w-24 h-9 font-semibold bg-white text-black rounded active:scale-90 duration-300"
+        className="w-24 h-9 font-semibold  text-white  rounded active:scale-90 duration-300"
         type="submit"
       >
         Submit

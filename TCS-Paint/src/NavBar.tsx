@@ -11,14 +11,14 @@ export default function NavBar() {
         <div className="flex justify-center items-center w-[1125px] h-full">
           <div className="left flex  items-center w-full h-full text-1xl lg:text-3xl ">
             <img
-              className="   object-cover mb-3   inline-block w-[32.5px] h-[32.5px]      "
+              className="   object-cover mb-3   inline-block w-[55px]"
               src={tcs_icon}
               alt="tcs icon"
             />
             <p className=" text-center">TCS - Paints</p>
           </div>
           <div className="right flex-2 w-full h-full">
-            <ul className=" text-1xl lg:text-3xl  flex justify-end gap-8 items-center h-full ">
+            <ul className=" text-1xl lg:text-2xl  flex justify-end gap-8 items-center h-full ">
               {array.map((item, index) => (
                 <Link key={index} to={links[index]} className="hover:underline">
                   {item}

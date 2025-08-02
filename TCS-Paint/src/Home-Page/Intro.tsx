@@ -12,23 +12,23 @@ export default function Intro() {
             "Fast, Clean, Professional Work.",
             "Schedule Your Free Estimate Today.",
           ]}
-          color="#6F974B"
-          width="w-[300px] lg:w-[900px] "
-          height="h-[140px] lg:h-[300px]"
-          font="text-1xl sm:text-1xl lg:text-5xl"
+          color="#4b8d97ff"
+          width="w-[400px] lg:w-[900px] "
+          height="h-[200px] lg:h-[300px]"
+          font="text-2xl sm:text-2xl lg:text-5xl"
         />
       </div>
       <div className="partTwo flex flex-row justify-center items-center gap-8 mt-8">
         <div className="left flex flex-col items-center justify-center">
           <img
-            className="w-[150px] lg:w-[460px]"
+            className="w-[200px] lg:w-[460px]"
             src={Kitchen}
             alt="kitchen icon"
           />
         </div>
         <div className="right flex flex-col items-center justify-center">
           <img
-            className="w-[150px] lg:w-[460px] "
+            className="w-[200px] lg:w-[460px] "
             src={House_Icon}
             alt="house icon"
           />
