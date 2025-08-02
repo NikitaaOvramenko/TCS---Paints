@@ -12,29 +12,29 @@ export default function SecondPart() {
         <TextPanel
           text={["Prep,Paint,Perfect.", "No Shortcuts Taken.", "No Mess Left."]}
           color="#070000"
-          width="w-[150px] md:w-[500px] "
-          height="h-[100px] md:h-[400px]"
+          width="w-[180px] md:w-[500px] "
+          height="h-[180px] md:h-[400px]"
           font="text-1xl  md:text-4xl"
         />
         <BeforeAfterCard
           beforeSrc={DoorBefore}
           afterSrc={DoorAfter}
-          width="w-[150px] md:w-[500px] "
-          height="h-[100px] md:h-[400px]"
+          width="w-[180px] md:w-[500px] "
+          height="h-[180px] md:h-[400px]"
         />
       </div>
       <div className="partTwo flex flex-row  md:flex-row gap-8">
         <BeforeAfterCard
           beforeSrc={GarageBefore}
           afterSrc={GarageAfter}
-          width="w-[150px] md:w-[500px] "
-          height="h-[100px] md:h-[400px]"
+          width="w-[180px] md:w-[500px] "
+          height="h-[180px] md:h-[400px]"
         />
         <TextPanel
           text={["We Paint Doors.", "We Paint Walls.", "We Paint It All."]}
           color="#070000"
-          width="w-[150px] md:w-[500px] "
-          height="h-[100px] md:h-[400px]"
+          width="w-[180px] md:w-[500px] "
+          height="h-[180px] md:h-[400px]"
           font="text-1xl  md:text-4xl"
         />
       </div>
