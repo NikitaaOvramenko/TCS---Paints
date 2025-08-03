@@ -66,9 +66,9 @@ const ThreeScene: React.FC = () => {
       }
     );
 
-    const geometry = new THREE.BoxGeometry(3, 3, 3);
-    const material = new THREE.MeshBasicMaterial({ color: 0xff8000 });
-    const sphere = new THREE.Mesh(geometry, material);
+    // const geometry = new THREE.BoxGeometry(3, 3, 3);
+    // const material = new THREE.MeshBasicMaterial({ color: 0xff8000 });
+    // const sphere = new THREE.Mesh(geometry, material);
 
     camera.position.z = 5;
 
@@ -76,8 +76,8 @@ const ThreeScene: React.FC = () => {
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xc9cbd3);
-
-    const animate = (t = 0) => {
+    // t = 0
+    const animate = () => {
       requestAnimationFrame(animate);
 
       // if (houseRef.current && houseRef.current.rotation) {
