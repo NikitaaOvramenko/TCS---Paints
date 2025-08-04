@@ -1,11 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import useWindowDimensions from "../helper/WindowHook";
 
 const ThreeScene: React.FC = () => {
   const sceneRef = useRef<HTMLDivElement | null>(null);
   const houseRef = useRef<THREE.Object3D | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+
+  const { width: windowWidth } = useWindowDimensions();
+  const [curWid, setCurWid] = useState(1000);
+  const [curHei, setCurHei] = useState(300);
+
+  // Resize logic
+  useEffect(() => {
+    if (windowWidth < 500) {
+      setCurWid(900);
+      setCurHei(150);
+    } else if (windowWidth < 1000) {
+      setCurWid(900);
+      setCurHei(150);
+    } else {
+      setCurWid(900);
+      setCurHei(300);
+    }
+  }, [windowWidth]);
 
   useEffect(() => {
     if (!sceneRef.current) return;
@@ -15,90 +35,80 @@ const ThreeScene: React.FC = () => {
     }
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      90,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+    const camera = new THREE.PerspectiveCamera(90, curWid / curHei, 0.1, 2000);
+    camera.position.z = curWid < 600 ? 2.5 : 2;
+    cameraRef.current = camera;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(curWid, curHei);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(0x000000, 0);
+    rendererRef.current = renderer;
+
+    sceneRef.current.appendChild(renderer.domElement);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(0, 2, 0);
+    scene.add(ambientLight, directionalLight);
 
     const loader = new GLTFLoader();
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1); // soft white light
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 10, 7.5);
-    scene.add(directionalLight);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-
-    controls.update();
-
     loader.load(
-      "/TCS---Paints/3D/residential_family_house.glb", // ← this path should be public-relative
-      function (gltf) {
+      "/TCS---Paints/3D/residential_family_house.glb",
+      (gltf) => {
         houseRef.current = gltf.scene;
-        gltf.scene.scale.set(2, 2, 2);
 
+        // Get model size
         const box = new THREE.Box3().setFromObject(gltf.scene);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        // Responsive scaling (just like you did in Matter.js)
+        const baseScreenWidth = 1000; // reference width
+        const targetModelSize = 3; // desired model world size
+        const screenRatio = curWid / baseScreenWidth;
+        const modelRatio = targetModelSize / Math.max(size.x, size.y, size.z);
+        const finalScale = screenRatio * modelRatio;
+
+        gltf.scene.scale.set(finalScale, finalScale, finalScale);
+
+        // Center the model
         const center = new THREE.Vector3();
         box.getCenter(center);
         gltf.scene.position.sub(center);
 
         scene.add(gltf.scene);
-
-        gltf.scene.traverse((child) => {
-          if ((child as THREE.Mesh).isMesh) {
-            const mesh = child as THREE.Mesh;
-
-            console.log("Found mesh:", mesh.name);
-            console.log("Material:", mesh.material);
-          }
-        });
-
-        console.log(gltf.scene);
       },
-      undefined, // Optional: progress callback
-      function (error) {
-        console.error("An error occurred while loading the GLTF model:", error);
+      undefined,
+      (error) => {
+        console.error("GLTF load error:", error);
       }
     );
 
-    // const geometry = new THREE.BoxGeometry(3, 3, 3);
-    // const material = new THREE.MeshBasicMaterial({ color: 0xff8000 });
-    // const sphere = new THREE.Mesh(geometry, material);
-
-    camera.position.z = 5;
-
-    // scene.add(sphere);
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0xc9cbd3);
-    // t = 0
-    const animate = () => {
+    const animate = (t = 0) => {
       requestAnimationFrame(animate);
-
-      // if (houseRef.current && houseRef.current.rotation) {
-      //   houseRef.current.rotation.y = Math.sin(t * 0.001) * 2;
-      // }
-
-      controls.update();
-
+      if (houseRef.current) {
+        houseRef.current.rotation.y = Math.sin(t * 0.0008) * 0.5;
+      }
       renderer.render(scene, camera);
     };
-
-    sceneRef.current?.appendChild(renderer.domElement);
 
     animate();
 
     return () => {
+      renderer.dispose();
       sceneRef.current?.removeChild(renderer.domElement);
     };
-  }, [sceneRef]);
+  }, [curWid, curHei]);
 
-  return <div ref={sceneRef}></div>;
+  return (
+    <div
+      ref={sceneRef}
+      className="w-full flex justify-center items-center"
+      style={{ height: `${curHei}px` }}
+    />
+  );
 };
 
 export default ThreeScene;

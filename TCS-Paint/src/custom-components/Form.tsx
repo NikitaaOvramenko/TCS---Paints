@@ -9,7 +9,7 @@ export default function Form({ height, width, background, font }: FormProps) {
   return (
     <form
       style={{ backgroundColor: background }}
-      className={`${height} ${width} ${font} flex flex-col items-center justify-center text-white p-4  rounded-2xl`}
+      className={`${height} ${width} ${font} flex scale-70 lg:scale-110 flex-col items-center justify-center text-white p-4  rounded-2xl`}
     >
       <div className="flex flex-col gap-3 mb-4">
         <label htmlFor="name" className="self-start">
