@@ -10,7 +10,7 @@ export default function Guide() {
         ]}
         width="w-[75%]"
         height="h-[300px]"
-        color="#070000"
+        color="#16020283"
         font="text-1xl lg:text-4xl"
       ></TextPanel>
       <TextPanel
@@ -20,7 +20,7 @@ export default function Guide() {
         ]}
         width="w-[75%]"
         height="h-[300px]"
-        color="#070000"
+        color="#16020283"
         font="text-1xl lg:text-4xl"
       ></TextPanel>
       <TextPanel
@@ -30,7 +30,7 @@ export default function Guide() {
         ]}
         width="w-[75%]"
         height="h-[300px]"
-        color="#070000"
+        color="#16020283"
         font="text-1xl lg:text-4xl"
       ></TextPanel>
     </div>
