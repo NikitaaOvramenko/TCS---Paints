@@ -29,7 +29,7 @@ const start = async() =>{
 
         await sequelize.authenticate()
         await sequelize.sync()
-        app.listen(port,() => {console.log(`Port ${port}...`)})
+        // app.listen(port,() => {console.log(`Port ${port}...`)})
         
     } catch (error) {
         console.log(error)        
@@ -40,7 +40,7 @@ const start = async() =>{
 
 start();
 
-
+module.exports = app;
 
 
 
