@@ -16,7 +16,7 @@ class BeforeAfterController{
     async create(req,res){
 
         try {
-        const {name} = req.body
+        const {name,type} = req.body
         const {beforePic,afterPic} = req.files
 
         let before = uuid.v4() + ".jpg"
@@ -32,6 +32,7 @@ class BeforeAfterController{
 
        const newPic = await BeforeAfterPic.create({
         name:name,
+        type:type,
         beforePic:before,
         afterPic:after
        })

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import tcs_icon from "./assets/icons/tcs_icon.png";
 
-const array = ["Home", "Gallery", "Contact"];
+const array = ["Home", "Gallery", "Contacts"];
 const links = ["/", "/gallery", "/contact"];
 
 export default function NavBar() {
@@ -20,7 +20,11 @@ export default function NavBar() {
           <div className="right flex-2 w-full h-full">
             <ul className=" text-1xl lg:text-2xl  flex justify-end gap-8 items-center h-full ">
               {array.map((item, index) => (
-                <Link key={index} to={links[index]} className="hover:underline">
+                <Link
+                  key={index}
+                  to={links[index]}
+                  className="hover:underline hover:scale-110 transition duration-300 active:scale-90"
+                >
                   {item}
                 </Link>
               ))}
