@@ -2,11 +2,11 @@ import "./App.css";
 import NavBar from "./NavBar";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <Router basename="/TCS---Paints/">
+    <Router>
       <div className="app">
         <NavBar />
         <div className="content bg-black">
