@@ -1,51 +1,35 @@
+require('dotenv').config();
 
-require('dotenv').config()
+const express = require("express");
+const sequelize = require("./db");
+const cors = require("cors");
+const fileUpload = require("express-fileupload");
+const path = require("path");
+const router = require("./routes");
 
-const express = require("express")
-const sequelize = require('./db')
-const cors = require("cors")
-const router = require('./routes/index')
-const port = process.env.PORT
-const fileUpload = require('express-fileupload')
-const path = require('path')
-
-
-
-const app = express()
+const app = express();
+const PORT = process.env.PORT || 8080;
 
 app.use('/media', express.static(path.resolve(__dirname, 'media')));
-app.use(cors())
-app.use(express.json())
-app.use(fileUpload())
+app.use(cors());
+app.use(express.json());
+app.use(fileUpload());
+app.use('/api', router);
 
+app.get("/", (req, res) => {
+  res.send("Express on Railway!");
+});
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
-
-app.use('/api',router)
-
-const start = async() =>{
-
-    try {
-
-        await sequelize.authenticate()
-        await sequelize.sync()
-        // app.listen(port,() => {console.log(`Port ${port}...`)})
-        
-    } catch (error) {
-        console.log(error)        
-    }
-
-
-}
+const start = async () => {
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync();
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ DB error:", error);
+  }
+};
 
 start();
-
-module.exports = app;
-
-
-
-
-
-
-
-
