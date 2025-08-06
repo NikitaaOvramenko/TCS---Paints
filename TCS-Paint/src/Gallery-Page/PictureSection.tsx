@@ -7,7 +7,9 @@ export default function PictureSection() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/BeforeAfterPic/getAll  ")
+      .get(
+        "https://tcs-paints-production.up.railway.app/api/BeforeAfterPic/getAll  "
+      )
       .then((res) => {
         setPics(res.data);
       });
@@ -18,8 +20,8 @@ export default function PictureSection() {
       <div className="intro h-auto  w-full max-w-[1125px] flex flex-wrap justify-center gap-8 items-center  text-bottom ">
         {pics.map((pic) => (
           <BeforeAfterCard
-            beforeSrc={`http://localhost:5000/media/beforePics/${pic.beforePic}`}
-            afterSrc={`http://localhost:5000/media/afterPics/${pic.afterPic}`}
+            beforeSrc={`${pic.beforePic}`}
+            afterSrc={`${pic.afterPic}`}
             width="w-[300px]"
             height="h-[300px]"
           />

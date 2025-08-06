@@ -1,57 +1,63 @@
-
-const path = require('path')
-const fs = require('fs')
 const uuid = require('uuid')
 const supabase = require('../supabase')
+const { BeforeAfterPic } = require('../models/models')
 
-const {BeforeAfterPic} = require('../models/models')
+class BeforeAfterController {
+  async getAll(req, res) {
+    const all = await BeforeAfterPic.findAll({ where: {} })
+    return res.json(all)
+  }
 
+  async create(req, res) {
+    try {
+      const { name, type } = req.body
+      const { beforePic, afterPic } = req.files
 
-class BeforeAfterController{
+      const bucketName = 'media'
 
-    async getAll(req,res){
-       const all =  await BeforeAfterPic.findAll({where:{}})
-       return res.json(all)
+      // Generate unique names
+      const beforeName = `beforePics/${uuid.v4()}.jpg`
+      const afterName = `afterPics/${uuid.v4()}.jpg`
+
+      // Upload beforePic
+      const { data: beforeData, error: beforeError } = await supabase.storage
+        .from(bucketName)
+        .upload(beforeName, beforePic.data, {
+          contentType: beforePic.mimetype,
+        })
+
+      if (beforeError) return res.status(500).json({ error: beforeError.message })
+
+      // Upload afterPic
+      const { data: afterData, error: afterError } = await supabase.storage
+        .from(bucketName)
+        .upload(afterName, afterPic.data, {
+          contentType: afterPic.mimetype,
+        })
+
+      if (afterError) return res.status(500).json({ error: afterError.message })
+
+      // Get public URLs
+      const beforeUrl = supabase.storage.from(bucketName).getPublicUrl(beforeName).data.publicUrl
+      const afterUrl = supabase.storage.from(bucketName).getPublicUrl(afterName).data.publicUrl
+
+      const newPic = await BeforeAfterPic.create({
+        name,
+        type,
+        beforePic: beforeUrl,
+        afterPic: afterUrl,
+      })
+
+      return res.json(newPic)
+    } catch (error) {
+      return res.status(500).json({ error: error.message || error })
     }
+  }
 
-    async create(req,res){
-
-        try {
-        const {name,type} = req.body
-        const {beforePic,afterPic} = req.files
-
-        const { data, error } = await supabase
-        .storage.
-        from('media')  
-        .upload('public/avatar1.png',
-             avatarFile, {    cacheControl: '3600',    upsert: false  })
-
-        let before = uuid.v4() + ".jpg"
-        let after = uuid.v4() + ".jpg"
-
-
-        // const staicBeforePath = path.resolve(__dirname,'..',"media","beforePics")
-        // const staicAfterPath = path.resolve(__dirname,'..',"media","afterPics")
-
-        beforePic.mv(path.resolve(__dirname,'..',"media","beforePics",before))
-        afterPic.mv(path.resolve(__dirname,'..',"media","afterPics",after))    
-
-
-       const newPic = await BeforeAfterPic.create({
-        name:name,
-        type:type,
-        beforePic:before,
-        afterPic:after
-       })
-
-      return res.json(newPic)    
-        } catch (error) {
-
-            return res.json(error)
-            
-        }
-        
-    }
+  async deleteAll(req, res) {
+    const deleted = await BeforeAfterPic.destroy({ where: {} })
+    return res.json(deleted)
+  }
 }
 
 module.exports = new BeforeAfterController()
