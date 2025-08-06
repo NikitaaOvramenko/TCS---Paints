@@ -19,6 +19,8 @@ app.use(express.json())
 app.use(fileUpload())
 
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
 app.use('/api',router)
 
 const start = async() =>{
