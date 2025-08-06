@@ -1,5 +1,3 @@
-import GapCard from "../custom-components/GapCard";
-
 export default function IntroGallery() {
   return (
     <>

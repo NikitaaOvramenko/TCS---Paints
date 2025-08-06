@@ -16,7 +16,7 @@ export default function PictureSection() {
   return (
     <>
       <div className="intro h-auto  w-full max-w-[1125px] flex flex-wrap justify-center gap-8 items-center  text-bottom ">
-        {pics.map((pic, index) => (
+        {pics.map((pic) => (
           <BeforeAfterCard
             beforeSrc={`http://localhost:5000/media/beforePics/${pic.beforePic}`}
             afterSrc={`http://localhost:5000/media/afterPics/${pic.afterPic}`}
