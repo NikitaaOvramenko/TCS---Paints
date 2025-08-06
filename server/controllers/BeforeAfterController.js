@@ -2,6 +2,7 @@
 const path = require('path')
 const fs = require('fs')
 const uuid = require('uuid')
+const supabase = require('../supabase')
 
 const {BeforeAfterPic} = require('../models/models')
 
@@ -18,6 +19,12 @@ class BeforeAfterController{
         try {
         const {name,type} = req.body
         const {beforePic,afterPic} = req.files
+
+        const { data, error } = await supabase
+        .storage.
+        from('media')  
+        .upload('public/avatar1.png',
+             avatarFile, {    cacheControl: '3600',    upsert: false  })
 
         let before = uuid.v4() + ".jpg"
         let after = uuid.v4() + ".jpg"
