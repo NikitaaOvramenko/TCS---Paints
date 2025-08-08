@@ -52,12 +52,18 @@ export default function BeforeAfterCard({
 
   const handleTouchDown = () => {
     SetDrag2(true);
+    console.log("Im touching");
+  };
+  const handleTouchUp = () => {
+    SetDrag2(false);
+    console.log("Im not touching");
   };
 
   return (
     <div
       className={`relative flex items-center justify-center ${width} ${height} overflow-hidden rounded-2xl border-4 border-black`}
       onMouseUp={handleMouseUp}
+      onTouchEnd={handleTouchUp}
     >
       {/* Before image */}
       <img
