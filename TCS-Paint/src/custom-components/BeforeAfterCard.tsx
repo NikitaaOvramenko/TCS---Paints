@@ -84,8 +84,8 @@ export default function BeforeAfterCard({
           style={{ left: `${value}px` }}
         ></div>
         <div
-          className="z-100 circle-arrow absolute top-[50%] rounded  bg-black w-2 h-4 touch-none"
-          style={{ left: `calc(${value}px - 3px)` }}
+          className="z-100 circle-arrow absolute top-[50%] rounded-full  bg-black w-4 h-4 touch-none transition duration-300 ease active:bg-white"
+          style={{ left: `calc(${value}px - 7px)` }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchDown}
         ></div>
