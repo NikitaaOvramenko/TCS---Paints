@@ -22,6 +22,8 @@ export default function BeforeAfterCard({
     if (!drag2) {
       return;
     }
+
+    event.preventDefault();
     const rect = event.currentTarget.getBoundingClientRect();
 
     const x = Math.max(
@@ -65,7 +67,7 @@ export default function BeforeAfterCard({
       />
 
       <div
-        className="w-full h-full relative z-20"
+        className="w-full h-full relative z-20 "
         onMouseMove={handleMove}
         onTouchMove={handleTouchMove}
       >
@@ -82,7 +84,7 @@ export default function BeforeAfterCard({
           style={{ left: `${value}px` }}
         ></div>
         <div
-          className="z-100 circle-arrow absolute top-[50%] rounded  bg-black w-2 h-4"
+          className="z-100 circle-arrow absolute top-[50%] rounded  bg-black w-2 h-4 touch-none"
           style={{ left: `calc(${value}px - 3px)` }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchDown}
