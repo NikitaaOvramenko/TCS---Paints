@@ -63,7 +63,7 @@ export default function BeforeAfterCard({
       <img
         src={beforeSrc}
         alt="Before"
-        className="absolute select-none z-10 top-0 left-0 w-full h-full object-cover"
+        className="absolute select-none z-10 top-0 left-0 w-full h-full object-cover pointer-events-none"
       />
 
       <div
@@ -74,7 +74,7 @@ export default function BeforeAfterCard({
         <img
           src={afterSrc}
           alt="After"
-          className="select-none absolute top-0 left-0 w-full h-full object-cover"
+          className="select-none absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
           style={{ clipPath: `inset(0 calc(100% - ${value}px) 0 0)` }}
         />
 
