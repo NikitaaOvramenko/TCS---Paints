@@ -24,6 +24,7 @@ export default function PictureSection() {
             afterSrc={`${pic.afterPic}`}
             width="w-[300px]"
             height="h-[300px]"
+            realWidth={300}
           />
         ))}
       </div>

@@ -21,6 +21,7 @@ export default function SecondPart() {
           afterSrc={DoorAfter}
           width="w-[180px] lg:w-[500px] "
           height="h-[180px] lg:h-[400px]"
+          realWidth={window.innerWidth >= 1024 ? 500 : 180}
         />
       </div>
       <div className="partTwo flex flex-row  md:flex-row gap-8">
@@ -29,6 +30,7 @@ export default function SecondPart() {
           afterSrc={GarageAfter}
           width="w-[180px] lg:w-[500px] "
           height="h-[180px] lg:h-[400px]"
+          realWidth={window.innerWidth >= 1024 ? 500 : 180}
         />
         <TextPanel
           text={["We Paint Doors.", "We Paint Walls.", "We Paint It All."]}
