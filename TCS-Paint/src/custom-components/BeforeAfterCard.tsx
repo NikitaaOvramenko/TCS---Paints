@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function BeforeAfterCard({
   beforeSrc,
@@ -17,6 +17,7 @@ export default function BeforeAfterCard({
   const [value, SetValue] = useState(MAX / 2); // start centered
   const [drag, SetDrag] = useState(false);
   const [drag2, SetDrag2] = useState(false);
+  const circleRef = useRef<HTMLDivElement>(null);
 
   const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!drag2) {
@@ -37,24 +38,42 @@ export default function BeforeAfterCard({
     if (!drag) {
       return;
     }
+
     const rect = event.currentTarget.getBoundingClientRect();
     const x = Math.max(0, Math.min(event.clientX - rect.left, rect.width));
     SetValue(x); // direct pixel value
   };
 
   const handleMouseUp = () => {
+    if (circleRef.current) {
+      circleRef.current.style.backgroundColor = "black";
+      circleRef.current.style.borderColor = "white";
+    }
     SetDrag(false);
   };
 
   const handleMouseDown = () => {
+    if (circleRef.current) {
+      circleRef.current.style.backgroundColor = "white";
+      circleRef.current.style.borderColor = "black";
+    }
+
     SetDrag(true);
   };
 
   const handleTouchDown = () => {
+    if (circleRef.current) {
+      circleRef.current.style.backgroundColor = "white";
+      circleRef.current.style.borderColor = "black";
+    }
     SetDrag2(true);
     console.log("Im touching");
   };
   const handleTouchUp = () => {
+    if (circleRef.current) {
+      circleRef.current.style.backgroundColor = "black";
+      circleRef.current.style.borderColor = "white";
+    }
     SetDrag2(false);
     console.log("Im not touching");
   };
@@ -94,6 +113,7 @@ export default function BeforeAfterCard({
           style={{ left: `calc(${value}px - 9px)` }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchDown}
+          ref={circleRef}
         ></div>
 
         <div
