@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-
-import useWindowDimensions from "../helper/WindowHook";
+import { useState } from "react";
 
 export default function BeforeAfterCard({
   beforeSrc,
