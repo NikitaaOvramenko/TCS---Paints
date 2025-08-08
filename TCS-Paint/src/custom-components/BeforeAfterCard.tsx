@@ -90,8 +90,15 @@ export default function BeforeAfterCard({
           style={{ left: `${value}px` }}
         ></div>
         <div
-          className="z-auto circle-arrow absolute top-[50%]    border-white active:border-black bg-black rounded-full border-[2px] w-[20px] h-[20px] touch-none transition duration-300 ease active:bg-white"
+          className="z-50 circle-arrow absolute top-[50%]    border-white active:border-black bg-black rounded-full border-[2px] w-[20px] h-[20px] touch-none transition duration-300 ease active:bg-white"
           style={{ left: `calc(${value}px - 9px)` }}
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchDown}
+        ></div>
+
+        <div
+          className="z-10  absolute top-0    w-[50px] h-full touch-none transition duration-300 ease "
+          style={{ left: `calc(${value}px - 24px)` }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchDown}
         ></div>
