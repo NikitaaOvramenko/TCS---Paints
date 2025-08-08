@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import useWindowDimensions from "../helper/WindowHook";
 
 export default function BeforeAfterCard({
   beforeSrc,
@@ -90,8 +92,8 @@ export default function BeforeAfterCard({
           style={{ left: `${value}px` }}
         ></div>
         <div
-          className="z-100 circle-arrow absolute top-[50%] rounded-full  bg-black w-4 h-4 touch-none transition duration-300 ease active:bg-white"
-          style={{ left: `calc(${value}px - 7px)` }}
+          className="z-auto circle-arrow absolute top-[50%]    border-white active:border-black bg-black rounded-full border-[2px] w-[20px] h-[20px] touch-none transition duration-300 ease active:bg-white"
+          style={{ left: `calc(${value}px - 9px)` }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchDown}
         ></div>
