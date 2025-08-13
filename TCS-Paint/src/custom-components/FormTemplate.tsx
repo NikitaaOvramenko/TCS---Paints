@@ -7,6 +7,7 @@ export default function FormTemplate({ className }: FormProps) {
     <form
       className={`${className} flex scale-110 lg:scale-110 flex-col items-center justify-center text-white p-4  rounded-2xl`}
     >
+      {/* Upper Section */}
       <section className="upper flex flex-col lg:flex-row gap-12">
         <div className="left">
           <div className="flex flex-col gap-3 mb-4">
@@ -107,6 +108,8 @@ export default function FormTemplate({ className }: FormProps) {
           </div>
         </div>
       </section>
+
+      {/* Lower Section */}
 
       <section className="lower">
         <button
