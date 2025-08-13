@@ -15,8 +15,8 @@ export default function Guide() {
       ></TextPanel>
       <TextPanel
         text={[
-          "STEP 2: GET YOUT CUSTOM ESTIMATE",
-          "Give us a call or message. We’ll schedule a time to check out the space and understand your needs.",
+          "STEP 2: GET YOUR CUSTOM ESTIMATE",
+          "We’ll put together a simple, easy-to-read estimate so you know exactly what to expect.",
         ]}
         width="w-[75%]"
         height="h-[300px]"
