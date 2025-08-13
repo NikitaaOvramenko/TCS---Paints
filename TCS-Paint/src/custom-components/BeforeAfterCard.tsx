@@ -38,7 +38,7 @@ export default function BeforeAfterCard({
     if (!drag) {
       return;
     }
-
+    event.preventDefault();
     const rect = event.currentTarget.getBoundingClientRect();
     const x = Math.max(0, Math.min(event.clientX - rect.left, rect.width));
     SetValue(x); // direct pixel value
@@ -80,7 +80,7 @@ export default function BeforeAfterCard({
 
   return (
     <div
-      className={`relative flex items-center justify-center ${width} ${height} overflow-hidden rounded-2xl border-4 border-black`}
+      className={`relative flex items-center z-10 justify-center ${width} ${height} overflow-hidden rounded-2xl border-4 border-black`}
       onMouseUp={handleMouseUp}
       onTouchEnd={handleTouchUp}
     >
@@ -109,7 +109,7 @@ export default function BeforeAfterCard({
           style={{ left: `${value}px` }}
         ></div>
         <div
-          className="z-50 circle-arrow absolute top-[50%]  select-none  border-white active:border-black bg-black rounded-full border-[2px] w-[20px] h-[20px] touch-none transition duration-300 ease active:bg-white"
+          className=" circle-arrow absolute top-[50%]  select-none  border-white active:border-black bg-black rounded-full border-[2px] w-[20px] h-[20px] touch-none transition duration-300 ease active:bg-white"
           style={{ left: `calc(${value}px - 9px)` }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchDown}
@@ -117,7 +117,7 @@ export default function BeforeAfterCard({
         ></div>
 
         <div
-          className="z-10  absolute top-0    w-[50px] h-full select-none touch-none transition duration-300 ease "
+          className="  absolute top-0    w-[50px] h-full select-none touch-none transition duration-300 ease "
           style={{ left: `calc(${value}px - 24px)` }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchDown}

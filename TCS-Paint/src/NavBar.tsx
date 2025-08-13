@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import tcs_icon from "./assets/icons/tcs_icon.png";
 
-const array = ["Home", "Gallery", "Contacts"];
+const array = ["Home", "Gallery", "About"];
 const links = ["/", "/gallery", "/contact"];
 
 export default function NavBar() {

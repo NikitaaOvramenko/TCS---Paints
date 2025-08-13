@@ -6,18 +6,14 @@ export default function PictureSection() {
   let [pics, setPics] = useState<any[]>([]);
 
   useEffect(() => {
-    axios
-      .get(
-        "https://tcs-paints-production.up.railway.app/api/BeforeAfterPic/getAll  "
-      )
-      .then((res) => {
-        setPics(res.data);
-      });
+    axios.get(import.meta.env.VITE_PIC_URL).then((res) => {
+      setPics(res.data);
+    });
   }, []);
 
   return (
     <>
-      <div className="intro h-auto  w-full max-w-[1125px] flex flex-wrap justify-center gap-8 items-center  text-bottom ">
+      <div className="intro h-auto  w-full max-w-[1125px] flex  flex-wrap justify-center gap-8 items-center  text-bottom ">
         {pics.map((pic) => (
           <BeforeAfterCard
             beforeSrc={`${pic.beforePic}`}
