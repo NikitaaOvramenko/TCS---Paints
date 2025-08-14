@@ -20,7 +20,7 @@ export default function FormTemplate({ className }: FormProps) {
           fileName.endsWith("jpeg")
         )
       ) {
-        alert("Wrong File ! Bitch");
+        alert("Wrong File! only png,jpeg and jpg accepted!");
         e.target.value = "";
         return;
       }
@@ -169,16 +169,32 @@ export default function FormTemplate({ className }: FormProps) {
         </div>
 
         <div className="right w-[50%] h-full flex  justify-center">
-          <div className="flex flex-col gap-3 mb-4">
-            <div className="flex flex-col items-center gap-4">
-              <label htmlFor="file">Upload Picture</label>
+          <div className="flex flex-row gap-3 mb-4">
+            <div className="flex flex-row items-center gap-4">
+              <label
+                htmlFor="file"
+                className="bg-yellow-600 text-black rounded p-1 scale-100 active:scale-80 hover:text-white transition duration-300"
+              >
+                Upload Picture
+              </label>
               <input
-                className="focus:bg-black"
+                className="text-none hidden"
                 type="file"
                 id="file"
                 name="type-work"
                 onChange={handleUpload}
               />
+            </div>
+            <div className="image">
+              {file && (
+                <img
+                  src={file}
+                  className="self-end"
+                  width={50}
+                  height={50}
+                  alt="Uploaded preview"
+                />
+              )}
             </div>
           </div>
         </div>
