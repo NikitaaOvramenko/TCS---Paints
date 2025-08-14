@@ -55,7 +55,7 @@ const ThreeScene: React.FC = () => {
 
     const loader = new GLTFLoader();
     loader.load(
-      "/TCS---Paints/3D/residential_family_house.glb",
+      "/3D/residential_family_house.glb",
       (gltf) => {
         houseRef.current = gltf.scene;
 
