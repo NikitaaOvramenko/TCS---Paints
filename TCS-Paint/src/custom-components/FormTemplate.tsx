@@ -1,43 +1,64 @@
 import { useState } from "react";
+import axios from "axios";
 
 interface FormProps {
   className?: string;
 }
 
 export default function FormTemplate({ className }: FormProps) {
-  const [file, SetFile] = useState<any>(null);
+  const [file, SetFile] = useState<string[]>([]);
+
+  function Submit(e: React.FormEvent<HTMLFormElement>) {
+    const formData = new FormData(e.currentTarget);
+
+    axios
+      .post(import.meta.env.VITE_EMAIL_SEND, formData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     console.log(e.target.files);
 
-    if (e.target.files && e.target.files[0]) {
-      const fileName = e.target.files[0].name;
+    let temp: string[] = [];
 
-      if (
-        !(
-          fileName.endsWith("jpg") ||
-          fileName.endsWith("png") ||
-          fileName.endsWith("jpeg")
-        )
-      ) {
-        alert("Wrong File! only png,jpeg and jpg accepted!");
-        e.target.value = "";
-        return;
+    if (e.target.files) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        let fileName = e.target.files[i].name.toLowerCase();
+
+        if (
+          !(
+            fileName.endsWith("jpg") ||
+            fileName.endsWith("png") ||
+            fileName.endsWith("jpeg")
+          )
+        ) {
+          alert("Wrong File! only png,jpeg and jpg accepted!");
+          e.target.value = "";
+          return;
+        }
+
+        temp.push(URL.createObjectURL(e.target.files[i]));
       }
-      SetFile(URL.createObjectURL(e.target.files[0]));
+      SetFile(temp);
     }
   }
 
   return (
     <form
+      onSubmit={Submit}
       className={`${
         className ?? ""
-      } flex scale-100 lg:scale-100 flex-col items-center justify-center text-white p-4 rounded-2xl`}
+      } flex scale-100 lg:scale-100 flex-col gap-8 items-center justify-center text-white p-6 rounded-2xl`}
     >
       {/* Upper Section */}
-      <section className="upper flex flex-col lg:flex-row gap-12">
-        <div className="left">
-          <div className="flex flex-col gap-3 mb-4">
+      <section className="upper flex flex-col lg:flex-row gap-8">
+        <div className="left flex flex-col gap-5">
+          <div className="flex flex-col gap-2">
             <label htmlFor="name" className="self-start">
               Name:
             </label>
@@ -47,12 +68,12 @@ export default function FormTemplate({ className }: FormProps) {
               name="name"
               placeholder="Enter your name"
               type="text"
-              className="w-[300px] h-8 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
+              className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
               required
             />
           </div>
 
-          <div className="flex flex-col gap-3 mb-4">
+          <div className="flex flex-col gap-2">
             <label htmlFor="email" className="self-start">
               Email:
             </label>
@@ -62,13 +83,13 @@ export default function FormTemplate({ className }: FormProps) {
               name="email"
               placeholder="Enter your email"
               type="email"
-              className="w-[300px] h-8 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
+              className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
               required
               autoComplete="email"
             />
           </div>
 
-          <div className="flex flex-col gap-3 mb-4">
+          <div className="flex flex-col gap-2">
             <label htmlFor="phone" className="self-start">
               Phone:
             </label>
@@ -79,15 +100,15 @@ export default function FormTemplate({ className }: FormProps) {
               placeholder="6479169777"
               type="text"
               minLength={10}
-              className="w-[300px] h-8 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
+              className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
               required
               autoComplete="tel"
             />
           </div>
         </div>
 
-        <div className="right">
-          <div className="flex flex-col gap-3 mb-4">
+        <div className="right flex flex-col gap-5">
+          <div className="flex flex-col gap-2">
             <label htmlFor="address" className="self-start">
               Address:
             </label>
@@ -97,13 +118,13 @@ export default function FormTemplate({ className }: FormProps) {
               name="address"
               placeholder="3716 Barham Blvd"
               type="text"
-              className="w-[300px] h-8 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
+              className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
               required
               autoComplete="street-address"
             />
           </div>
 
-          <div className="flex flex-col gap-3 mb-4">
+          <div className="flex flex-col gap-2">
             <label htmlFor="state" className="self-start">
               State:
             </label>
@@ -113,7 +134,7 @@ export default function FormTemplate({ className }: FormProps) {
               name="state"
               placeholder="FL"
               type="text"
-              className="w-[300px] h-8 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
+              className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
               minLength={2}
               maxLength={2}
               required
@@ -121,7 +142,7 @@ export default function FormTemplate({ className }: FormProps) {
             />
           </div>
 
-          <div className="flex flex-col gap-3 mb-4">
+          <div className="flex flex-col gap-2">
             <label htmlFor="zip" className="self-start">
               Zip:
             </label>
@@ -131,7 +152,7 @@ export default function FormTemplate({ className }: FormProps) {
               name="zip"
               placeholder="90068"
               type="text"
-              className="w-[300px] h-8 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
+              className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
               minLength={5}
               maxLength={5}
               required
@@ -141,61 +162,60 @@ export default function FormTemplate({ className }: FormProps) {
         </div>
       </section>
 
-      {/* middle section */}
-      <section className="middle flex w-full flex-col lg:flex-row justify-center items-center">
-        <div className="left w-[50%] h-full flex justify-center">
-          <div className="flex flex-col gap-3 mb-4">
+      {/* Middle section */}
+      <section className="middle flex w-full flex-col lg:flex-row justify-center items-center gap-8">
+        <div className="left w-full lg:w-[50%] flex justify-center">
+          <div className="flex flex-col gap-3">
             <label className="self-start">Paint Type:</label>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <label htmlFor="interior-a">Interior:</label>
               <input
-                className="focus:bg-black"
                 type="checkbox"
                 id="interior-a"
-                name="type-work"
+                name="paintType"
                 value="Interior"
               />
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <label htmlFor="exterior-a">Exterior:</label>
               <input
                 type="checkbox"
                 id="exterior-a"
-                name="type-work"
+                name="paintType"
                 value="Exterior"
               />
             </div>
           </div>
         </div>
 
-        <div className="right w-[50%] h-full flex  justify-center">
-          <div className="flex flex-row gap-3 mb-4">
-            <div className="flex flex-row items-center gap-4">
-              <label
-                htmlFor="file"
-                className="bg-yellow-600 text-black rounded p-1 scale-100 active:scale-80 hover:text-white transition duration-300"
-              >
-                Upload Picture
-              </label>
-              <input
-                className="text-none hidden"
-                type="file"
-                id="file"
-                name="type-work"
-                onChange={handleUpload}
-              />
-            </div>
-            <div className="image">
-              {file && (
+        <div className="right w-full lg:w-[50%] flex flex-col items-center gap-3">
+          <label
+            htmlFor="file"
+            className="bg-yellow-600 text-black rounded px-4 py-2 active:scale-95 hover:text-white transition duration-300 cursor-pointer"
+          >
+            Upload Picture
+          </label>
+          <input
+            className="hidden"
+            multiple
+            accept="image/*"
+            type="file"
+            id="file"
+            name="pics"
+            onChange={handleUpload}
+          />
+          <div className="flex gap-2 flex-wrap justify-center">
+            {file &&
+              file.map((element, idx) => (
                 <img
-                  src={file}
-                  className="self-end"
+                  key={idx}
+                  src={element}
+                  className="rounded border border-gray-400"
                   width={50}
                   height={50}
                   alt="Uploaded preview"
                 />
-              )}
-            </div>
+              ))}
           </div>
         </div>
       </section>
@@ -203,30 +223,12 @@ export default function FormTemplate({ className }: FormProps) {
       {/* Lower Section */}
       <section className="lower">
         <button
-          className="w-24 h-9 font-semibold text-white rounded active:scale-90 duration-300"
+          className="w-28 h-10 bg-yellow-600 font-semibold text-white rounded active:scale-95 hover:scale-105 transition duration-300"
           type="submit"
         >
           Submit
         </button>
       </section>
-
-      {/*
-      <div className="flex flex-col gap-3 mb-6">
-        <label htmlFor="message" className="self-start">
-          Message:
-        </label>
-        <textarea
-          style={{ backgroundColor: "inherit" }}
-          id="message"
-          name="message"
-          className="border-2 border-white text-white px-2 pt-1 focus:outline-none rounded resize-none"
-          cols={33}
-          rows={5}
-          required
-          placeholder="Type your message here..."
-        ></textarea>
-      </div>
-      */}
     </form>
   );
 }
