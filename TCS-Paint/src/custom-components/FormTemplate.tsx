@@ -9,12 +9,16 @@ export default function FormTemplate({ className }: FormProps) {
   const [file, SetFile] = useState<string[]>([]);
 
   function Submit(e: React.FormEvent<HTMLFormElement>) {
-    const formData = new FormData(e.currentTarget);
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
     axios
       .post(import.meta.env.VITE_EMAIL_SEND, formData)
       .then((res) => {
         console.log(res.data);
+        form.reset(); // clear all inputs
+        SetFile([]); // clear file preview
       })
       .catch((err) => {
         console.error(err);
@@ -22,8 +26,6 @@ export default function FormTemplate({ className }: FormProps) {
   }
 
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log(e.target.files);
-
     let temp: string[] = [];
 
     if (e.target.files) {
@@ -167,23 +169,24 @@ export default function FormTemplate({ className }: FormProps) {
         <div className="left w-full lg:w-[50%] flex justify-center">
           <div className="flex flex-col gap-3">
             <label className="self-start">Paint Type:</label>
-            <div className="flex items-center gap-3">
-              <label htmlFor="interior-a">Interior:</label>
+
+            <div className="flex items-center gap-2">
               <input
                 type="checkbox"
                 id="interior-a"
                 name="paintType"
                 value="Interior"
               />
+              <label htmlFor="interior-a">Interior</label>
             </div>
-            <div className="flex items-center gap-3">
-              <label htmlFor="exterior-a">Exterior:</label>
+            <div className="flex items-center gap-2">
               <input
                 type="checkbox"
                 id="exterior-a"
                 name="paintType"
                 value="Exterior"
               />
+              <label htmlFor="exterior-a">Exterior</label>
             </div>
           </div>
         </div>
