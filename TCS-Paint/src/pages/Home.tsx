@@ -1,7 +1,7 @@
 import Intro from "../Home-Page/Intro";
 import SecondPart from "../Home-Page/SecondPart";
 import Guide from "../Home-Page/Guide";
-
+import Footer from "../footer";
 export default function Home() {
   return (
     <>
@@ -9,6 +9,7 @@ export default function Home() {
         <Intro />
         <SecondPart />
         <Guide />
+        <Footer />
       </div>
     </>
   );
