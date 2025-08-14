@@ -36,10 +36,11 @@ export default function FormTemplate({ className }: FormProps) {
           !(
             fileName.endsWith("jpg") ||
             fileName.endsWith("png") ||
-            fileName.endsWith("jpeg")
+            fileName.endsWith("jpeg") ||
+            fileName.endsWith("heic")
           )
         ) {
-          alert("Wrong File! only png,jpeg and jpg accepted!");
+          alert("Wrong File! only png,jpeg,heic or jpg accepted!");
           e.target.value = "";
           return;
         }
