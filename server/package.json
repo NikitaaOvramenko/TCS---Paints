@@ -19,6 +19,7 @@
     "express": "^5.1.0",
     "express-fileupload": "^1.5.2",
     "fs": "^0.0.1-security",
+    "nodemailer": "^7.0.5",
     "nodemon": "^3.1.10",
     "pg": "^8.16.3",
     "sequelize": "^6.37.7",
