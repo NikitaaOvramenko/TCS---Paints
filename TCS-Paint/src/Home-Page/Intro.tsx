@@ -18,7 +18,7 @@ export default function Intro() {
           font="text-2xl sm:text-2xl lg:text-5xl "
         />
         <FormButton
-          text="Fill The Form"
+          text="Contact Us"
           className="w-[50%] text-2xl text-white h-[60px] bg-yellow-600 rounded "
         />
       </div>
