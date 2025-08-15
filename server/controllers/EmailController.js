@@ -4,8 +4,6 @@ class EmailController {
 
    async sendEmail(req, res) {
 
-    
-
   const { name, email, address, state, phone, zip, paintType } = req.body;
   
   const pics = req.files?.pics;
@@ -30,7 +28,7 @@ if (pics) {
   const message = await mailer.sendMail({
     from: "ovramenko.nikitka@gmail.com",
     to: "nikita.ovramenkos@gmail.com",
-    subject: "test",
+    subject: `${name} Paint Lead`,
     html: `
       <p>${name}</p>
       <p>${email}</p>
@@ -41,7 +39,22 @@ if (pics) {
     attachments
   });
 
-  return res.json(message);
+
+  const message1 = await mailer.sendMail({
+    from: "ovramenko.nikitka@gmail.com",
+    to: "ovramenkomartin@gmail.com",
+    subject: `${name} Paint Lead`,
+    html: `
+      <p>${name}</p>
+      <p>${email}</p>
+      <p>${phone}</p>
+      <p>${address}, ${state}, ${zip}</p>
+      <p>${paintType}</p>
+    `,
+    attachments
+  });
+
+  return res.json(message,message1);
 }
 
 
