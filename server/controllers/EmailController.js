@@ -4,6 +4,12 @@ class EmailController {
 
    async sendEmail(req, res) {
 
+    console.log(process.env.EMAIL_RECIEVERS)
+    const toEmails = process.env.EMAIL_RECIEVERS.split(',');
+    console.log(toEmails)
+    const fromEmail = process.env.EMAIL_SENDER
+
+
   const { name, email, address, state, phone, zip, paintType } = req.body;
   
   const pics = req.files?.pics;
@@ -25,9 +31,14 @@ if (pics) {
     content: file.data
   }));
 
-  const message = await mailer.sendMail({
-    from: "ovramenko.nikitka@gmail.com",
-    to: "nikita.ovramenkos@gmail.com",
+
+  const result = []
+
+  toEmails.forEach(async toEmail => {
+
+    result.push(await mailer.sendMail({
+    from: `${fromEmail}`,
+    to: `${toEmail}`,
     subject: `${name} Paint Lead`,
     html: `
       <p>${name}</p>
@@ -37,24 +48,16 @@ if (pics) {
       <p>${paintType}</p>
     `,
     attachments
+  }))
+
+    
   });
 
+  
 
-  const message1 = await mailer.sendMail({
-    from: "ovramenko.nikitka@gmail.com",
-    to: "ovramenkomartin@gmail.com",
-    subject: `${name} Paint Lead`,
-    html: `
-      <p>${name}</p>
-      <p>${email}</p>
-      <p>${phone}</p>
-      <p>${address}, ${state}, ${zip}</p>
-      <p>${paintType}</p>
-    `,
-    attachments
-  });
+  
 
-  return res.json(message,message1);
+  return res.json(result);
 }
 
 
