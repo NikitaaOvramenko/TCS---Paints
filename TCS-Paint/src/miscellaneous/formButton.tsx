@@ -9,9 +9,9 @@ export default function FormButton({ className, text }: Props) {
   return (
     <Link
       to="/form"
-      className={`flex justify-center text-white items-center ${className}`}
+      className={`flex text-black hover:text-white justify-center items-center ${className}`}
     >
-      <div className="box text-black">{text}</div>
+      <div className=" transition text-[interit] duration-300">{text}</div>
     </Link>
   );
 }

@@ -19,7 +19,7 @@ export default function Intro() {
         />
         <FormButton
           text="Contact Us"
-          className="w-[50%] text-2xl text-white h-[60px] bg-yellow-600 rounded "
+          className="w-[50%] text-2xl text-black h-[60px] bg-yellow-600 rounded "
         />
       </div>
       <div className="partTwo flex flex-row justify-center items-center gap-8 mt-8">

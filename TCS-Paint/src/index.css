@@ -2,18 +2,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
 @import "tailwindcss";
 
+@keyframes fadeIn {
+  from { scale: 50%; }
+  to { scale: 100%; }
+}
 
+@keyframes colorFadeIn{
+  0% {
+     background: #8C1C27;
+background: linear-gradient(255deg, rgba(140, 28, 39, 1) 0%, rgba(245, 245, 245, 1) 100%);
+    }
 
-/* Reset & box sizing
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
+    50%{
+      background: #8C1C27;
+background: linear-gradient(255deg, rgba(140, 28, 39, 1) 50%, rgba(245, 245, 245, 1) 100%);
+    }
+    100% {
+      background: #8C1C27;
+background: linear-gradient(255deg, rgba(140, 28, 39, 1) 100%, rgba(245, 245, 245, 1) 100%);
+    }
+}
 
-/* Set base font and background */
+@theme {
+  --animate-fadeIn: fadeIn 0.5s ease-out forwards;
+  --animate-colorFadeIn: colorFadeIn 0.5s ease forwards;
+}
+
 body {
   font-family: 'Lalezar', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
