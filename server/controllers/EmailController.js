@@ -58,8 +58,7 @@ if (pics) {
   <p>Thank you for reaching out to us! We have received your message and our team will get back to you shortly.</p>
   <p>If your inquiry is urgent, please call us at (647)809-7778 for immediate assistance.</p>
   <p>Best regards,<br/>The Team</p>
-    `,
-    attachments
+    `
   })
 
   return res.json(result);
