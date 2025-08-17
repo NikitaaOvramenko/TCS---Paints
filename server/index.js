@@ -25,10 +25,10 @@ const start = async () => {
     await sequelize.authenticate();
     await sequelize.sync();
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(` Server running on port ${PORT}`);
     });
   } catch (error) {
-    console.error("❌ DB error:", error);
+    console.error(" DB error:", error);
   }
 };
 
