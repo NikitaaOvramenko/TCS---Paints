@@ -7,7 +7,7 @@ export default function Form() {
     <>
       <div className="gallery bg-radial-[at_50%_100%] from-[rgba(140,28,49,1)] to-[rgba(12,12,26,1)] to-75% w-full min-h-screen flex flex-col items-center justify-between gap-8  ">
         <GapCard height="h-[80px]" />
-        <FormTemplate className="w-[75%] h-full bg-[rgba(3,0,0,0.72)]  " />
+        <FormTemplate className="w-[75%] h-full bg-[rgba(3,0,0,0.72)]" />
         <Footer />
       </div>
     </>

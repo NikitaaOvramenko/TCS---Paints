@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import tcs_icon from "./assets/icons/tcs_icon.png";
 
 const array = ["Home", "Gallery", "About"];
-const links = ["/", "/gallery", "/contact"];
+const links = ["/", "/gallery", "/about"];
 
 export default function NavBar() {
   return (
@@ -11,7 +11,7 @@ export default function NavBar() {
         <div className="flex justify-center items-center w-[1125px] h-full">
           <div className="left flex  items-center w-full h-full text-1xl lg:text-3xl ">
             <img
-              className="   object-cover mb-3   inline-block w-[55px]"
+              className="object-cover mb-3 inline-block w-[55px]"
               src={tcs_icon}
               alt="tcs icon"
             />

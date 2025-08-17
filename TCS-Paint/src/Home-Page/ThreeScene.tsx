@@ -64,7 +64,6 @@ const ThreeScene: React.FC = () => {
         const size = new THREE.Vector3();
         box.getSize(size);
 
-        // Responsive scaling (just like you did in Matter.js)
         const baseScreenWidth = 1000; // reference width
         const targetModelSize = 3; // desired model world size
         const screenRatio = curWid / baseScreenWidth;
@@ -93,7 +92,6 @@ const ThreeScene: React.FC = () => {
       }
       renderer.render(scene, camera);
     };
-
     animate();
 
     return () => {
