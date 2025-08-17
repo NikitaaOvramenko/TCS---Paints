@@ -2,7 +2,7 @@ import TextPanel from "../custom-components/TextPanel";
 
 export default function Guide() {
   return (
-    <div className=" h-[512px] md:h-[1024px] w-full flex flex-col items-center justify-center bg-radial-[at_35%_50%] from-[rgba(140,28,49,1)] to-[rgba(12,12,26,1)] to-50%  gap-8">
+    <div className=" h-[1024px] md:h-[1024px] w-full flex flex-col items-center   bg-radial-[at_35%_50%] from-[rgba(140,28,49,1)] to-[rgba(12,12,26,1)] to-50%  gap-8">
       <TextPanel
         text={[
           "STEP 1: BOOK A FREE VISIT",
@@ -11,7 +11,7 @@ export default function Guide() {
         width="w-[400px] lg:w-[900px] "
         height="h-[200px] lg:h-[400px]"
         color="#16020283"
-        font="text-1xl lg:text-4xl"
+        font="text-2xl lg:text-4xl"
       ></TextPanel>
       <TextPanel
         text={[
@@ -20,7 +20,7 @@ export default function Guide() {
         ]}
         width="w-[400px] lg:w-[900px] "
         height="h-[200px] lg:h-[400px]"
-        font="text-1xl lg:text-4xl"
+        font="text-2xl lg:text-4xl"
         color="#16020283"
       ></TextPanel>
       <TextPanel
@@ -31,7 +31,7 @@ export default function Guide() {
         width="w-[400px] lg:w-[900px] "
         height="h-[200px] lg:h-[400px]"
         color="#16020283"
-        font="text-1xl lg:text-4xl"
+        font="text-2xl lg:text-4xl"
       ></TextPanel>
     </div>
   );
