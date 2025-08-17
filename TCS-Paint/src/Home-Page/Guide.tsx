@@ -8,7 +8,7 @@ export default function Guide() {
           "STEP 1: BOOK A FREE VISIT",
           "Give us a call or message. We’ll schedule a time to check out the space and understand your needs.",
         ]}
-        width="w-[400px] lg:w-[500px] "
+        width="w-[400px] lg:w-[900px] "
         height="h-[200px] lg:h-[400px]"
         color="#16020283"
         font="text-1xl lg:text-4xl"
@@ -18,7 +18,7 @@ export default function Guide() {
           "STEP 2: GET YOUR CUSTOM ESTIMATE",
           "We’ll put together a simple, easy-to-read estimate so you know exactly what to expect.",
         ]}
-        width="w-[400px] lg:w-[500px] "
+        width="w-[400px] lg:w-[900px] "
         height="h-[200px] lg:h-[400px]"
         font="text-1xl lg:text-4xl"
         color="#16020283"
@@ -28,7 +28,7 @@ export default function Guide() {
           "STEP 3: WE GET TO WORK",
           "Once approved, we handle it all — prep, paint, and cleanup. You relax and enjoy.",
         ]}
-        width="w-[400px] lg:w-[500px] "
+        width="w-[400px] lg:w-[900px] "
         height="h-[200px] lg:h-[400px]"
         color="#16020283"
         font="text-1xl lg:text-4xl"
