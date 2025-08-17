@@ -7,16 +7,9 @@ export default function Footer() {
           All rights reserved.
         </p>
 
-        <div className="flex gap-4 mt-2 md:mt-0">
-          <a href="#privacy" className="hover:text-yellow-400 transition">
-            Privacy Policy
-          </a>
-          <a href="#terms" className="hover:text-yellow-400 transition">
-            Terms of Service
-          </a>
-          <a href="#contact" className="hover:text-yellow-400 transition">
-            Contact
-          </a>
+        <div className="flex gap-4 mt-2 md:mt-0">   
+          <a className="hover:text-yellow-400 transition">6478097778</a>
+          <a className="hover:text-yellow-400 transition">4243464307</a>
         </div>
       </div>
     </footer>
