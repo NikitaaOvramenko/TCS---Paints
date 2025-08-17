@@ -62,7 +62,7 @@ export default function FormTemplate({ className }: FormProps) {
         bool={modal}
         closeModal={() => {
           SetModal(false);
-          // navigate("/");
+          navigate("/");
         }}
       />
       <form
