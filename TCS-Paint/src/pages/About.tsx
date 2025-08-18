@@ -1,9 +1,11 @@
 import FormButton from "../miscellaneous/formButton";
 import Footer from "../footer";
+import GapCard from "../custom-components/GapCard";
 
 export default function About() {
   return (
     <>
+      <GapCard height="h-[80px]" />
       <div className="gallery bg-radial-[at_50%_100%] from-[rgba(140,28,49,1)] to-[rgba(12,12,26,1)] to-75% w-full min-h-screen flex flex-col items-center justify-center px-6 py-16 text-white">
         {/* Main Section */}
         <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-16">
