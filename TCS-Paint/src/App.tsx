@@ -5,6 +5,7 @@ import Gallery from "./pages/Gallery";
 import Form from "./pages/Form";
 import About from "./pages/About";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import Chat from "./Chat";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/form" element={<Form />} />
           </Routes>
         </div>
+        <Chat />
       </div>
     </Router>
   );

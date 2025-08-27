@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import Submission from "../modals/Submission";
 import { useNavigate } from "react-router-dom";
@@ -8,22 +8,36 @@ interface FormProps {
 }
 
 export default function FormTemplate({ className }: FormProps) {
-  const [file, SetFile] = useState<string[]>([]);
-  const [modal, SetModal] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const [modal, setModal] = useState(false);
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   function Submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    SetModal(true);
+
+    // append uploaded files
+    files.forEach((file) => {
+      formData.append("pics", file);
+    });
+
+    setModal(true);
 
     axios
       .post(import.meta.env.VITE_EMAIL_SEND, formData)
       .then((res) => {
         console.log(res.data);
-        form.reset(); // clear all inputs
-        SetFile([]); // clear file preview
+        form.reset(); // clear inputs
+        setFiles([]);
+        setPreviews([]);
+
+        // clear file input manually
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -31,12 +45,13 @@ export default function FormTemplate({ className }: FormProps) {
   }
 
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    let temp: string[] = [];
-
     if (e.target.files) {
-      for (let i = 0; i < e.target.files.length; i++) {
-        let fileName = e.target.files[i].name.toLowerCase();
+      const selectedFiles = Array.from(e.target.files);
+      const validFiles: File[] = [];
+      const previewUrls: string[] = [];
 
+      for (const file of selectedFiles) {
+        const fileName = file.name.toLowerCase();
         if (
           !(
             fileName.endsWith("jpg") ||
@@ -45,14 +60,16 @@ export default function FormTemplate({ className }: FormProps) {
             fileName.endsWith("heic")
           )
         ) {
-          alert("Wrong File! only png,jpeg,heic or jpg accepted!");
+          alert("Wrong File! Only png, jpeg, heic or jpg accepted!");
           e.target.value = "";
           return;
         }
-
-        temp.push(URL.createObjectURL(e.target.files[i]));
+        validFiles.push(file);
+        previewUrls.push(URL.createObjectURL(file));
       }
-      SetFile(temp);
+
+      setFiles(validFiles);
+      setPreviews(previewUrls);
     }
   }
 
@@ -61,12 +78,13 @@ export default function FormTemplate({ className }: FormProps) {
       <Submission
         bool={modal}
         closeModal={() => {
-          SetModal(false);
+          setModal(false);
           navigate("/");
         }}
       />
       <form
         onSubmit={Submit}
+        encType="multipart/form-data"
         className={`${
           className ?? ""
         } flex scale-100 lg:scale-100 flex-col gap-8 items-center justify-center text-white p-6 rounded-2xl`}
@@ -114,7 +132,7 @@ export default function FormTemplate({ className }: FormProps) {
                 id="phone"
                 name="phone"
                 placeholder="6479169777"
-                type="text"
+                type="tel"
                 minLength={10}
                 className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
                 required
@@ -213,6 +231,7 @@ export default function FormTemplate({ className }: FormProps) {
               Upload Picture
             </label>
             <input
+              ref={fileInputRef}
               className="hidden"
               multiple
               accept="image/*"
@@ -222,17 +241,16 @@ export default function FormTemplate({ className }: FormProps) {
               onChange={handleUpload}
             />
             <div className="flex gap-2 flex-wrap justify-center">
-              {file &&
-                file.map((element, idx) => (
-                  <img
-                    key={idx}
-                    src={element}
-                    className="rounded border border-gray-400"
-                    width={50}
-                    height={50}
-                    alt="Uploaded preview"
-                  />
-                ))}
+              {previews.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  className="rounded border border-gray-400"
+                  width={50}
+                  height={50}
+                  alt="Uploaded preview"
+                />
+              ))}
             </div>
           </div>
         </section>
