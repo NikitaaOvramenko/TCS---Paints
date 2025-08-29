@@ -37,7 +37,7 @@ export default function Chat() {
     ]);
 
     axios
-      .post("/api/Session/GetSession", { Id: id })
+      .post(import.meta.env.VITE_SK_CREATE_SESSION_URL, { Id: id })
       .catch((err) => console.error("Session create failed:", err));
   }, []);
 
@@ -81,7 +81,10 @@ export default function Chat() {
     ]);
 
     try {
-      const res = await axios.post("/api/Session/WriteToChat", formData);
+      const res = await axios.post(
+        import.meta.env.VITE_SK_WRITE_TO_CHAT_URL,
+        formData
+      );
 
       setChat((prev) => {
         // Remove pending + typing
