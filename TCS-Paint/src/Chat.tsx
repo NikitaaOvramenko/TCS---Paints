@@ -17,23 +17,17 @@ export default function Chat() {
   // Create a session once on mount
   useEffect(() => {
     const id = uuidv4();
+    globalThis.MY_GLOBAL_DATA = id;
     setUniqueId(id);
 
-    setChat((prev) => [
-      ...prev,
+    setChat([
       { type: "text", content: "Hi I'm Your Paint-Agent !", sender: "agent" },
-    ]);
-    setChat((prev) => [
-      ...prev,
       {
         type: "text",
         content:
           "You can ask me questions regarding surface you want to paint (walls for right now)!",
         sender: "agent",
       },
-    ]);
-    setChat((prev) => [
-      ...prev,
       {
         type: "text",
         content:
@@ -149,7 +143,8 @@ export default function Chat() {
   return (
     <div
       ref={chatRef}
-      className={`chat flex flex-col fixed z-50 w-full h-[${chatSize}] left-0 bottom-0 rounded`}
+      className="chat flex flex-col fixed z-50 w-full left-0 bottom-0 rounded"
+      style={{ height: chatSize }}
     >
       <header
         onClick={unFold}
