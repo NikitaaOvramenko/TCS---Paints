@@ -11,7 +11,9 @@ export default function FormButton({ className, text }: Props) {
       to="/form"
       className={`flex text-black hover:text-white justify-center items-center ${className}`}
     >
-      <div className=" transition text-[interit] duration-300">{text}</div>
+      <div className=" transition text-[interit] text-center duration-300">
+        {text}
+      </div>
     </Link>
   );
 }

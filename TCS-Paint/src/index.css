@@ -7,11 +7,17 @@
   to { scale: 100%; }
 }
 
+@keyframes rollDown {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
 
 
 @theme {
   --animate-fadeIn: fadeIn 0.5s ease-out forwards;
   --animate-colorFadeIn: colorFadeIn 0.5s ease forwards;
+  --animate-rollDown: rollDown 0.5s ease;
 }
 
 body {
