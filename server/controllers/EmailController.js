@@ -10,7 +10,7 @@ class EmailController {
     const fromEmail = process.env.EMAIL_SENDER
     
 
-  const { name, email,address, state, phone, zip, paintType } = req.body;
+  const { name, email, phone, zip, paintType, description } = req.body;
   
   const pics = req.files?.pics;
 
@@ -42,7 +42,8 @@ if (pics) {
       <p>${name}</p>
       <p>${email}</p>
       <p>${phone}</p>
-      <p>$${address}, ${state}, ${zip}</p>
+      <p>${zip}</p>
+      <p>${description}</p>
       <p>${paintType}</p>
     `,
     attachments
