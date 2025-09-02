@@ -7,7 +7,8 @@ module.exports = new Sequelize(
     process.env.DB_PASS, //Database Password
 
     {
-       dialect: pg,
+        dialect: "postgres",        
+        dialectModule: pg,           
        host: process.env.DB_HOST, //Database Hostname
        port: process.env.DB_PORT, //Database Port
        dialectOptions: {
