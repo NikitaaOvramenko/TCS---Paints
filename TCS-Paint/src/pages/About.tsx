@@ -56,13 +56,9 @@ export default function About() {
 
           <div className="flex flex-col md:flex-row justify-center gap-6 mt-6">
             <a
-              href="tel:6478097778"
-              className="hover:text-yellow-400 transition"
-            >
-              📞 647-809-7778
-            </a>
-            <a
-              href="tel:4243464307"
+              href="https://wa.me/14243464307"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-yellow-400 transition"
             >
               📞 424-346-4307
