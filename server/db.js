@@ -1,3 +1,4 @@
+const pg = require('pg');
 const {Sequelize} = require('sequelize');
 
 module.exports = new Sequelize(
@@ -6,7 +7,7 @@ module.exports = new Sequelize(
     process.env.DB_PASS, //Database Password
 
     {
-       dialect: 'postgres',
+       dialect: pg,
        host: process.env.DB_HOST, //Database Hostname
        port: process.env.DB_PORT, //Database Port
        dialectOptions: {
