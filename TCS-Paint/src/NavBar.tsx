@@ -12,7 +12,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="w-full flex items-center justify-center bg-[#16020283] text-white fixed top-0 z-50 px-2 h-[80px] lg:h-[80px]">
+      <div className="w-full flex items-center justify-center bg-[#160202f2] text-white fixed top-0 z-50 px-2 h-[80px] lg:h-[80px]">
         <div className="flex justify-center items-center w-[1125px] h-full">
           <div className="left flex items-center gap-2 text-1xl lg:text-3xl">
             <Link
@@ -24,7 +24,18 @@ export default function NavBar() {
                 src={tcs_icon}
                 alt="tcs icon"
               />
-              <p className="text-center">TCS - Paints - LA</p>
+              <div className="flex flex-col md:flex-row">
+                {!open && (
+                  <p
+                    style={{ animation: "rollUp 300ms ease-out" }}
+                    className="rollUp text-left text-"
+                  >
+                    TCS Paints - Serving Los Angeles
+                  </p>
+                )}
+
+                <p className="text-left"> </p>
+              </div>
             </Link>
           </div>
 
@@ -46,6 +57,25 @@ export default function NavBar() {
 
             {width <= 768 && (
               <div className="flex items-center justify-end h-full">
+                {open && (
+                  <div
+                    style={{ animation: "rollDown 300ms ease-out" }}
+                    className=" rollDown top-0 left-0 right-0 w-full  text-whitebackdrop-blur-sm p-4 shadow-xl"
+                  >
+                    <ul className="text-xl flex justify-center flex-row gap-4">
+                      {array.map((item, index) => (
+                        <Link
+                          key={index}
+                          to={links[index]}
+                          className="hover:underline hover:scale-110 transition duration-300 active:scale-90"
+                          onClick={() => setOpen(false)}
+                        >
+                          {item}
+                        </Link>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 {/* Menu button */}
                 <button
                   type="button"
@@ -62,25 +92,6 @@ export default function NavBar() {
                 </button>
 
                 {/* Dropdown */}
-                {open && (
-                  <div
-                    style={{ animation: "rollDown 300ms ease-out" }}
-                    className="fixed rolDown top-[80px] left-0 right-0 w-full  bg-[#16020283] text-whitebackdrop-blur-sm p-4 shadow-xl"
-                  >
-                    <ul className="text-xl flex justify-center flex-row gap-4">
-                      {array.map((item, index) => (
-                        <Link
-                          key={index}
-                          to={links[index]}
-                          className="hover:underline hover:scale-110 transition duration-300 active:scale-90"
-                          onClick={() => setOpen(false)}
-                        >
-                          {item}
-                        </Link>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
             )}
           </div>
