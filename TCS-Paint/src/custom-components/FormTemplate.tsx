@@ -19,7 +19,6 @@ export default function FormTemplate({ className }: FormProps) {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // append uploaded files
     files.forEach((file) => {
       formData.append("pics", file);
     });
@@ -30,18 +29,12 @@ export default function FormTemplate({ className }: FormProps) {
       .post(import.meta.env.VITE_EMAIL_SEND, formData)
       .then((res) => {
         console.log(res.data);
-        form.reset(); // clear inputs
+        form.reset();
         setFiles([]);
         setPreviews([]);
-
-        // clear file input manually
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
+        if (fileInputRef.current) fileInputRef.current.value = "";
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   }
 
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -82,12 +75,19 @@ export default function FormTemplate({ className }: FormProps) {
           navigate("/");
         }}
       />
+
+      {/* Инфо-текст перед формой */}
+      <p className="text-white text-center w-1/2 mb-6">
+        Fill out the form below and add a few photos (optional). This helps us
+        prepare your estimate faster — our team will reach out with next steps.
+      </p>
+
       <form
         onSubmit={Submit}
         encType="multipart/form-data"
         className={`${
           className ?? ""
-        } flex scale-100 lg:scale-100 flex-col gap-8 items-center justify-center text-white p-6 rounded-2xl`}
+        } flex flex-col gap-8 items-center justify-center text-white p-6 rounded-2xl`}
       >
         {/* Upper Section */}
         <section className="upper flex flex-col lg:flex-row gap-8">
@@ -122,7 +122,9 @@ export default function FormTemplate({ className }: FormProps) {
                 autoComplete="email"
               />
             </div>
+          </div>
 
+          <div className="right flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label htmlFor="phone" className="self-start">
                 Phone:
@@ -139,43 +141,7 @@ export default function FormTemplate({ className }: FormProps) {
                 autoComplete="tel"
               />
             </div>
-          </div>
-
-          <div className="right flex flex-col gap-5">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="address" className="self-start">
-                Address:
-              </label>
-              <input
-                style={{ backgroundColor: "inherit" }}
-                id="address"
-                name="address"
-                placeholder="3716 Barham Blvd"
-                type="text"
-                className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
-                required
-                autoComplete="street-address"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label htmlFor="state" className="self-start">
-                State:
-              </label>
-              <input
-                style={{ backgroundColor: "inherit" }}
-                id="state"
-                name="state"
-                placeholder="FL"
-                type="text"
-                className="w-[300px] h-9 border-b-2 px-2 border-white bg-black text-white focus:outline-none"
-                minLength={2}
-                maxLength={2}
-                required
-                autoComplete="address-level1"
-              />
-            </div>
-
+            {/* Only ZIP */}
             <div className="flex flex-col gap-2">
               <label htmlFor="zip" className="self-start">
                 Zip:
@@ -193,6 +159,23 @@ export default function FormTemplate({ className }: FormProps) {
                 autoComplete="postal-code"
               />
             </div>
+          </div>
+        </section>
+
+        {/* Project description */}
+        <section className="w-full flex justify-center">
+          <div className="flex flex-col gap-2 w-full max-w-[600px]">
+            <label htmlFor="description" className="self-center">
+              Short project description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Tell us a bit about your project..."
+              rows={4}
+              className="w-full border-2 border-white rounded-md p-2 bg-black text-white focus:outline-none"
+              required
+            />
           </div>
         </section>
 

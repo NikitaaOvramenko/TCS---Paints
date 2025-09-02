@@ -18,7 +18,7 @@ export default function Intro() {
         />
         <FormButton
           text="Schedule Your Free Estimate Today"
-          className="w-4/5 px-8 h-[60px] text-2xl font-bold text-black bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-600 rounded shadow-lg hover:scale-105 hover:bg-yellow-500 hover:shadow-2xl transition-all duration-300"
+          className="w-4/5 px-8 py-10 h-[60px] text-2xl font-bold text-black bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-600 rounded shadow-lg hover:scale-105 hover:bg-yellow-500 hover:shadow-2xl transition-all duration-300"
         />
       </div>
       <div className="partTwo flex flex-row justify-center items-center gap-8 mt-8 animate-fadeIn delay-200">
