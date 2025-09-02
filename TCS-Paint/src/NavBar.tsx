@@ -28,7 +28,7 @@ export default function NavBar() {
                 {!open && (
                   <p
                     style={{ animation: "rollUp 300ms ease-out" }}
-                    className="rollUp text-left text-"
+                    className="rollUp text-left text-base"
                   >
                     TCS Paints - Serving Los Angeles
                   </p>
@@ -62,7 +62,7 @@ export default function NavBar() {
                     style={{ animation: "rollDown 300ms ease-out" }}
                     className=" rollDown top-0 left-0 right-0 w-full  text-whitebackdrop-blur-sm p-4 shadow-xl"
                   >
-                    <ul className="text-xl flex justify-center flex-row gap-4">
+                    <ul className="text-base flex justify-center flex-row gap-4">
                       {array.map((item, index) => (
                         <Link
                           key={index}
