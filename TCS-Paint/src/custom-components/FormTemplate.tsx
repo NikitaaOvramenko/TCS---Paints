@@ -77,7 +77,7 @@ export default function FormTemplate({ className }: FormProps) {
       />
 
       {/* Инфо-текст перед формой */}
-      <p className="text-white text-center w-1/2 mb-6">
+      <p className="text-white text-2xl text-center  w-3/5 mb-6">
         Fill out the form below and add a few photos (optional). This helps us
         prepare your estimate faster — our team will reach out with next steps.
       </p>
@@ -211,7 +211,7 @@ export default function FormTemplate({ className }: FormProps) {
               htmlFor="file"
               className="bg-yellow-600 text-black rounded px-4 py-2 active:scale-95 hover:text-white transition duration-300 cursor-pointer"
             >
-              Upload Picture
+              Upload Image(s)
             </label>
             <input
               ref={fileInputRef}
