@@ -20,7 +20,7 @@ function App() {
             <Route path="/form" element={<Form />} />
           </Routes>
         </div>
-        <Chat />
+        {import.meta.env.VITE_SK_CHAT_DISPLAY === "1" && <Chat />}
       </div>
     </Router>
   );
