@@ -14,7 +14,7 @@ export default function NavBar() {
     <>
       <div className="w-full flex items-center justify-center bg-[#070707] text-white fixed top-0 z-50 px-2 h-[80px] lg:h-[80px]">
         <div className="flex justify-center items-center w-[1125px] h-full">
-          <div className="left flex items-center gap-2 text-1xl lg:text-3xl">
+          <div className="left flex items-center gap-2">
             <Link
               to="/"
               className="flex items-center gap-2 cursor-pointer hover:scale-105 transition duration-300"
@@ -42,7 +42,7 @@ export default function NavBar() {
           {/* Right nav links */}
           <div className="right flex-2 w-full h-full relative">
             {width > 768 && (
-              <ul className="text-1xl lg:text-2xl flex justify-end gap-8 items-center h-full">
+              <ul className="text-1xl  flex justify-end gap-8 items-center h-full">
                 {array.map((item, index) => (
                   <Link
                     key={index}
