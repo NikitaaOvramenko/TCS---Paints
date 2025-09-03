@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import BeforeAfterCard from "../custom-components/BeforeAfterCard";
 
 export default function PictureSection() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [pics, setPics] = useState<any[]>([]);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function PictureSection() {
 
   return (
     <>
-      <div className="intro w-full max-w-6xl bg-[#16020283] rounded-2xl p-8 flex flex-wrap justify-center gap-10 items-center">
+      <div className="intro w-full max-w-6xl bg-[rgba(3,0,0,0.72)] rounded-2xl p-8 flex flex-wrap justify-center gap-10 items-center">
         {pics.map((pic, idx) => (
           <div key={idx} className="transition duration-300">
             <BeforeAfterCard

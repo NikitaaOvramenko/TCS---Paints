@@ -18,7 +18,7 @@ export default function SecondPart() {
   }, []);
 
   return (
-    <div className="intro min-h-[1024px] md:min-h-[1024px] w-full flex flex-col items-center justify-center gap-8 bg-radial-[at_75%_50%] from-[rgba(140,28,49,1)] to-[rgba(12,12,26,1)] to-50%">
+    <div className="intro min-h-[1024px] md:min-h-[1024px] w-full flex flex-col items-center justify-center gap-8 bg-radial-[at_75%_50%] from-[rgba(14,165,233,1)] to-[rgba(12,12,26,1)] to-50%">
       {/* Top section */}
       <div className="partOne flex flex-col lg:flex-row gap-8 w-full max-w-5xl grow  lg:grow-0 items-center">
         <TextPanel

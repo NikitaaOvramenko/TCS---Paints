@@ -1,8 +1,8 @@
 import TextPanel from "../custom-components/TextPanel";
-
+// bg-radial-[at_35%_50%] from-[rgba(140,28,49,1)] to-[rgba(12,12,26,1)] to-50%
 export default function Guide() {
   return (
-    <div className=" h-[1024px] md:h-[1024px] w-full flex flex-col items-center   bg-radial-[at_35%_50%] from-[rgba(140,28,49,1)] to-[rgba(12,12,26,1)] to-50%  gap-8">
+    <div className=" h-[1024px] md:h-[1024px] w-full flex flex-col items-center pb-4  bg-radial-[at_35%_50%] from-[rgba(14,165,233,1)] to-[rgba(12,12,26,1)] to-70%  gap-8">
       <TextPanel
         text={[
           "STEP 1: BOOK A FREE VISIT",

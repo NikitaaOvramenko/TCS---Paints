@@ -12,7 +12,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="w-full flex items-center justify-center bg-[#160202f2] text-white fixed top-0 z-50 px-2 h-[80px] lg:h-[80px]">
+      <div className="w-full flex items-center justify-center bg-[#070707] text-white fixed top-0 z-50 px-2 h-[80px] lg:h-[80px]">
         <div className="flex justify-center items-center w-[1125px] h-full">
           <div className="left flex items-center gap-2 text-1xl lg:text-3xl">
             <Link
