@@ -4,15 +4,20 @@ import { v4 as uuidv4 } from "uuid";
 
 type ChatMessage =
   | { type: "text"; content: string; sender: "user" | "agent" }
-  | { type: "image"; src: string; sender: "user" | "agent"; pending?: boolean };
+  | { type: "image"; src: string; sender: "user" | "agent" }; // no pending flag
 
 export default function Chat() {
   const [uniqueId, setUniqueId] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const [chatSize, setChatSize] = useState("3%");
-  const chatRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when messages change or panel expands
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
+  }, [chat, expanded]);
 
   // Create a session once on mount
   useEffect(() => {
@@ -21,17 +26,15 @@ export default function Chat() {
     setUniqueId(id);
 
     setChat([
-      { type: "text", content: "Hi I'm Your Paint-Agent !", sender: "agent" },
+      { type: "text", content: "Hi, I'm your Paint-Agent!", sender: "agent" },
       {
         type: "text",
-        content:
-          "You can ask me questions regarding surface you want to paint (walls for right now)!",
+        content: "Ask me about the surface you want to paint (walls for now).",
         sender: "agent",
       },
       {
         type: "text",
-        content:
-          "You can send me an Image of a surface you want to color, and I will return you the colored version!",
+        content: "Upload a photo and I’ll return a recolored version.",
         sender: "agent",
       },
     ]);
@@ -53,12 +56,12 @@ export default function Chat() {
       ]);
     }
 
-    // Add user image immediately as pending
+    // Add user image immediately (no pending state, no overlay)
     if (file) {
       const previewUrl = URL.createObjectURL(file);
       setChat((prev) => [
         ...prev,
-        { type: "image", src: previewUrl, sender: "user", pending: true },
+        { type: "image", src: previewUrl, sender: "user" },
       ]);
     }
 
@@ -66,10 +69,7 @@ export default function Chat() {
     formData.append("MessageT", input || "(Image uploaded)");
     formData.append("Id", uniqueId);
     formData.append("Author", "User");
-
-    if (file) {
-      formData.append("Image", file);
-    }
+    if (file) formData.append("Image", file);
 
     setInput("");
     setFile(null);
@@ -77,7 +77,7 @@ export default function Chat() {
     // Add typing indicator for agent
     setChat((prev) => [
       ...prev,
-      { type: "text", content: "Agent is typing...", sender: "agent" },
+      { type: "text", content: "⋯", sender: "agent" },
     ]);
 
     try {
@@ -87,25 +87,20 @@ export default function Chat() {
       );
 
       setChat((prev) => {
-        // Remove pending + typing
-        const filtered = prev.filter(
-          (m) =>
-            !(m.type === "text" && m.content === "Agent is typing...") &&
-            !(m.type === "image" && m.sender === "user" && m.pending)
+        // Remove only typing indicator; keep user's image + everything else
+        const withoutTyping = prev.filter(
+          (m) => !(m.type === "text" && m.content === "⋯")
         );
 
-        // Add agent reply
         const newMessages: ChatMessage[] = [];
-
-        if (res.data.Message) {
+        if (res.data?.Message) {
           newMessages.push({
             type: "text",
             content: res.data.Message,
             sender: "agent",
           });
         }
-
-        if (res.data.Url) {
+        if (res.data?.Url) {
           newMessages.push({
             type: "image",
             src: res.data.Url,
@@ -113,13 +108,13 @@ export default function Chat() {
           });
         }
 
-        return [...filtered, ...newMessages];
+        return [...withoutTyping, ...newMessages];
       });
     } catch (err) {
       console.error(err);
       setChat((prev) => {
         const filtered = prev.filter(
-          (m) => !(m.type === "text" && m.content === "Agent is typing...")
+          (m) => !(m.type === "text" && m.content === "⋯")
         );
         return [
           ...filtered,
@@ -134,92 +129,118 @@ export default function Chat() {
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-    }
-  }
-
-  function unFold() {
-    setChatSize(chatSize === "3%" ? "50%" : "3%");
+    if (e.target.files && e.target.files.length > 0) setFile(e.target.files[0]);
   }
 
   return (
-    <div
-      ref={chatRef}
-      className="chat flex flex-col fixed z-50 w-full left-0 bottom-0 rounded"
-      style={{ height: chatSize }}
-    >
-      <header
-        onClick={unFold}
-        className="header text-white bg-black text-center cursor-pointer"
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[640px]">
+      {/* Container */}
+      <div
+        className={`backdrop-blur-md rounded-2xl shadow-2xl border border-white/10
+                    ${
+                      expanded ? "h-[70vh]" : "h-14"
+                    } bg-[rgba(10,15,25,0.75)] overflow-hidden
+                   transition-all duration-300`}
       >
-        {chatSize === "3%" && "^Chat^"}
-        {chatSize === "50%" && "vChatv"}
-      </header>
+        {/* Header */}
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="w-full h-14 flex items-center justify-between px-4
+                     text-white/90 bg-gradient-to-r from-slate-900/60 to-sky-900/40"
+          aria-label={expanded ? "Collapse chat" : "Expand chat"}
+          type="button"
+        >
+          <div className="flex items-center gap-2 font-semibold">
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-sky-400" />
+            Paint-Agent
+          </div>
+          <span className="text-white/70 text-sm">
+            {expanded ? "Hide" : "Open"}
+          </span>
+        </button>
 
-      <main className="main flex flex-col w-full h-full bg-[rgba(20,3,12,0.72)] gap-4 overflow-y-auto p-2">
-        {chat.map((message, i) => (
-          <div
-            key={i}
-            className={`flex ${
-              message.sender === "agent" ? "justify-end" : "justify-start"
-            }`}
+        {/* Messages */}
+        <div
+          ref={listRef}
+          className={`px-3 sm:px-4 py-3 space-y-2 h-[calc(70vh-7rem)] overflow-y-auto ${
+            expanded ? "block" : "hidden"
+          }`}
+        >
+          {chat.map((message, i) => (
+            <div
+              key={i}
+              className={`flex ${
+                message.sender === "agent" ? "justify-end" : "justify-start"
+              }`}
+            >
+              {message.type === "text" ? (
+                <span
+                  className={`px-3 py-2 rounded-2xl max-w-[80%] leading-snug text-sm shadow
+                    ${
+                      message.sender === "agent"
+                        ? "bg-sky-600 text-white"
+                        : "bg-slate-700/90 text-white"
+                    }`}
+                >
+                  {message.content}
+                </span>
+              ) : (
+                // IMAGE (no uploading overlay, no 'Uploaded' badge)
+                <img
+                  src={message.src}
+                  alt="chat-img"
+                  className="max-w-[220px] max-h-[220px] rounded-xl border border-white/10 shadow"
+                />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Input bar */}
+        <form
+          onSubmit={handleSubmit}
+          className={`h-14 w-full items-center gap-2 px-2 sm:px-3 bg-black/70 border-t border-white/10 ${
+            expanded ? "flex" : "hidden"
+          }`}
+          encType="multipart/form-data"
+        >
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 h-10 px-3 rounded-xl bg-slate-800/80 text-white placeholder-white/50
+                       border border-white/10 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            placeholder="Type a message…"
+          />
+
+          <label
+            className="h-10 px-3 flex items-center rounded-xl cursor-pointer
+                       bg-slate-700/80 text-white border border-white/10 hover:bg-slate-700"
+            title={file ? file.name : "Upload image"}
           >
-            {message.type === "text" && (
-              <span
-                className={`px-2 py-1 rounded ${
-                  message.sender === "agent"
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-700 text-white"
-                }`}
-              >
-                {message.content}
+            {file ? "Selected:" : "Upload"}
+            {file && (
+              <span className="ml-2 text-xs opacity-80 truncate max-w-[160px]">
+                {file.name}
               </span>
             )}
+            <input
+              type="file"
+              className="hidden"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </label>
 
-            {message.type === "image" && (
-              <img
-                src={message.src}
-                alt="chat-img"
-                className={`max-w-[200px] max-h-[200px] rounded border ${
-                  message.sender === "agent" ? "self-end" : "self-start"
-                } ${message.pending ? "opacity-50" : ""}`}
-              />
-            )}
-          </div>
-        ))}
-      </main>
-
-      <form
-        onSubmit={handleSubmit}
-        className="footer flex px-1 gap-1 bg-black h-12 w-full"
-        encType="multipart/form-data"
-      >
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="text-white w-[60%] border-2 border-white focus:outline-none"
-          placeholder="Type a message..."
-        />
-
-        <label className="button flex items-center justify-center h-full w-[20%] bg-amber-400 border-2 cursor-pointer">
-          Upload
-          <input
-            type="file"
-            className="hidden"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="button flex items-center justify-center h-full w-[20%] bg-amber-400 border-2"
-        >
-          Send
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="h-10 px-4 rounded-xl bg-sky-600 text-white font-semibold
+                       hover:bg-sky-500 active:scale-[0.98] transition"
+          >
+            Send
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
