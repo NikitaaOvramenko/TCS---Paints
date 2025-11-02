@@ -1,0 +1,30 @@
+﻿# TCS---Paints Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2025-10-29
+
+## Active Technologies
+
+- TypeScript (React), Node 18+ + React, Vite; CSS Modules (001-ui-styling)
+
+## Project Structure
+
+```text
+backend/
+frontend/
+tests/
+```
+
+## Commands
+
+npm test; npm run lint
+
+## Code Style
+
+TypeScript (React), Node 18+: Follow standard conventions
+
+## Recent Changes
+
+- 001-ui-styling: Added TypeScript (React), Node 18+ + React, Vite; CSS Modules
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

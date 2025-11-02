@@ -9,6 +9,7 @@ const links = ["/", "/gallery", "/about"];
 export default function NavBar() {
   const { width } = useWindowDimensions();
   const [open, setOpen] = useState(false);
+  const city = import.meta.env.VITE_CITY;
 
   return (
     <>
@@ -30,7 +31,7 @@ export default function NavBar() {
                     style={{ animation: "rollUp 300ms ease-out" }}
                     className="rollUp text-left text-base"
                   >
-                    TCS Paints - Serving Los Angeles
+                    TCS Paints - Serving {city}
                   </p>
                 )}
 
