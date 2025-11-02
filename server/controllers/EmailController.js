@@ -57,7 +57,7 @@ if (pics) {
     html: `
     <p>Dear ${name},</p>
   <p>Thank you for reaching out to us! We have received your message and our team will get back to you shortly.</p>
-  <p>If your inquiry is urgent, please call us at (647)809-7778 for immediate assistance.</p>
+  <p>If your inquiry is urgent, please call us at (424)346-4307 for immediate assistance.</p>
   <p>Best regards,<br/>The Team</p>
     `
   })
