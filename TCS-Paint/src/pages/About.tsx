@@ -17,8 +17,10 @@ export default function About() {
             <h1 className="text-4xl md:text-5xl font-bold">About Us</h1>
             <p className="text-lg md:text-xl leading-relaxed">
               At{" "}
-              <span className="text-yellow-500 font-semibold">TCS Paints</span>,
-              we deliver high-quality painting services that transform your
+              <span className="text-yellow-500 font-semibold">
+                Your Local Painter & Co
+              </span>
+              , we deliver high-quality painting services that transform your
               home’s look and feel. Our team is passionate about precision,
               clean finishes, and customer satisfaction.
             </p>
