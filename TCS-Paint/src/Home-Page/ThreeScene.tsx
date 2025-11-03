@@ -1,111 +1,44 @@
-import React, { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import useWindowDimensions from "../helper/WindowHook";
+import React from "react";
+// Using public path for better branch compatibility
+const maxImage = "/Max.png";
 
 const ThreeScene: React.FC = () => {
-  const sceneRef = useRef<HTMLDivElement | null>(null);
-  const houseRef = useRef<THREE.Object3D | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-
-  const { width: windowWidth } = useWindowDimensions();
-  const [curWid, setCurWid] = useState(1000);
-  const [curHei, setCurHei] = useState(300);
-
-  // Resize logic
-  useEffect(() => {
-    if (windowWidth < 500) {
-      setCurWid(900);
-      setCurHei(150);
-    } else if (windowWidth < 1000) {
-      setCurWid(900);
-      setCurHei(150);
-    } else {
-      setCurWid(900);
-      setCurHei(300);
-    }
-  }, [windowWidth]);
-
-  useEffect(() => {
-    if (!sceneRef.current) return;
-
-    while (sceneRef.current.firstChild) {
-      sceneRef.current.removeChild(sceneRef.current.firstChild);
-    }
-
-    const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(90, curWid / curHei, 0.1, 2000);
-    camera.position.z = curWid < 600 ? 2.5 : 2;
-    cameraRef.current = camera;
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(curWid, curHei);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(0x000000, 0);
-    rendererRef.current = renderer;
-
-    sceneRef.current.appendChild(renderer.domElement);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(0, 2, 0);
-    scene.add(ambientLight, directionalLight);
-
-    const loader = new GLTFLoader();
-    loader.load(
-      "/3D/residential_family_house.glb",
-      (gltf) => {
-        houseRef.current = gltf.scene;
-
-        // Get model size
-        const box = new THREE.Box3().setFromObject(gltf.scene);
-        const size = new THREE.Vector3();
-        box.getSize(size);
-
-        const baseScreenWidth = 1000; // reference width
-        const targetModelSize = 3; // desired model world size
-        const screenRatio = curWid / baseScreenWidth;
-        const modelRatio = targetModelSize / Math.max(size.x, size.y, size.z);
-        const finalScale = screenRatio * modelRatio;
-
-        gltf.scene.scale.set(finalScale, finalScale, finalScale);
-
-        // Center the model
-        const center = new THREE.Vector3();
-        box.getCenter(center);
-        gltf.scene.position.sub(center);
-
-        scene.add(gltf.scene);
-      },
-      undefined,
-      (error) => {
-        console.error("GLTF load error:", error);
-      }
-    );
-
-    const animate = (t = 0) => {
-      requestAnimationFrame(animate);
-      if (houseRef.current) {
-        houseRef.current.rotation.y = Math.sin(t * 0.0008) * 0.5;
-      }
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    return () => {
-      renderer.dispose();
-      sceneRef.current?.removeChild(renderer.domElement);
-    };
-  }, [curWid, curHei]);
-
   return (
-    <div
-      ref={sceneRef}
-      className="w-full flex justify-center items-center"
-      style={{ height: `${curHei}px` }}
-    />
+    <div className="w-full flex justify-center items-center py-8">
+      <div className="relative">
+        {/* Outer glow effect */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 via-cyan-400/20 to-blue-400/20 blur-xl animate-pulse"></div>
+
+        {/* Outer decorative ring */}
+        <div className="absolute inset-[-8px] rounded-full border-4 border-white/40 blur-sm"></div>
+
+        {/* Main circular frame with elegant border */}
+        <div
+          className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.3),0_0_60px_rgba(59,130,246,0.2)]"
+          style={{
+            border: "6px solid rgba(255, 255, 255, 0.6)",
+            boxShadow:
+              "0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(59, 130, 246, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1)",
+          }}
+        >
+          {/* Image container */}
+          <div className="absolute inset-0 rounded-full overflow-hidden">
+            <img
+              src={maxImage}
+              alt="Max"
+              className="w-full h-full object-cover rounded-full"
+              style={{ filter: "brightness(1.05) contrast(1.05)" }}
+            />
+          </div>
+
+          {/* Inner shine effect overlay */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/30 via-transparent to-transparent pointer-events-none"></div>
+
+          {/* Bottom highlight */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/3 rounded-full bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
+        </div>
+      </div>
+    </div>
   );
 };
 
