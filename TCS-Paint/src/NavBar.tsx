@@ -31,7 +31,7 @@ export default function NavBar() {
                     style={{ animation: "rollUp 300ms ease-out" }}
                     className="rollUp text-left text-base"
                   >
-                    TCS Paints - Serving {city}
+                    Your Local Painter & Co - Serving {city}
                   </p>
                 )}
 
