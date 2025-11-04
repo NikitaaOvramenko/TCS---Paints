@@ -14,7 +14,7 @@ export default function PictureSection() {
 
   return (
     <>
-      <div className="intro w-full max-w-6xl bg-[rgba(3,0,0,0.72)] rounded-2xl p-8 flex flex-wrap justify-center gap-10 items-center">
+      <div className="intro w-full max-w-6xl bg-[rgba(3,0,0,0)]  rounded-2xl p-8 flex flex-wrap justify-center gap-10 items-center">
         {pics.map((pic, idx) => (
           <div key={idx} className="transition duration-300">
             <BeforeAfterCard
