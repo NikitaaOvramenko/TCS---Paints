@@ -4,7 +4,7 @@ import FormButton from "../miscellaneous/formButton";
 
 export default function Intro() {
   return (
-    <div className="intro w-full flex flex-col-reverse items-center justify-evenly h-[512px] lg:h-[1024px] bg-[radial-gradient(ellipse_at_0%_50%,rgba(14,165,233,1)_0%,rgba(12,12,26,1)_72%)] transition-all duration-700">
+    <div className="intro w-full flex flex-col-reverse items-center justify-evenly h-dvh  bg-[radial-gradient(ellipse_at_0%_50%,rgba(14,165,233,1)_0%,rgba(12,12,26,1)_72%)] transition-all duration-700">
       <div className="partOne flex flex-col items-center gap-8 h-1/2 animate-fadeIn">
         <TextPanel
           text={[
