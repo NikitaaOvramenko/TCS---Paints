@@ -163,4 +163,4 @@ We welcome contributions! Please follow these steps:
 
 - **Three.js Community**: For excellent documentation and examples.
 - **Microsoft Semantic Kernel**: For powering the AI interactions.
-- Contributors: [List key contributors here]
+- Contributors: me
