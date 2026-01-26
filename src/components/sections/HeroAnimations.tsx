@@ -8,7 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroAnimations() {
   useGSAP(() => {
-    // Hero header entrance animation
+    const isDev = process.env.NODE_ENV === "development";
+
+    // ----- Intro animations -----
     gsap.from(".heroHeader", {
       y: "-20%",
       opacity: 0,
@@ -16,7 +18,6 @@ export default function HeroAnimations() {
       ease: "back.out(1.7)",
     });
 
-    // Subheadline entrance with delay
     gsap.from(".heroSubhead", {
       y: 20,
       opacity: 0,
@@ -25,7 +26,6 @@ export default function HeroAnimations() {
       ease: "power2.out",
     });
 
-    // CTA buttons entrance
     gsap.from(".heroCta", {
       y: 20,
       opacity: 0,
@@ -34,7 +34,6 @@ export default function HeroAnimations() {
       ease: "power2.out",
     });
 
-    // Trust badge entrance
     gsap.from(".heroTrust", {
       y: 20,
       opacity: 0,
@@ -43,7 +42,6 @@ export default function HeroAnimations() {
       ease: "power2.out",
     });
 
-    // Phone CTA entrance
     gsap.from(".heroPhone", {
       y: 20,
       opacity: 0,
@@ -52,16 +50,16 @@ export default function HeroAnimations() {
       ease: "power2.out",
     });
 
-    // Brush stroke "painting" animation
-    const brushPath = document.querySelector(".brushPath") as SVGPathElement;
+    // Brush stroke
+    const brushPath = document.querySelector(
+      ".brushPath",
+    ) as SVGPathElement | null;
     if (brushPath) {
       const pathLength = brushPath.getTotalLength();
-
       gsap.set(brushPath, {
         strokeDasharray: pathLength,
         strokeDashoffset: pathLength,
       });
-
       gsap.to(brushPath, {
         strokeDashoffset: 0,
         duration: 1.2,
@@ -70,73 +68,91 @@ export default function HeroAnimations() {
       });
     }
 
-    // Parallax background on scroll
+    // Parallax background
     gsap.to(".heroBg", {
+      y: 300,
       scrollTrigger: {
         trigger: ".hero",
         start: "top top",
         end: "bottom top",
         scrub: true,
       },
-      y: 300,
     });
 
-    // Video scrub on scroll with responsive breakpoints
-    const videoElem = document.querySelector(
-      ".video video",
-    ) as HTMLVideoElement;
+    // ----- Video scrub (DESKTOP ONLY) -----
+    const mm = gsap.matchMedia();
 
-    if (videoElem) {
-      const mm = gsap.matchMedia();
+    mm.add("(min-width: 1024px)", () => {
+      const videoElem = document.querySelector(
+        ".video video",
+      ) as HTMLVideoElement | null;
+      if (!videoElem) return;
 
-      const setupVideoScrub = (isMobile: boolean) => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".hero",
-            // Mobile: start earlier and use shorter scroll distance
-            // Desktop: original behavior
-            start: isMobile ? "top top" : "top 10%",
-            end: isMobile ? "80% top" : "bottom top",
-            scrub: isMobile ? 0.5 : true, // Smoother scrub on mobile
-          },
-        });
+      // Ensure it's prepared for seeking
+      videoElem.preload = "auto";
+      videoElem.muted = true;
+      videoElem.playsInline = true;
 
-        tl.to(videoElem, {
-          currentTime: videoElem.duration,
-          ease: "none",
-        });
-      };
+      // This helps Safari initialize
+      videoElem.load();
 
-      const initVideoScrub = (isMobile: boolean) => {
-        if (videoElem.readyState >= 1) {
-          setupVideoScrub(isMobile);
-        } else {
-          videoElem.addEventListener(
-            "loadedmetadata",
-            () => setupVideoScrub(isMobile),
-            { once: true },
-          );
+      // Proxy smoothing (Safari-friendly)
+      const proxy = { t: 0 };
+
+      const applyTime = () => {
+        // HAVE_CURRENT_DATA (2) is a safer bar than just "truthy"
+        if (videoElem.readyState >= 2) {
+          // clamp to duration
+          const d = Number.isFinite(videoElem.duration)
+            ? videoElem.duration
+            : 0;
+          videoElem.currentTime = d ? Math.min(proxy.t, d) : 0;
         }
       };
 
-      // Desktop breakpoint (1024px and above)
-      mm.add("(min-width: 1024px)", () => {
-        initVideoScrub(false);
+      const setT = gsap.quickTo(proxy, "t", {
+        duration: 0.12,
+        ease: "power4.out",
+        onUpdate: applyTime,
       });
 
-      // Tablet breakpoint (768px to 1023px)
-      mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
-        initVideoScrub(true);
-      });
+      const setup = () => {
+        const dur = videoElem.duration;
+        if (!Number.isFinite(dur) || dur <= 0) return;
 
-      // Mobile breakpoint (below 768px)
-      mm.add("(max-width: 767px)", () => {
-        initVideoScrub(true);
-      });
-    }
+        ScrollTrigger.create({
+          trigger: ".hero",
+          start: "top 10%",
+          end: "bottom top",
+          scrub: 0.5,
+          markers: isDev, // only show markers in dev
+          onUpdate: (self) => {
+            setT(self.progress * dur);
+          },
+        });
+      };
 
+      if (videoElem.readyState >= 1 && Number.isFinite(videoElem.duration)) {
+        setup();
+      } else {
+        videoElem.addEventListener("loadedmetadata", setup, { once: true });
+      }
+
+      // Cleanup for this media query scope
+      return () => {
+        // ScrollTriggers created in this scope will be killed automatically by matchMedia revert,
+        // but we can also be explicit:
+        ScrollTrigger.getAll().forEach((st) => {
+          if (st.trigger && (st.trigger as Element).classList?.contains("hero"))
+            st.kill();
+        });
+      };
+    });
+
+    // Global cleanup
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      mm.revert();
+      ScrollTrigger.refresh();
     };
   }, []);
 
