@@ -81,24 +81,23 @@ export default function HeroAnimations() {
       y: 300,
     });
 
-    // Video scrub on scroll
-
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 1024", () => {});
-
+    // Video scrub on scroll with responsive breakpoints
     const videoElem = document.querySelector(
       ".video video",
     ) as HTMLVideoElement;
+
     if (videoElem) {
-      const setupVideoScrub = () => {
+      const mm = gsap.matchMedia();
+
+      const setupVideoScrub = (isMobile: boolean) => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".hero",
-            start: "top 10%",
-            markers: true,
-            end: "bottom top",
-            scrub: true,
+            // Mobile: start earlier and use shorter scroll distance
+            // Desktop: original behavior
+            start: isMobile ? "top top" : "top 10%",
+            end: isMobile ? "80% top" : "bottom top",
+            scrub: isMobile ? 0.5 : true, // Smoother scrub on mobile
           },
         });
 
@@ -108,16 +107,37 @@ export default function HeroAnimations() {
         });
       };
 
-      if (videoElem.readyState >= 1) {
-        setupVideoScrub();
-      } else {
-        videoElem.addEventListener("loadedmetadata", setupVideoScrub, {
-          once: true,
-        });
-      }
+      const initVideoScrub = (isMobile: boolean) => {
+        if (videoElem.readyState >= 1) {
+          setupVideoScrub(isMobile);
+        } else {
+          videoElem.addEventListener(
+            "loadedmetadata",
+            () => setupVideoScrub(isMobile),
+            { once: true },
+          );
+        }
+      };
+
+      // Desktop breakpoint (1024px and above)
+      mm.add("(min-width: 1024px)", () => {
+        initVideoScrub(false);
+      });
+
+      // Tablet breakpoint (768px to 1023px)
+      mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
+        initVideoScrub(true);
+      });
+
+      // Mobile breakpoint (below 768px)
+      mm.add("(max-width: 767px)", () => {
+        initVideoScrub(true);
+      });
     }
 
-    return () => {};
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, []);
 
   return null;

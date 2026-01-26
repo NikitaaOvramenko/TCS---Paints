@@ -28,13 +28,11 @@ export function Hero({ location }: HeroProps) {
       <div className="video absolute inset-0">
         <video
           src="/videos/roller_paint_down_updated.mp4"
-          autoPlay
-          loop
           muted
           playsInline
+          webkit-playsinline="true"
           preload="auto"
-          poster="/videos/roller_poster.jpg"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover mt-20 sm:mt-20 md:mt-20"
         />
       </div>
 
