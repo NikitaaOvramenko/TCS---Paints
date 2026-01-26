@@ -1,0 +1,42 @@
+{
+  "name": "yourlocalpaints",
+  "version": "1.0.0",
+  "description": "SEO-first painting services website",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikitaaOvramenko/TCS---Paints.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikitaaOvramenko/TCS---Paints/issues"
+  },
+  "homepage": "https://github.com/NikitaaOvramenko/TCS---Paints#readme",
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@types/node": "^25.0.10",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.23",
+    "gsap": "^3.14.2",
+    "next": "^16.1.4",
+    "postcss": "^8.5.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@tailwindcss/postcss": "^4.1.18",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.4"
+  }
+}

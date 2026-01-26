@@ -1,0 +1,8 @@
+export { Hero } from './Hero'
+export { WhyUs } from './WhyUs'
+export { Services } from './Services'
+export { Reviews } from './Reviews'
+export { FAQ } from './FAQ'
+export { Gallery } from './Gallery'
+export { LocationMap } from './LocationMap'
+export { FooterCTA } from './FooterCTA'
