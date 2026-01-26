@@ -25,13 +25,16 @@ export function Hero({ location }: HeroProps) {
         <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-yellow-400/10 blur-3xl" /> */}
       </div>
 
-      <div className="video absolute inset-0 ">
+      <div className="video absolute inset-0">
         <video
           src="/videos/roller_paint_down_updated.mp4"
+          autoPlay
+          loop
           muted
           playsInline
           preload="auto"
-          className="h-full w-full object-cover mt-20"
+          poster="/videos/roller_poster.jpg"
+          className="h-full w-full object-cover"
         />
       </div>
 
