@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { siteConfig } from "@/data/site";
-import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { JsonLd, getLocalBusinessSchema } from "@/lib/seo/jsonld";
+import Navbar from "@/components/ui/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -54,9 +54,9 @@ export default function RootLayout({
       <head>
         <JsonLd data={getLocalBusinessSchema()} />
       </head>
-      <body className=" bg-black font-sans antialiased text-espresso-700">
-        <Header />
-        <main className="flex-1">{children}</main>
+      <body className="font-sans antialiased text-espresso-700">
+        <Navbar />
+        {children}
         <Footer />
       </body>
     </html>

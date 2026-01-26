@@ -82,6 +82,11 @@ export default function HeroAnimations() {
     });
 
     // Video scrub on scroll
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024", () => {});
+
     const videoElem = document.querySelector(
       ".video video",
     ) as HTMLVideoElement;
@@ -111,6 +116,8 @@ export default function HeroAnimations() {
         });
       }
     }
+
+    return () => {};
   }, []);
 
   return null;

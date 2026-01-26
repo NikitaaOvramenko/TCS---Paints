@@ -40,6 +40,7 @@
 
 body {
   color: var(--foreground);
+  background-color: white;
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
@@ -51,7 +52,7 @@ html, body {
 
 /* Smooth scrolling */
 html {
-  
+  scroll-behavior: smooth;
 }
 
 /* Remove default focus outline and add custom */
