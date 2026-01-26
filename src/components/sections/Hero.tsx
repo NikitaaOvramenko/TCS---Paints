@@ -4,6 +4,7 @@ import { getHeroContent } from "@/data/content";
 import { siteConfig } from "@/data/site";
 import type { Location } from "@/data/locations";
 import HeroAnimations from "./HeroAnimations";
+import HeroCanvas from "./HeroCanvas";
 
 interface HeroProps {
   location?: Location;
@@ -25,7 +26,7 @@ export function Hero({ location }: HeroProps) {
         <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-yellow-400/10 blur-3xl" /> */}
       </div>
 
-      <div className="video absolute inset-0">
+      {/* <div className="video absolute inset-0">
         <video
           src="/videos/roller_paint_down_updated.mp4"
           muted
@@ -34,7 +35,8 @@ export function Hero({ location }: HeroProps) {
           preload="auto"
           className="h-full w-full object-cover mt-20 sm:mt-20 md:mt-20"
         />
-      </div>
+      </div> */}
+      <HeroCanvas></HeroCanvas>
 
       <Container className="relative z-10 flex min-h-screen items-center justify-center">
         <div className="py-24 sm:py-32 lg:py-40">
