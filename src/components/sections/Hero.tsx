@@ -4,7 +4,7 @@ import { getHeroContent } from "@/data/content";
 import { siteConfig } from "@/data/site";
 import type { Location } from "@/data/locations";
 import HeroAnimations from "./HeroAnimations";
-import HeroCanvas from "./HeroCanvas";
+import AnimationCanvas from "./AnimationCanvas";
 
 interface HeroProps {
   location?: Location;
@@ -15,28 +15,20 @@ export function Hero({ location }: HeroProps) {
 
   return (
     <section className="hero relative min-h-screen overflow-hidden bg-gradient-to-br bg-black text-white">
-      {/* GSAP Animations (client component) */}
       <HeroAnimations />
 
-      {/* Parallax background layer */}
-      <div className="heroBg absolute inset-0 overflow-hidden">
-        {/* Purple glow effects */}
-        {/* <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-purple-500/30 blur-3xl" />
-        <div className="absolute top-1/2 left-1/4 h-64 w-64 rounded-full bg-purple-400/20 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-yellow-400/10 blur-3xl" /> */}
-      </div>
+      <div className="heroBg absolute inset-0 overflow-hidden"></div>
 
-      {/* <div className="video absolute inset-0">
-        <video
-          src="/videos/roller_paint_down_updated.mp4"
-          muted
-          playsInline
-          webkit-playsinline="true"
-          preload="auto"
-          className="h-full w-full object-cover mt-20 sm:mt-20 md:mt-20"
-        />
-      </div> */}
-      <HeroCanvas></HeroCanvas>
+      <AnimationCanvas
+        path="/videos/video_frames_one"
+        pads={2}
+        frames={60}
+        start="top 20%"
+        end="bottom top"
+        scrub={true}
+        markers={false}
+        className="absolute mt-30 inset-0 w-full h-full"
+      />
 
       <Container className="relative z-10 flex min-h-screen items-center justify-center">
         <div className="py-24 sm:py-32 lg:py-40">

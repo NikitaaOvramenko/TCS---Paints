@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { siteConfig } from "@/data/site";
-import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/ui/Footer";
 import { JsonLd, getLocalBusinessSchema } from "@/lib/seo/jsonld";
 import Navbar from "@/components/ui/Navbar";
 

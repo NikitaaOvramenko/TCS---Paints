@@ -88,13 +88,12 @@ export default async function LocationPage({ params }: LocationPageProps) {
 
   return (
     <>
-      {/* Structured Data
+      {/* Structured Data */}
       <JsonLd data={getLocalBusinessSchema(location)} />
       <JsonLd data={getServiceSchema(location)} />
       <JsonLd data={getFaqSchema(faqContent.faqs)} />
-      <JsonLd data={getBreadcrumbSchema(breadcrumbs)} /> */}
+      <JsonLd data={getBreadcrumbSchema(breadcrumbs)} />
 
-      {/* Page Sections with location context */}
       <Hero location={location} />
       <WhyUs />
       <Services location={location} />
