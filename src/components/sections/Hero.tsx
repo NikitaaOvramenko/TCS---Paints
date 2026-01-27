@@ -27,6 +27,7 @@ export function Hero({ location }: HeroProps) {
         end="bottom top"
         scrub={true}
         markers={false}
+        rotated={false}
         className="absolute mt-30 inset-0 w-full h-full"
       />
 
