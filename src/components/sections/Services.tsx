@@ -122,7 +122,7 @@ export function Services({ location }: ServicesProps) {
         start="-60% 20%"
         end="bottom top"
         scrub={true}
-        markers={true}
+        markers={false}
         rotated={false}
         className="absolute inset-0 w-full h-full"
       />
