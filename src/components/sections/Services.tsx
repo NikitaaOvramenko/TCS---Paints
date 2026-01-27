@@ -114,7 +114,7 @@ export function Services({ location }: ServicesProps) {
     : servicesContent.title;
 
   return (
-    <div className="relative" id="services">
+    <div className="relative " id="services">
       <AnimationCanvas
         path="/videos/services-image-seq-90"
         pads={4}
@@ -126,12 +126,16 @@ export function Services({ location }: ServicesProps) {
         rotated={false}
         className="absolute inset-0 w-full h-full"
       />
-      <Section>
+      <Section className="bg-black text-white">
         <ServicesAnimations />
         <SectionHeader title={title} subtitle={servicesContent.subtitle} />
         <div className="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {siteConfig.services.map((service) => (
-            <Card key={service.id} hover className="group service-card">
+            <Card
+              key={service.id}
+              hover
+              className="group service-card bg-black"
+            >
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-purple-100 text-purple-600 transition-colors group-hover:bg-purple-600 group-hover:text-white">
                 {iconMap[service.icon] || iconMap.home}
               </div>

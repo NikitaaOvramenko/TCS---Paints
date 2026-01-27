@@ -98,7 +98,7 @@ const iconMap: Record<string, React.ReactNode> = {
 export function WhyUs() {
   return (
     <Section className="relative" background="gray" id="why-us">
-      <div className="back">
+      <div className="back absolute inset-0">
         <div className=" absolute inset-0  videoWrapper w-full h-full">
           <video
             src="/videos/wall-painting.mp4"
@@ -110,7 +110,7 @@ export function WhyUs() {
         </div>
         <div className="blurring absolute inset-0 backdrop-blur-sm w-full  h-full "></div>
       </div>
-      <div className="content">
+      <div className="content relative z-10">
         <WhyUsAnimations />
         <SectionHeader
           title={whyUsContent.title}
