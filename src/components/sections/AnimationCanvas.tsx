@@ -89,18 +89,32 @@ export default function HeroCanvas({
     }
   };
 
-  useEffect(() => {
-    const newImages: HTMLImageElement[] = [];
+  const loadImages = async () => {
+    const srcs = function () {
+      const arr = [];
 
-    for (let i = 1; i <= frames; i++) {
+      for (let i = 1; i <= frames; i++) {
+        arr.push(currentFrame(i));
+      }
+
+      return arr;
+    };
+
+    const loadedImages = await preloadAll(srcs());
+    images.current = loadedImages;
+  };
+
+  const preload = (src: string) =>
+    new Promise<HTMLImageElement>((resolve, reject) => {
       const img = new Image();
-      img.src = currentFrame(i);
-      newImages.push(img);
-    }
+      img.src = src;
+      img.onload = () => resolve(img);
+    });
 
-    images.current = newImages;
+  const preloadAll = (srcs: string[]) => Promise.all(srcs.map(preload));
 
-    newImages[0].onload = () => render(1);
+  useEffect(() => {
+    loadImages();
   }, []);
 
   useGSAP(() => {
@@ -115,7 +129,9 @@ export default function HeroCanvas({
         scrub: scrub,
         markers: markers,
       },
-      onUpdate: () => render(playhead.current.frame),
+      onUpdate: () => {
+        render(playhead.current.frame);
+      },
     });
   }, []);
 
