@@ -116,15 +116,16 @@ export function Services({ location }: ServicesProps) {
   return (
     <div className="relative " id="services">
       <AnimationCanvas
-        path="/videos/services-image-seq-90"
+        path="/videos/out"
         pads={4}
         frames={90}
         start="-60% 20%"
         end="bottom top"
         scrub={true}
         markers={false}
-        rotated={false}
-        className="absolute inset-0 w-full h-full"
+        rotateFlag={true}
+        className="absolute inset-0 z-0 w-full h-full"
+        format="webp"
       />
       <Section className="bg-black text-white">
         <ServicesAnimations />

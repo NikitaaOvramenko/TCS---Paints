@@ -20,7 +20,7 @@ export function Hero({ location }: HeroProps) {
       <div className="heroBg absolute inset-0 overflow-hidden"></div>
 
       <AnimationCanvas
-        path="/videos/video_frames_one"
+        path="/videos/hero-frames-webp"
         pads={2}
         frames={60}
         start="top 20%"
@@ -28,6 +28,7 @@ export function Hero({ location }: HeroProps) {
         scrub={true}
         markers={false}
         rotated={false}
+        format="webp"
         className="absolute mt-30 inset-0 w-full h-full"
       />
 

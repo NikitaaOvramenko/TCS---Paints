@@ -16,7 +16,9 @@ interface Props {
   end: string;
   scrub: number | boolean;
   markers: boolean;
-  rotated: boolean;
+  rotated?: boolean;
+  rotateFlag?: boolean;
+  format: string;
 }
 
 export default function HeroCanvas({
@@ -29,13 +31,15 @@ export default function HeroCanvas({
   scrub,
   markers,
   rotated,
+  rotateFlag,
+  format,
 }: Props) {
   const images = useRef<HTMLImageElement[]>([]);
   const playhead = useRef({ frame: 1 });
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const currentFrame = (index: number) =>
-    `${path}/${index.toString().padStart(pads, "0")}.png`;
+    `${path}/${index.toString().padStart(pads, "0")}.${format}`;
 
   const render = (frame: number) => {
     const canvas = canvasRef.current;
@@ -47,9 +51,14 @@ export default function HeroCanvas({
     const img = images.current[frame - 1];
     if (!img || !img.complete) return;
 
-    // Swap dimensions: rotated 90° means width↔height
+    const nonRotate = () => {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
 
-    if (rotated) {
+      ctx.drawImage(img, 0, 0);
+    };
+
+    const rotate = () => {
       canvas.width = img.naturalHeight;
       canvas.height = img.naturalWidth;
 
@@ -59,11 +68,24 @@ export default function HeroCanvas({
       ctx.rotate(Math.PI / 2);
       // Draw at (0,0) in the rotated coordinate space
       ctx.drawImage(img, 0, 0);
-    } else {
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+    };
 
-      ctx.drawImage(img, 0, 0);
+    // Swap dimensions: rotated 90° means width↔height
+
+    if (rotateFlag) {
+      if (window.innerWidth < 1024) {
+        rotate();
+      } else {
+        nonRotate();
+      }
+
+      return;
+    }
+
+    if (rotated) {
+      rotate();
+    } else {
+      nonRotate();
     }
   };
 
