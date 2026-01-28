@@ -121,7 +121,7 @@ export function Services({ location }: ServicesProps) {
         frames={90}
         start="-60% 20%"
         end="bottom top"
-        scrub={true}
+        scrub={0.7}
         markers={false}
         rotateFlag={true}
         className="absolute inset-0 z-0 w-full h-full"
