@@ -103,6 +103,7 @@ export function WhyUs() {
           <video
             src="/videos/wall-painting.mp4"
             className="w-full h-full object-cover"
+            playsInline
             muted
             autoPlay
             loop
