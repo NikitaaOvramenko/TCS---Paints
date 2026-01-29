@@ -5,6 +5,7 @@ import { siteConfig } from "@/data/site";
 import type { Location } from "@/data/locations";
 import HeroAnimations from "./HeroAnimations";
 import AnimationCanvas from "./AnimationCanvas";
+import Image from "next/image";
 
 interface HeroProps {
   location?: Location;
@@ -17,11 +18,18 @@ export function Hero({ location }: HeroProps) {
     <section className="hero relative min-h-screen overflow-hidden bg-gradient-to-br bg-black text-white">
       <HeroAnimations />
 
-      <div className="heroBg absolute inset-0 overflow-hidden"></div>
+      <Image
+        src="/herobg2.jpg"
+        alt=""
+        fill
+        priority
+        className="object-cover "
+      />
 
+      <div className="filter h-full w-full backdrop-blur-sm  absolute inset-0"></div>
       <AnimationCanvas
-        path="/videos/hero-frames-webp"
-        pads={2}
+        path="/videos/roller-paint"
+        pads={4}
         frames={60}
         start="top 20%"
         end="bottom top"
@@ -29,7 +37,7 @@ export function Hero({ location }: HeroProps) {
         markers={false}
         rotated={false}
         format="webp"
-        className="absolute mt-30 inset-0 w-full h-full"
+        className="absolute  inset-0 w-full h-full mt-18"
       />
 
       <Container className="relative z-10 flex min-h-screen items-center justify-center">

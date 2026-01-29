@@ -52,6 +52,9 @@ export default function HeroCanvas({
     if (!img || !img.complete) return;
 
     const nonRotate = () => {
+      const xScale = img.width / canvas.width;
+      const yScale = img.height / canvas.height;
+
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
 
@@ -63,14 +66,10 @@ export default function HeroCanvas({
       canvas.height = img.naturalWidth;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // Move origin to top-right corner, then rotate 90° clockwise
       ctx.translate(canvas.width, 0);
       ctx.rotate(Math.PI / 2);
-      // Draw at (0,0) in the rotated coordinate space
       ctx.drawImage(img, 0, 0);
     };
-
-    // Swap dimensions: rotated 90° means width↔height
 
     if (rotateFlag) {
       if (window.innerWidth < 1024) {
@@ -89,32 +88,51 @@ export default function HeroCanvas({
     }
   };
 
-  const loadImages = async () => {
-    const srcs = function () {
-      const arr = [];
-
-      for (let i = 1; i <= frames; i++) {
-        arr.push(currentFrame(i));
-      }
-
-      return arr;
-    };
-
-    const loadedImages = await preloadAll(srcs());
-    images.current = loadedImages;
-  };
-
   const preload = (src: string) =>
     new Promise<HTMLImageElement>((resolve, reject) => {
       const img = new Image();
-      img.src = src;
       img.onload = () => resolve(img);
+      img.src = src;
     });
 
   const preloadAll = (srcs: string[]) => Promise.all(srcs.map(preload));
 
+  const loadFirstAndRender = async () => {
+    const src = currentFrame(1);
+
+    const preloaded = await preload(src);
+
+    images.current.push(preloaded);
+
+    render(1);
+  };
+
+  const loadImages = async () => {
+    const arr = [];
+
+    for (let i = 1; i <= frames; i++) {
+      arr.push(currentFrame(i));
+    }
+
+    const batchSize = 30;
+
+    const loadingFrames = [];
+
+    for (let i = 1; i < arr.length; i += batchSize) {
+      console.log(i);
+      const subArr = arr.slice(i, i + batchSize);
+      const subFrames = await preloadAll(subArr);
+      loadingFrames.push(...subFrames);
+    }
+
+    images.current.push(...loadingFrames);
+  };
+
   useEffect(() => {
-    loadImages();
+    (async () => {
+      await loadFirstAndRender();
+      await loadImages();
+    })();
   }, []);
 
   useGSAP(() => {
