@@ -9,7 +9,6 @@ import {
   HomeIcon,
 } from "@/components/ui";
 import { siteConfig } from "@/data/site";
-import { servicesContent, replaceLocationPlaceholders } from "@/data/content";
 import type { Location } from "@/data/locations";
 import ServicesAnimations from "./ServicesAnimations";
 import AnimationCanvas from "./AnimationCanvas";
@@ -21,19 +20,12 @@ interface ServicesProps {
 
 export function Services({ location }: ServicesProps) {
   const title = location
-    ? replaceLocationPlaceholders(servicesContent.titleWithCity, location)
-    : servicesContent.title;
+    ? `Painting Services in ${location.cityName}`
+    : 'Our Services';
 
   return (
     <div className="relative" id="services">
-      <div className="absolute inset-0 w-full h-full">
-        <Image
-          src="/herobg2.jpg"
-          alt="bg"
-          fill
-          className="object-cover"
-        />
-      </div>
+      <div className="absolute inset-0 bg-black w-full h-full"></div>
       <div className="absolute inset-0 backdrop-blur-sm" />
       <div className="service-bg absolute"></div>
       <AnimationCanvas
@@ -42,7 +34,7 @@ export function Services({ location }: ServicesProps) {
         frames={90}
         start="-60% 20%"
         end="bottom top"
-        scrub={0.7}
+        scrub={true}
         markers={false}
         rotateFlag={true}
         className="absolute inset-0 z-0 w-full h-full"
@@ -52,7 +44,7 @@ export function Services({ location }: ServicesProps) {
         <ServicesAnimations />
         <SectionHeader
           title={title}
-          subtitle={servicesContent.subtitle}
+          subtitle="From interior walls to exterior facades, we handle projects of all sizes."
           light
         />
         <div className="relative z-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

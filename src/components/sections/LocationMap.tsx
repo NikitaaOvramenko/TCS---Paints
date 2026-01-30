@@ -1,6 +1,5 @@
 import { Section, SectionHeader, MapPinIcon } from "@/components/ui";
 import { siteConfig } from "@/data/site";
-import { locationMapContent, replaceLocationPlaceholders } from "@/data/content";
 import type { Location } from "@/data/locations";
 
 interface LocationMapProps {
@@ -9,14 +8,14 @@ interface LocationMapProps {
 
 export function LocationMap({ location }: LocationMapProps) {
   const title = location
-    ? replaceLocationPlaceholders(locationMapContent.titleWithCity, location)
-    : locationMapContent.title;
+    ? `Serving ${location.cityName} & Surrounding Areas`
+    : 'Service Area';
 
   const address = siteConfig.address;
 
   return (
     <Section id="location">
-      <SectionHeader title={title} subtitle={locationMapContent.subtitle} />
+      <SectionHeader title={title} subtitle="We proudly serve the greater metropolitan area." />
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Map placeholder */}
         <div className="aspect-[4/3] overflow-hidden rounded-xl bg-neutral-200 lg:aspect-auto lg:h-full">
@@ -33,7 +32,7 @@ export function LocationMap({ location }: LocationMapProps) {
         </div>
 
         {/* Contact info */}
-        <div className="flex flex-col justify-center space-y-6">
+        <div className="flex flex-col justify-center space-y-6 text-center lg:text-left">
           <div>
             <h3 className="text-lg font-semibold text-neutral-900">Address</h3>
             <p className="mt-2 text-neutral-600">

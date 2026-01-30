@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/lemonmilk');
 @import 'tailwindcss';
 
 /* ========================================
@@ -41,7 +42,7 @@
 body {
   color: var(--foreground);
   background-color: white;
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: Helvetica, 'Helvetica Neue', Arial, system-ui, sans-serif;
 }
 
 html, body {
@@ -80,8 +81,34 @@ html {
   background: var(--color-primary);
 }
 
+/* Hero heading font */
+.hero-heading {
+  font-family: 'Lemon/Milk', sans-serif;
+  background: linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 70%, #FACC15 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Section heading font */
+.section-heading {
+  font-family: 'Lemon/Milk', sans-serif;
+  background: linear-gradient(90deg, #7C3AED 0%, #7C3AED 70%, #C084FC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Tailwind v4 theme extensions */
 @theme {
+  --font-LemonMilk: 'Lemon/Milk', sans-serif;
+
   /* Purple scale (Primary) */
   --color-purple-50: #FAF5FF;
   --color-purple-100: #F3E8FF;

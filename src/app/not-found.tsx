@@ -1,8 +1,9 @@
-import Link from 'next/link'
 import { Section, Button } from '@/components/ui'
+import { Footer } from '@/components/ui/Footer'
 
 export default function NotFound() {
   return (
+    <>
     <Section>
       <div className="mx-auto max-w-xl text-center">
         <h1 className="text-6xl font-bold text-gray-900">404</h1>
@@ -20,5 +21,7 @@ export default function NotFound() {
         </div>
       </div>
     </Section>
+    <Footer />
+    </>
   )
 }

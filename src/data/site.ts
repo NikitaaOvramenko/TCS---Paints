@@ -5,8 +5,8 @@ export const siteConfig = {
   url: 'https://yourlocalpaints.com',
 
   // Business contact
-  phone: '(555) 123-4567',
-  email: 'info@yourlocalpaints.com',
+  phone: '(424) 346-4307',
+  email: 'info@yourlocalservice.co',
 
   // Business address (primary location)
   address: {
@@ -26,10 +26,10 @@ export const siteConfig = {
 
   // Social media
   socials: {
-    facebook: 'https://facebook.com/yourlocalpaints',
-    instagram: 'https://instagram.com/yourlocalpaints',
-    twitter: 'https://twitter.com/yourlocalpaints',
-    linkedin: 'https://linkedin.com/company/yourlocalpaints',
+    // facebook: 'https://facebook.com/yourlocalpaints',
+    instagram: 'https://www.instagram.com/your_local.painter.and.co/',
+    // twitter: 'https://twitter.com/yourlocalpaints',
+    // linkedin: 'https://linkedin.com/company/yourlocalpaints',
   },
 
   // Services offered

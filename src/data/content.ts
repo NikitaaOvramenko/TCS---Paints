@@ -7,7 +7,7 @@ import type { Location } from './locations'
 
 export const heroContent = {
   headline: 'Professional Painting Services',
-  headlineWithCity: 'Professional Painting Services in {city}',
+  headlineWithCity: 'Painting Services in {city}',
   subheadline: 'Transform your space with expert painters who deliver stunning results, on time and on budget.',
   subheadlineWithCity: 'Transform your {city} home or business with expert painters who deliver stunning results.',
   cta: 'Get a Free Quote',

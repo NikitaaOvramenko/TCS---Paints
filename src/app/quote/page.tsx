@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Section, SectionHeader } from '@/components/ui'
+import { Section } from '@/components/ui'
+import { Footer } from '@/components/ui/Footer'
 import { QuoteForm } from '@/features/quote'
 import { getQuoteMetadata } from '@/lib/seo/metadata'
 import { siteConfig } from '@/data/site'
@@ -80,6 +81,7 @@ export default function QuotePage() {
           </a>
         </div>
       </section>
+      <Footer />
     </>
   )
 }

@@ -10,6 +10,7 @@ import {
   LocationMap,
   FooterCTA,
 } from "@/components/sections";
+import { Footer } from "@/components/ui/Footer";
 import { findLocation, locations, getLocationPath } from "@/data/locations";
 import { getLocationMetadata } from "@/lib/seo/metadata";
 import {
@@ -19,7 +20,6 @@ import {
   getFaqSchema,
   getBreadcrumbSchema,
 } from "@/lib/seo/jsonld";
-import { getFaqContent } from "@/data/content";
 import { siteConfig } from "@/data/site";
 import { getCanonicalUrl } from "@/lib/seo/canonical";
 
@@ -68,7 +68,37 @@ export default async function LocationPage({ params }: LocationPageProps) {
     notFound();
   }
 
-  const faqContent = getFaqContent(location);
+  const faqsForSchema = [
+    {
+      question: "How long does a typical painting project take?",
+      answer:
+        "Project timelines vary based on scope. A single room typically takes 1-2 days, while a full interior can take 3-5 days. Exterior projects usually take 3-7 days depending on the size of the home.",
+    },
+    {
+      question: "Do you provide free estimates?",
+      answer:
+        "Yes! We provide detailed, no-obligation estimates for all projects. We'll assess your space, discuss your vision, and provide transparent pricing.",
+    },
+    {
+      question: "What type of paint do you use?",
+      answer:
+        "We use premium quality paints from trusted brands like Benjamin Moore and Sherwin-Williams. We can also accommodate special requests for eco-friendly or low-VOC options.",
+    },
+    {
+      question: "Are you licensed and insured?",
+      answer:
+        "Absolutely. We are fully licensed and carry comprehensive liability insurance to protect both our team and your property.",
+    },
+    {
+      question: "Do I need to move my furniture?",
+      answer:
+        "No, our team handles all furniture moving and protection. We carefully cover and move items as needed and return everything to its place when complete.",
+    },
+    {
+      question: "What areas do you serve?",
+      answer: `We proudly serve ${location.cityName} and the surrounding ${location.regionName} communities. Contact us to confirm coverage for your specific location.`,
+    },
+  ];
 
   const breadcrumbs = [
     { name: "Home", url: getCanonicalUrl("/") },
@@ -91,17 +121,18 @@ export default async function LocationPage({ params }: LocationPageProps) {
       {/* Structured Data */}
       <JsonLd data={getLocalBusinessSchema(location)} />
       <JsonLd data={getServiceSchema(location)} />
-      <JsonLd data={getFaqSchema(faqContent.faqs)} />
+      <JsonLd data={getFaqSchema(faqsForSchema)} />
       <JsonLd data={getBreadcrumbSchema(breadcrumbs)} />
 
       <Hero location={location} />
       <WhyUs />
       <Services location={location} />
-      <Reviews location={location} />
+      {/* <Reviews location={location} /> */}
       <FAQ location={location} />
       <Gallery location={location} />
       <LocationMap location={location} />
       <FooterCTA location={location} />
+      <Footer location={location} />
     </>
   );
 }

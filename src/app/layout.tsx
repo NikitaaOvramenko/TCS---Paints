@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { siteConfig } from "@/data/site";
-import { Footer } from "@/components/ui/Footer";
+
 import { JsonLd, getLocalBusinessSchema } from "@/lib/seo/jsonld";
 import Navbar from "@/components/ui/Navbar";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -50,14 +44,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
+    <html lang="en" className="h-full">
       <head>
         <JsonLd data={getLocalBusinessSchema()} />
       </head>
       <body className="font-sans antialiased text-espresso-700">
         <Navbar />
         {children}
-        <Footer />
       </body>
     </html>
   );

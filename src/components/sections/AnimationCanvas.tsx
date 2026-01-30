@@ -136,21 +136,19 @@ export default function HeroCanvas({
   }, []);
 
   useGSAP(() => {
-    gsap.to(playhead.current, {
-      frame: frames,
-      ease: "none",
-      snap: "frame",
-      scrollTrigger: {
-        trigger: canvasRef.current,
-        start: start,
-        end: end,
-        scrub: scrub,
-        markers: markers,
-      },
-      onUpdate: () => {
-        render(playhead.current.frame);
+    const sT = ScrollTrigger.create({
+      trigger: canvasRef.current,
+      start: start,
+      end: end,
+      scrub: scrub,
+      markers: markers,
+      onUpdate: (self) => {
+        console.log(self.progress);
+        render(1 + Math.floor((frames - 1) * self.progress));
       },
     });
+
+    return () => sT.kill();
   }, []);
 
   return (

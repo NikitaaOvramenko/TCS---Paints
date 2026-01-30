@@ -39,7 +39,7 @@ export default function Navbar() {
           <div className="left flex gap-2">
             <Logo className="logo h-10 w-10"></Logo>
             <Link href={homeHref} className="flex items-center gap-2">
-              <span className="text-xl font-bold text-neutral-900">
+              <span className="text-xl tracking-[9%] leading-none ">
                 {siteConfig.name}
               </span>
             </Link>

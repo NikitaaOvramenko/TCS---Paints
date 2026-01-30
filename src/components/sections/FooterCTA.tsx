@@ -1,6 +1,5 @@
 import { Section, Button, PhoneIcon } from "@/components/ui";
 import { siteConfig } from "@/data/site";
-import { ctaContent, replaceLocationPlaceholders } from "@/data/content";
 import type { Location } from "@/data/locations";
 
 interface FooterCTAProps {
@@ -9,19 +8,19 @@ interface FooterCTAProps {
 
 export function FooterCTA({ location }: FooterCTAProps) {
   const title = location
-    ? replaceLocationPlaceholders(ctaContent.titleWithCity, location)
-    : ctaContent.title;
+    ? `Ready to Transform Your ${location.cityName} Home?`
+    : 'Ready to Transform Your Space?';
 
   return (
     <Section background="gradient">
       <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mx-auto" style={{ fontFamily: "'Lemon/Milk', sans-serif" }}>
           {title}
         </h2>
-        <p className="mt-4 text-lg text-white/80">{ctaContent.subtitle}</p>
+        <p className="mt-4 text-lg text-white/80">Get a free, no-obligation quote today.</p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button href="/quote" size="lg" variant="secondary">
-            {ctaContent.buttonText}
+            Get Your Free Quote
           </Button>
           <span className="text-white/60">or</span>
           <a

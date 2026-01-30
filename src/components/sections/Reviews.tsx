@@ -1,11 +1,41 @@
 import { Section, SectionHeader, Card, StarIcon } from "@/components/ui";
-import { reviewsContent, replaceLocationPlaceholders } from "@/data/content";
 import type { Location } from "@/data/locations";
 import { getInitials } from "@/lib/utils/format";
 
 interface ReviewsProps {
   location?: Location;
 }
+
+const reviews = [
+  {
+    name: 'Sarah M.',
+    location: 'Miami, FL',
+    rating: 5,
+    text: 'Absolutely fantastic work! They transformed our living room and kitchen. Professional, clean, and the results exceeded our expectations.',
+    date: '2024-01-15',
+  },
+  {
+    name: 'Michael R.',
+    location: 'Orlando, FL',
+    rating: 5,
+    text: 'Best painting company I\'ve ever worked with. On time, on budget, and the attention to detail was impressive.',
+    date: '2024-02-20',
+  },
+  {
+    name: 'Jennifer L.',
+    location: 'Tampa, FL',
+    rating: 5,
+    text: 'They painted the entire exterior of our home and it looks brand new. Highly recommend!',
+    date: '2024-03-10',
+  },
+  {
+    name: 'David K.',
+    location: 'Houston, TX',
+    rating: 5,
+    text: 'Professional from start to finish. Great communication and amazing results.',
+    date: '2024-04-05',
+  },
+];
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -22,14 +52,14 @@ function StarRating({ rating }: { rating: number }) {
 
 export function Reviews({ location }: ReviewsProps) {
   const title = location
-    ? replaceLocationPlaceholders(reviewsContent.titleWithCity, location)
-    : reviewsContent.title;
+    ? `What ${location.cityName} Customers Say`
+    : 'What Our Customers Say';
 
   return (
     <Section background="gray" id="reviews">
-      <SectionHeader title={title} subtitle={reviewsContent.subtitle} />
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {reviewsContent.reviews.map((review, index) => (
+      <SectionHeader title={title} subtitle="Real reviews from satisfied homeowners and businesses." />
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        {reviews.map((review, index) => (
           <Card key={index} variant="glass" className="flex flex-col">
             <StarRating rating={review.rating} />
             <p className="mt-4 flex-1 text-neutral-600 italic">
