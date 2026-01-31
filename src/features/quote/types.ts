@@ -8,7 +8,7 @@ export interface QuoteFormData {
   email: string
   phone: string
   workType: string
-  service: string
+  service: string[]
   country: string
   town: string
   street: string
@@ -29,6 +29,11 @@ export interface FormErrors {
  */
 export type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
+export type Service = {
+  name:string;
+  isSelected:boolean;
+}
+
 /**
  * Available work types
  */
@@ -41,12 +46,9 @@ export const workTypes = [
 /**
  * Available services
  */
-export const services = [
-  'Interior Painting',
-  'Exterior Painting',
-  'Cabinet Refinishing',
-  'Deck & Fence Staining',
-  'Drywall Repair',
-  'Color Consultation',
-  'Other',
-] as const
+export const servicesInitial: Service[] = [
+  {name:'Interior Painting',isSelected:false},
+  {name:'Exterior Painting',isSelected:false},
+  {name:'Deck & fence staining/painting',isSelected:false},
+   {name:'Cabinet painting / refinishing',isSelected:false}
+]  

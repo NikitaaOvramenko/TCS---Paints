@@ -44,7 +44,7 @@ export function validateQuoteForm(data: Partial<QuoteFormData>): FormErrors {
     errors.phone = 'Please enter a valid phone number'
   }
 
-  if (!data.service?.trim()) {
+  if (!data.service || data.service.length === 0) {
     errors.service = 'Please select a service type'
   }
 
@@ -81,8 +81,8 @@ export function getInitialFormData(): QuoteFormData {
     lastname: '',
     email: '',
     phone: '',
-    workType: '',
-    service: '',
+    workType: 'Paint Service',
+    service: [],
     country: 'USA',
     town: '',
     street: '',
