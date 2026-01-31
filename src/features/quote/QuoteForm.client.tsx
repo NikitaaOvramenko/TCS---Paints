@@ -201,7 +201,7 @@ export function QuoteForm() {
         </div>
       </div>
 
-      {/* City & Postal Code */}
+      {/* City & Postal Code
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label
@@ -243,7 +243,7 @@ export function QuoteForm() {
             placeholder="123 Main St"
           />
         </div>
-      </div>
+      </div> */}
 
       <div>
         <label
