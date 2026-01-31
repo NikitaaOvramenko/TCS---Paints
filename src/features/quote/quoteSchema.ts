@@ -48,11 +48,8 @@ export function validateQuoteForm(data: Partial<QuoteFormData>): FormErrors {
     errors.service = 'Please select a service type'
   }
 
-  if (!data.town?.trim()) {
-    errors.town = 'City/Town is required'
-  }
-
   // Optional fields - no validation needed for:
+  // - town
   // - description
   // - street
   // - postal_code
