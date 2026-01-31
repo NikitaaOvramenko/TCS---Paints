@@ -128,9 +128,10 @@ export default async function LocationPage({ params }: LocationPageProps) {
       <WhyUs />
       <Services location={location} />
       {/* <Reviews location={location} /> */}
-      <FAQ location={location} />
+
       <Gallery location={location} />
       <LocationMap location={location} />
+      <FAQ location={location} />
       <FooterCTA location={location} />
       <Footer location={location} />
     </>

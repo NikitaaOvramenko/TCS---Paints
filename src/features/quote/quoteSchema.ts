@@ -44,16 +44,8 @@ export function validateQuoteForm(data: Partial<QuoteFormData>): FormErrors {
     errors.phone = 'Please enter a valid phone number'
   }
 
-  if (!data.workType?.trim()) {
-    errors.workType = 'Please select a work type'
-  }
-
   if (!data.service?.trim()) {
-    errors.service = 'Please select a service'
-  }
-
-  if (!data.country?.trim()) {
-    errors.country = 'Country is required'
+    errors.service = 'Please select a service type'
   }
 
   if (!data.town?.trim()) {

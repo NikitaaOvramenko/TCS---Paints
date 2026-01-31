@@ -19,9 +19,7 @@ interface ServicesProps {
 }
 
 export function Services({ location }: ServicesProps) {
-  const title = location
-    ? `Painting Services in ${location.cityName}`
-    : 'Our Services';
+  const title = location ? `Our Services` : "Our Services";
 
   return (
     <div className="relative" id="services">

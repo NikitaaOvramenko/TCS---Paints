@@ -20,9 +20,9 @@ export function Hero({ location }: HeroProps) {
   return (
     <div className="hero relative bg-black min-h-screen overflow-hidden">
       <AnimationCanvas
-        path="/videos/roller-paint"
+        path="/videos/roller-paint-120"
         pads={4}
-        frames={60}
+        frames={120}
         start="top 20%"
         end="bottom top"
         scrub={true}
