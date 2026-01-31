@@ -52,13 +52,8 @@ export function validateQuoteForm(data: Partial<QuoteFormData>): FormErrors {
     errors.town = 'City/Town is required'
   }
 
-  if (!data.description?.trim()) {
-    errors.description = 'Please describe your project'
-  } else if (data.description.length < 10) {
-    errors.description = 'Description must be at least 10 characters'
-  }
-
   // Optional fields - no validation needed for:
+  // - description
   // - street
   // - postal_code
 

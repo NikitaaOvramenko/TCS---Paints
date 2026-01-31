@@ -3,25 +3,28 @@
 import { useState } from 'react'
 import { uploadToS3 } from './uploadToS3'
 
+interface UploadedImage {
+  name: string
+  previewUrl: string
+}
+
 interface ImageUploadProps {
   onImagesChange: (images: string[]) => void
   initialImages?: string[]
 }
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic']
-const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 
 export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadProps) {
-  const [images, setImages] = useState<string[]>(initialImages)
+  const [images, setImages] = useState<UploadedImage[]>(
+    initialImages.map((name) => ({ name, previewUrl: '' }))
+  )
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const validateFile = (file: File): string | null => {
     if (!ALLOWED_TYPES.includes(file.type)) {
       return `${file.name}: Invalid file type. Allowed: JPG, PNG, WebP, HEIC`
-    }
-    if (file.size > MAX_FILE_SIZE) {
-      return `${file.name}: File too large. Maximum size is 10MB`
     }
     return null
   }
@@ -34,7 +37,7 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
     setError(null)
 
     try {
-      const uploadedNames: string[] = []
+      const newImages: UploadedImage[] = []
 
       for (const file of Array.from(files)) {
         const validationError = validateFile(file)
@@ -43,18 +46,21 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
           continue
         }
 
+        const previewUrl = URL.createObjectURL(file)
+
         try {
           const fileName = await uploadToS3(file)
-          uploadedNames.push(fileName)
+          newImages.push({ name: fileName, previewUrl })
         } catch (err) {
           console.error('Upload failed for', file.name, err)
+          URL.revokeObjectURL(previewUrl)
         }
       }
 
-      if (uploadedNames.length > 0) {
-        const updatedImages = [...images, ...uploadedNames]
-        setImages(updatedImages)
-        onImagesChange(updatedImages)
+      if (newImages.length > 0) {
+        const updated = [...images, ...newImages]
+        setImages(updated)
+        onImagesChange(updated.map((img) => img.name))
       }
     } catch (err) {
       console.error('Upload failed', err)
@@ -66,9 +72,13 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
   }
 
   const removeImage = (indexToRemove: number) => {
-    const updatedImages = images.filter((_, index) => index !== indexToRemove)
-    setImages(updatedImages)
-    onImagesChange(updatedImages)
+    const removed = images[indexToRemove]
+    if (removed?.previewUrl) {
+      URL.revokeObjectURL(removed.previewUrl)
+    }
+    const updated = images.filter((_, index) => index !== indexToRemove)
+    setImages(updated)
+    onImagesChange(updated.map((img) => img.name))
   }
 
   return (
@@ -89,14 +99,14 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
             <p className="mb-2 text-sm text-neutral-400">
               <span className="font-semibold text-neutral-300">Click to upload</span> or drag and drop
             </p>
-            <p className="text-xs text-neutral-500">PNG, JPG, WebP, HEIC (MAX. 10MB)</p>
+            <p className="text-xs text-neutral-500">PNG, JPG, WebP, HEIC</p>
           </div>
           <input
             id="image-upload"
             type="file"
             className="hidden"
             multiple
-            accept="image/*"
+            accept="image/png,image/jpeg,image/jpg,image/webp,image/heic"
             onChange={handleFileChange}
             disabled={uploading}
           />
@@ -118,13 +128,23 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
       )}
 
       {images.length > 0 && (
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {images.map((imgName, index) => (
-            <li
-              key={`${imgName}-${index}`}
-              className="relative group rounded-lg border border-neutral-700 bg-neutral-900 p-3 text-xs text-neutral-400"
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+          {images.map((img, index) => (
+            <div
+              key={`${img.name}-${index}`}
+              className="relative group aspect-square rounded-lg border border-neutral-700 bg-neutral-900 overflow-hidden"
             >
-              <span className="block truncate" title={imgName}>{imgName}</span>
+              {img.previewUrl ? (
+                <img
+                  src={img.previewUrl}
+                  alt={img.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="flex items-center justify-center w-full h-full text-xs text-neutral-500 p-2 text-center">
+                  {img.name}
+                </div>
+              )}
               <button
                 type="button"
                 onClick={() => removeImage(index)}
@@ -135,9 +155,9 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   )

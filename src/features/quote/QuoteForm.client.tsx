@@ -304,7 +304,7 @@ export function QuoteForm() {
           htmlFor="description"
           className="block text-sm font-medium text-neutral-300 mb-1.5"
         >
-          What do you need painted? *
+          What do you need painted?
         </label>
         <textarea
           id="description"
