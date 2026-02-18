@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'YourLocalPaints',
   tagline: 'Professional Painting Services',
   description: 'Transform your space with our expert painting services. Professional, reliable, and delivering stunning results for residential and commercial properties.',
-  url: 'https://yourlocalpaints.com',
+  url: 'https://paints.yourlocalservice.co',
 
   // Business contact
   phone: '(424) 346-4307',
