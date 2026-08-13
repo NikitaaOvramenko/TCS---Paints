@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "@/styles/globals.css";
 import { siteConfig } from "@/data/site";
 
 import { JsonLd, getLocalBusinessSchema } from "@/lib/seo/jsonld";
