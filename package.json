@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/NikitaaOvramenko/TCS---Paints#readme",
   "dependencies": {
+    "@builder.io/sdk-react-nextjs": "^0.25.9",
     "@gsap/react": "^2.1.2",
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",
