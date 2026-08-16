@@ -4,6 +4,7 @@ import {
   isPreviewing,
 } from "@builder.io/sdk-react-nextjs";
 import { notFound, redirect } from "next/navigation";
+import { builderCustomComponents } from "@/builder-registry";
 
 const BUILDER_API_KEY = process.env.NEXT_PUBLIC_BUILDER_API_KEY!;
 
@@ -48,6 +49,11 @@ export default async function Page({ params, searchParams }: PageProps) {
   }
 
   return (
-    <Content content={content} apiKey={BUILDER_API_KEY} model="page" />
+    <Content
+      content={content}
+      apiKey={BUILDER_API_KEY}
+      model="page"
+      customComponents={builderCustomComponents}
+    />
   );
 }
