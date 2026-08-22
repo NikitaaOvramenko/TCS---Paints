@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
+  Content,
+  fetchOneEntry,
+  getBuilderSearchParams,
+  isPreviewing,
+} from "@builder.io/sdk-react-nextjs";
+import { builderCustomComponents } from "@/builder-registry";
+import {
+  createBuilderPreviewContent,
+  toUrlSearchParams,
+} from "@/lib/builder/preview";
+import {
   Hero,
   WhyUs,
   Services,
@@ -29,7 +40,12 @@ interface LocationPageProps {
     region: string;
     city: string;
   }>;
+  searchParams: Promise<
+    Record<string, string | string[] | undefined>
+  >;
 }
+
+const BUILDER_API_KEY = process.env.NEXT_PUBLIC_BUILDER_API_KEY!;
 
 /**
  * Generate static params for all known locations
@@ -60,13 +76,30 @@ export async function generateMetadata({
   return getLocationMetadata(location);
 }
 
-export default async function LocationPage({ params }: LocationPageProps) {
+export default async function LocationPage({
+  params,
+  searchParams,
+}: LocationPageProps) {
   const { country, region, city } = await params;
+  const search = await searchParams;
+  const builderSearch = toUrlSearchParams(search);
   const location = findLocation(country, region, city);
 
   if (!location) {
     notFound();
   }
+
+  const urlPath = getLocationPath(location);
+  const builderContent = await fetchOneEntry({
+    model: "page",
+    apiKey: BUILDER_API_KEY,
+    options: getBuilderSearchParams(builderSearch),
+    userAttributes: { urlPath },
+  });
+  const isPreview = isPreviewing(builderSearch);
+  const shouldRenderBuilder = Boolean(builderContent) || isPreview;
+  const contentToRender =
+    builderContent ?? (isPreview ? createBuilderPreviewContent(search) : null);
 
   const faqsForSchema = [
     {
@@ -124,16 +157,28 @@ export default async function LocationPage({ params }: LocationPageProps) {
       <JsonLd data={getFaqSchema(faqsForSchema)} />
       <JsonLd data={getBreadcrumbSchema(breadcrumbs)} />
 
-      <Hero location={location} />
-      <WhyUs />
-      <Services location={location} />
-      {/* <Reviews location={location} /> */}
+      {shouldRenderBuilder ? (
+        <Content
+          content={contentToRender}
+          apiKey={BUILDER_API_KEY}
+          model="page"
+          customComponents={builderCustomComponents}
+          data={{ location }}
+        />
+      ) : (
+        <>
+          <Hero location={location} />
+          <WhyUs />
+          <Services location={location} />
+          {/* <Reviews location={location} /> */}
 
-      <Gallery location={location} />
-      <LocationMap location={location} />
-      <FAQ location={location} />
-      <FooterCTA location={location} />
-      <Footer location={location} />
+          <Gallery location={location} />
+          <LocationMap location={location} />
+          <FAQ location={location} />
+          <FooterCTA location={location} />
+          <Footer location={location} />
+        </>
+      )}
     </>
   );
 }

@@ -71,66 +71,75 @@ const locationInput = {
 };
 
 const pageBlock = {
-  isRSC: true,
   models: ["page"],
 };
 
-const locationBlock = {
+const rscPageBlock = {
+  ...pageBlock,
+  isRSC: true,
+};
+
+const rscLocationBlock = {
+  ...rscPageBlock,
+  inputs: [locationInput],
+};
+
+const clientLocationBlock = {
   ...pageBlock,
   inputs: [locationInput],
 };
 
 export const builderCustomComponents = [
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Hero",
     component: Hero,
     description: "Full-screen painting hero with location-aware copy.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Services",
     component: Services,
     description: "Painting services grid and animated background.",
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Why Us",
     component: WhyUs,
     description: "Benefits and trust signals section.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Gallery",
     component: Gallery,
     description: "Before-and-after project gallery.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Reviews",
     component: Reviews,
     description: "Customer reviews grid.",
   },
   {
-    ...locationBlock,
+    ...clientLocationBlock,
     name: "YLP FAQ",
     component: FAQ,
     description: "Interactive location-aware FAQ accordion.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Location Map",
     component: LocationMap,
     description: "Service-area and contact-information section.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Footer CTA",
     component: FooterCTA,
     description: "Location-aware quote call to action.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Footer",
     component: Footer,
     description: "Site footer with services, links, and contact details.",
@@ -166,7 +175,7 @@ export const builderCustomComponents = [
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Section",
     component: Section,
     description: "Responsive section wrapper that accepts child blocks.",
@@ -190,7 +199,7 @@ export const builderCustomComponents = [
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Section Header",
     component: SectionHeader,
     description: "Styled section title and subtitle.",
@@ -203,7 +212,7 @@ export const builderCustomComponents = [
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Container",
     component: Container,
     description: "Responsive content-width wrapper that accepts child blocks.",
@@ -219,7 +228,7 @@ export const builderCustomComponents = [
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Button",
     component: Button,
     description: "Brand-styled link or button that accepts child blocks.",
@@ -243,7 +252,7 @@ export const builderCustomComponents = [
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Card",
     component: Card,
     description: "Brand card container that accepts child blocks.",
@@ -269,7 +278,7 @@ export const builderCustomComponents = [
     ["YLP Card Header", CardHeader],
     ["YLP Card Content", CardContent],
   ] as const).map(([name, component]) => ({
-    ...pageBlock,
+    ...rscPageBlock,
     name,
     component,
     canHaveChildren: true,
@@ -279,7 +288,7 @@ export const builderCustomComponents = [
     ["YLP Card Title", CardTitle],
     ["YLP Card Description", CardDescription],
   ] as const).map(([name, component]) => ({
-    ...pageBlock,
+    ...rscPageBlock,
     name,
     component,
     canHaveChildren: true,
@@ -304,7 +313,7 @@ export const builderCustomComponents = [
     ["YLP Icon - Star", StarIcon],
     ["YLP Icon - Map Pin", MapPinIcon],
   ] as const).map(([name, component]) => ({
-    ...pageBlock,
+    ...rscPageBlock,
     name,
     component,
     inputs: [
