@@ -20,8 +20,14 @@ export function Services({ location }: ServicesProps) {
         path="/videos/brush-90"
         pads={4}
         frames={90}
-        start="-60% 20%"
-        end="bottom top"
+        // Scrub across the section's own traversal: nothing until its top
+        // reaches the top of the viewport (by which point the hero roller has
+        // finished), complete once its bottom reaches the bottom. The old
+        // "-60% 20%" start was 60% of this section's height ABOVE its top,
+        // which on a tall mobile layout began before the page had scrolled at
+        // all — the brush was ~44% painted while the hero was still running.
+        start="top top"
+        end="bottom bottom"
         scrub={true}
         markers={false}
         rotateFlag={true}
