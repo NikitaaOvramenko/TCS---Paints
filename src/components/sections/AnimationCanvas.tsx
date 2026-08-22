@@ -52,6 +52,9 @@ export default function AnimationCanvas({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [ready, setReady] = useState(false);
+  // Frame 1 already contains the brush parked at its start position, so a
+  // canvas whose scrub has not begun would otherwise sit there showing it.
+  const [revealed, setRevealed] = useState(false);
 
   const currentFrame = (index: number) =>
     `${path}/${index.toString().padStart(pads, "0")}.${format}`;
@@ -161,7 +164,16 @@ export default function AnimationCanvas({
       onUpdate: (self) => {
         render(1 + Math.floor((frames - 1) * self.progress));
       },
+      // Visible while the scrub is live, and still visible once it has run
+      // past the end. Only being inactive *at progress 0* — i.e. above the
+      // start — keeps it hidden.
+      onToggle: (self) => setRevealed(self.isActive || self.progress > 0),
     });
+
+    // onToggle only fires on a change, so settle the initial state for a
+    // canvas that already starts active — the hero at load, or a deep link
+    // that lands below a sequence.
+    setRevealed(sT.isActive || sT.progress > 0);
 
     return () => sT.kill();
   }, []);
@@ -171,7 +183,7 @@ export default function AnimationCanvas({
       <canvas
         ref={canvasRef}
         className={`h-full w-full object-cover transition-opacity duration-700 ${
-          ready ? "opacity-100" : "opacity-0"
+          ready && revealed ? "opacity-100" : "opacity-0"
         }`}
       />
     </div>

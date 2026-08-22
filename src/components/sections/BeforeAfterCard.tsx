@@ -79,18 +79,19 @@ export default function BeforeAfterCard({ title, category, beforeImage, afterIma
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Before image (full background) */}
+        {/* After sits underneath and is what the right of the handle shows. */}
         <img
-          src={beforeImage}
-          alt="Before"
+          src={afterImage}
+          alt="After"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           draggable={false}
         />
 
-        {/* After image (clipped) */}
+        {/* Before is clipped from the left edge, so dragging right wipes the
+            old surface away to reveal the finished one. */}
         <img
-          src={afterImage}
-          alt="After"
+          src={beforeImage}
+          alt="Before"
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{ clipPath: `inset(0 ${100 - percentage}% 0 0)` }}
           draggable={false}
@@ -124,9 +125,6 @@ export default function BeforeAfterCard({ title, category, beforeImage, afterIma
           onTouchStart={handleTouchStart}
         />
 
-        {/* Labels */}
-        <span className="eyebrow absolute bottom-0 left-0 z-10 bg-neutral-950/70 px-3 py-2 text-white">Before</span>
-        <span className="eyebrow absolute right-0 bottom-0 z-10 bg-neutral-950/70 px-3 py-2 text-white">After</span>
       </div>
 
       <div className="border-t border-neutral-900/10 px-5 py-5">

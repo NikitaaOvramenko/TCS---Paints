@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { siteConfig } from "@/data/site";
-import { locations, getLocationPath } from "@/data/locations";
+import {
+  locations,
+  getCitiesByCountry,
+  getLocationPath,
+} from "@/data/locations";
 import type { Location } from "@/data/locations";
 
 interface Props {
@@ -8,6 +12,9 @@ interface Props {
 }
 
 export function Footer({ location }: Props) {
+  // Same country-scoping as the service-area index.
+  const cities = location ? getCitiesByCountry(location.country) : locations;
+
   return (
     <footer className="bg-neutral-950 text-white">
       <div className="mx-auto w-full max-w-[1600px] px-5 py-20 sm:px-8 lg:px-12">
@@ -39,7 +46,7 @@ export function Footer({ location }: Props) {
           <div>
             <p className="eyebrow mb-5 opacity-45">Service Area</p>
             <ul className="space-y-2.5">
-              {locations.slice(0, 5).map((loc) => (
+              {cities.slice(0, 5).map((loc) => (
                 <li key={getLocationPath(loc)}>
                   <Link
                     href={getLocationPath(loc)}

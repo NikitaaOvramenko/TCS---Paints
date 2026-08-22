@@ -2,7 +2,11 @@ import Link from "next/link";
 import { Section, SectionHeader } from "@/components/ui";
 import { siteConfig } from "@/data/site";
 import { locationMapContent, replaceLocationPlaceholders } from "@/data/content";
-import { locations, getLocationPath } from "@/data/locations";
+import {
+  locations,
+  getCitiesByCountry,
+  getLocationPath,
+} from "@/data/locations";
 import type { Location } from "@/data/locations";
 
 interface LocationMapProps {
@@ -13,6 +17,10 @@ export function LocationMap({ location }: LocationMapProps) {
   const title = location
     ? replaceLocationPlaceholders(locationMapContent.titleWithCity, location)
     : locationMapContent.title;
+
+  // Only offer cities in the country being viewed — a visitor on /us has no
+  // use for Toronto. Without a location (Builder preview) show everything.
+  const cities = location ? getCitiesByCountry(location.country) : locations;
 
   return (
     <Section id="location" background="lightAlt">
@@ -25,7 +33,7 @@ export function LocationMap({ location }: LocationMapProps) {
       <div className="grid gap-16 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:gap-24">
         {/* City index — doubles as internal linking for the location pages. */}
         <div className="grid grid-cols-2 gap-x-8 sm:grid-cols-3">
-          {locations.map((loc) => {
+          {cities.map((loc) => {
             const isCurrent = loc.city === location?.city;
             return (
               <Link
