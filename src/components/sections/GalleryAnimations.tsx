@@ -8,23 +8,21 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function GalleryAnimations() {
   useGSAP(() => {
-    // Set initial state
-    gsap.set(".gallery-item", {
-      scale: 0.9,
-      opacity: 0,
-    })
-
-    // Animate to visible on scroll
-    gsap.to(".gallery-item", {
+    // `from` + immediateRender:false leaves the rows visible until the trigger
+    // actually fires. The navbar anchors jump straight to a section, which can
+    // land past the start point — with a `set`-then-`to` pair that would strand
+    // the rows at opacity 0.
+    gsap.from(".gallery-item", {
       scrollTrigger: {
         trigger: "#gallery",
-        start: "top 85%",
+        start: "top 75%",
       },
-      scale: 1,
-      opacity: 1,
-      duration: 0.6,
+      immediateRender: false,
+      y: 50,
+      opacity: 0,
+      duration: 0.9,
       stagger: 0.1,
-      ease: "power2.out",
+      ease: "power3.out",
     })
   }, [])
 

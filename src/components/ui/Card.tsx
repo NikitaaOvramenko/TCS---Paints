@@ -3,20 +3,21 @@ interface CardProps {
   className?: string;
   hover?: boolean;
   padding?: "none" | "sm" | "md" | "lg";
-  variant?: "dark" | "light" | "glass";
+  /** Flat editorial surfaces — hairline rules instead of shadows. */
+  variant?: "outline" | "light" | "ink";
 }
 
 const paddingStyles = {
   none: "",
-  sm: "p-4",
-  md: "p-6",
-  lg: "p-8",
+  sm: "p-5",
+  md: "p-7",
+  lg: "p-9",
 };
 
 const variantStyles = {
-  dark: "bg-black/55 backdrop-blur-sm",
-  light: "bg-white",
-  glass: "bg-white/55 backdrop-blur-sm",
+  outline: "border border-current/15 bg-transparent",
+  light: "border border-neutral-900/10 bg-neutral-50",
+  ink: "border border-white/10 bg-neutral-900",
 };
 
 export function Card({
@@ -24,14 +25,14 @@ export function Card({
   className = "",
   hover = false,
   padding = "md",
-  variant = "dark",
+  variant = "outline",
 }: CardProps) {
   return (
     <div
       className={`
-        ${variantStyles[variant]} rounded-xl shadow-sm
+        ${variantStyles[variant]} rounded-none
         ${paddingStyles[padding]}
-        ${hover ? "transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 hover:-translate-y-1" : ""}
+        ${hover ? "transition-colors duration-300 hover:bg-current/[0.04]" : ""}
         ${className}
       `}
     >
@@ -52,18 +53,11 @@ export function CardHeader({ children, className = "" }: CardHeaderProps) {
 interface CardTitleProps {
   children: React.ReactNode;
   className?: string;
-  light?: boolean;
 }
 
-export function CardTitle({
-  children,
-  className = "",
-  light = true,
-}: CardTitleProps) {
+export function CardTitle({ children, className = "" }: CardTitleProps) {
   return (
-    <h3
-      className={`text-xl font-semibold ${light ? "text-white" : "text-neutral-900"} ${className}`}
-    >
+    <h3 className={`text-xl font-normal tracking-[-0.01em] ${className}`}>
       {children}
     </h3>
   );
@@ -72,21 +66,13 @@ export function CardTitle({
 interface CardDescriptionProps {
   children: React.ReactNode;
   className?: string;
-  light?: boolean;
 }
 
 export function CardDescription({
   children,
   className = "",
-  light = true,
 }: CardDescriptionProps) {
-  return (
-    <p
-      className={`${light ? "text-neutral-300" : "text-neutral-600"} ${className}`}
-    >
-      {children}
-    </p>
-  );
+  return <p className={`leading-relaxed opacity-60 ${className}`}>{children}</p>;
 }
 
 interface CardContentProps {

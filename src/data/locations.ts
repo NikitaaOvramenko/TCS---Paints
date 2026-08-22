@@ -180,6 +180,16 @@ export function getCities(country: string, region: string): Location[] {
 }
 
 /**
+ * Get all cities for a country. Used by the service-area index and the
+ * footer, which should only offer cities in the country being viewed.
+ */
+export function getCitiesByCountry(country: string): Location[] {
+  return locations.filter(
+    (loc) => loc.country.toLowerCase() === country.toLowerCase()
+  )
+}
+
+/**
  * Build the URL path for a location
  */
 export function getLocationPath(location: Location): string {

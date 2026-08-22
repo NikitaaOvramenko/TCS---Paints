@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Section, SectionHeader } from "@/components/ui";
+import { Section } from "@/components/ui";
+import { getFaqContent } from "@/data/content";
 import type { Location } from "@/data/locations";
 
 interface FAQProps {
@@ -9,85 +10,55 @@ interface FAQProps {
 }
 
 interface AccordionItemProps {
+  index: number;
   question: string;
   answer: string;
   isOpen: boolean;
   onToggle: () => void;
 }
 
-const faqs = [
-  {
-    question: "How long does a typical painting project take?",
-    answer:
-      "Project timelines vary based on scope. A single room typically takes 1-2 days, while a full interior can take 3-5 days. Exterior projects usually take 3-7 days depending on the size of the home.",
-  },
-  {
-    question: "Do you provide free estimates?",
-    answer:
-      "Yes! We provide detailed, no-obligation estimates for all projects. We'll assess your space, discuss your vision, and provide transparent pricing.",
-  },
-  {
-    question: "What type of paint do you use?",
-    answer:
-      "We use premium quality paints from trusted brands like Benjamin Moore and Sherwin-Williams. We can also accommodate special requests for eco-friendly or low-VOC options.",
-  },
-  {
-    question: "Are you licensed and insured?",
-    answer:
-      "Absolutely. We are fully licensed and carry comprehensive liability insurance to protect both our team and your property.",
-  },
-  {
-    question: "Do I need to move my furniture?",
-    answer:
-      "No, our team handles all furniture moving and protection. We carefully cover and move items as needed and return everything to its place when complete.",
-  },
-  {
-    question: "What areas do you serve?",
-    answer:
-      "We serve the greater metropolitan area and surrounding communities. Contact us to confirm if we cover your location.",
-    answerWithCity:
-      "We proudly serve {city} and the surrounding {region} communities. Contact us to confirm coverage for your specific location.",
-  },
-];
-
 function AccordionItem({
+  index,
   question,
   answer,
   isOpen,
   onToggle,
 }: AccordionItemProps) {
   return (
-    <div className="border-b border-neutral-200">
+    <div className="border-b border-neutral-900/10">
       <button
-        className="flex w-full items-center justify-between py-5 text-left"
+        className="group grid w-full grid-cols-[auto_1fr_auto] items-start gap-x-6 py-7 text-left sm:gap-x-10"
         onClick={onToggle}
         aria-expanded={isOpen}
       >
-        <span className="text-base sm:text-lg font-medium text-neutral-900 pr-4">
+        <span className="eyebrow pt-2 text-purple-700">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <span className="display pr-4 text-[clamp(1.125rem,1.9vw,1.5rem)]">
           {question}
         </span>
-        <svg
-          className={`h-5 w-5 text-neutral-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
+
+        {/* Plus that rotates into a minus */}
+        <span className="relative mt-2.5 h-3.5 w-3.5 shrink-0 opacity-50 transition-opacity group-hover:opacity-100">
+          <span className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-current" />
+          <span
+            className={`absolute top-0 left-1/2 h-full w-px -translate-x-1/2 bg-current transition-transform duration-300 ${
+              isOpen ? "scale-y-0" : "scale-y-100"
+            }`}
           />
-        </svg>
+        </span>
       </button>
 
       <div
-        className={`grid overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`grid overflow-hidden transition-all duration-500 ease-out ${
           isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="overflow-hidden">
-          <p className="pb-5 text-neutral-600">{answer}</p>
+          <p className="max-w-2xl pb-8 leading-relaxed opacity-60 sm:pl-[calc(2rem+2.5rem)]">
+            {answer}
+          </p>
         </div>
       </div>
     </div>
@@ -95,38 +66,30 @@ function AccordionItem({
 }
 
 export function FAQ({ location }: FAQProps) {
-  const title = location
-    ? `Frequently Asked Questions`
-    : "Frequently Asked Questions";
-
-  const resolvedFaqs = faqs.map((faq) => ({
-    question: faq.question,
-    answer:
-      location && faq.answerWithCity
-        ? faq.answerWithCity
-            .replace(/{city}/g, location.cityName)
-            .replace(/{region}/g, location.regionName)
-        : faq.answer,
-  }));
-
+  // Answers stay city-aware; the city rides in the eyebrow so the heading
+  // does not wrap into four lines.
+  const { faqs } = getFaqContent(location);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const handleToggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
-    <Section id="faq">
-      <div className="mx-auto max-w-3xl">
-        <SectionHeader title={title} />
-        <div className="divide-y divide-neutral-200 border-t border-neutral-200">
-          {resolvedFaqs.map((faq, index) => (
+    <Section id="faq" background="light">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:gap-24">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <p className="eyebrow mb-6 opacity-50">
+            05 — Questions{location ? ` · ${location.cityName}` : ""}
+          </p>
+          <h2 className="display-md">Frequently asked questions</h2>
+        </div>
+
+        <div className="border-t border-neutral-900/10">
+          {faqs.map((faq, index) => (
             <AccordionItem
-              key={index}
+              key={faq.question}
+              index={index}
               question={faq.question}
               answer={faq.answer}
               isOpen={openIndex === index}
-              onToggle={() => handleToggle(index)}
+              onToggle={() => setOpenIndex(openIndex === index ? null : index)}
             />
           ))}
         </div>

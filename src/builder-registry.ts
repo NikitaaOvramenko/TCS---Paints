@@ -30,6 +30,7 @@ import {
   Gallery,
   Hero,
   LocationMap,
+  Marquee,
   Reviews,
   Services,
   WhyUs,
@@ -71,66 +72,75 @@ const locationInput = {
 };
 
 const pageBlock = {
-  isRSC: true,
   models: ["page"],
 };
 
-const locationBlock = {
+const rscPageBlock = {
+  ...pageBlock,
+  isRSC: true,
+};
+
+const rscLocationBlock = {
+  ...rscPageBlock,
+  inputs: [locationInput],
+};
+
+const clientLocationBlock = {
   ...pageBlock,
   inputs: [locationInput],
 };
 
 export const builderCustomComponents = [
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Hero",
     component: Hero,
     description: "Full-screen painting hero with location-aware copy.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Services",
     component: Services,
-    description: "Painting services grid and animated background.",
+    description: "Numbered painting services list over the animated brush stroke.",
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Why Us",
     component: WhyUs,
     description: "Benefits and trust signals section.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Gallery",
     component: Gallery,
     description: "Before-and-after project gallery.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Reviews",
     component: Reviews,
     description: "Customer reviews grid.",
   },
   {
-    ...locationBlock,
+    ...clientLocationBlock,
     name: "YLP FAQ",
     component: FAQ,
     description: "Interactive location-aware FAQ accordion.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Location Map",
     component: LocationMap,
     description: "Service-area and contact-information section.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Footer CTA",
     component: FooterCTA,
     description: "Location-aware quote call to action.",
   },
   {
-    ...locationBlock,
+    ...rscLocationBlock,
     name: "YLP Footer",
     component: Footer,
     description: "Site footer with services, links, and contact details.",
@@ -166,7 +176,26 @@ export const builderCustomComponents = [
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
+    name: "YLP Marquee",
+    component: Marquee,
+    description: "Continuously scrolling text band.",
+    inputs: [
+      {
+        name: "items",
+        type: "list",
+        subFields: [{ name: "item", type: "string" }],
+        defaultValue: [
+          { item: "Interior Painting" },
+          { item: "Exterior Painting" },
+          { item: "Commercial Painting" },
+        ],
+      },
+      { name: "className", type: "string", advanced: true },
+    ],
+  },
+  {
+    ...rscPageBlock,
     name: "YLP Section",
     component: Section,
     description: "Responsive section wrapper that accepts child blocks.",
@@ -184,26 +213,28 @@ export const builderCustomComponents = [
       {
         name: "background",
         type: "string",
-        enum: ["white", "gray", "dark", "black", "primary", "gradient"],
-        defaultValue: "white",
+        // Legacy names (white/gray/dark/black/primary/gradient) still resolve
+        // in Section, so existing entries keep rendering.
+        enum: ["light", "lightAlt", "tint", "ink", "inkBrand", "transparent"],
+        defaultValue: "light",
       },
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Section Header",
     component: SectionHeader,
     description: "Styled section title and subtitle.",
     inputs: [
+      { name: "eyebrow", type: "string", helperText: "Small tracked label, e.g. \"01 — What we do\"" },
       { name: "title", type: "string", defaultValue: "Section heading", required: true },
       { name: "subtitle", type: "longText" },
-      { name: "centered", type: "boolean", defaultValue: true },
-      { name: "light", type: "boolean", defaultValue: false },
+      { name: "centered", type: "boolean", defaultValue: false },
       { name: "className", type: "string", advanced: true },
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Container",
     component: Container,
     description: "Responsive content-width wrapper that accepts child blocks.",
@@ -219,7 +250,7 @@ export const builderCustomComponents = [
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Button",
     component: Button,
     description: "Brand-styled link or button that accepts child blocks.",
@@ -229,7 +260,7 @@ export const builderCustomComponents = [
       {
         name: "variant",
         type: "string",
-        enum: ["primary", "secondary", "outline", "ghost"],
+        enum: ["primary", "accent", "outline", "ghost"],
         defaultValue: "primary",
       },
       {
@@ -239,11 +270,12 @@ export const builderCustomComponents = [
         defaultValue: "md",
       },
       { name: "fullWidth", type: "boolean", defaultValue: false },
+      { name: "arrow", type: "boolean", defaultValue: true },
       { name: "className", type: "string", advanced: true },
     ],
   },
   {
-    ...pageBlock,
+    ...rscPageBlock,
     name: "YLP Card",
     component: Card,
     description: "Brand card container that accepts child blocks.",
@@ -259,8 +291,8 @@ export const builderCustomComponents = [
       {
         name: "variant",
         type: "string",
-        enum: ["dark", "light", "glass"],
-        defaultValue: "dark",
+        enum: ["outline", "light", "ink"],
+        defaultValue: "outline",
       },
       { name: "className", type: "string", advanced: true },
     ],
@@ -269,7 +301,7 @@ export const builderCustomComponents = [
     ["YLP Card Header", CardHeader],
     ["YLP Card Content", CardContent],
   ] as const).map(([name, component]) => ({
-    ...pageBlock,
+    ...rscPageBlock,
     name,
     component,
     canHaveChildren: true,
@@ -279,14 +311,11 @@ export const builderCustomComponents = [
     ["YLP Card Title", CardTitle],
     ["YLP Card Description", CardDescription],
   ] as const).map(([name, component]) => ({
-    ...pageBlock,
+    ...rscPageBlock,
     name,
     component,
     canHaveChildren: true,
-    inputs: [
-      { name: "light", type: "boolean", defaultValue: true },
-      { name: "className", type: "string", advanced: true },
-    ],
+    inputs: [{ name: "className", type: "string", advanced: true }],
   })),
   ...([
     ["YLP Icon - Shield", ShieldIcon],
@@ -304,7 +333,7 @@ export const builderCustomComponents = [
     ["YLP Icon - Star", StarIcon],
     ["YLP Icon - Map Pin", MapPinIcon],
   ] as const).map(([name, component]) => ({
-    ...pageBlock,
+    ...rscPageBlock,
     name,
     component,
     inputs: [
