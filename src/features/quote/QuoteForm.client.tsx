@@ -63,10 +63,10 @@ export function QuoteForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-purple-500/30 bg-purple-950/50 p-8 text-center">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-500/20">
+      <div className="border border-neutral-900/15 p-10">
+        <div className="mb-6 flex h-12 w-12 items-center justify-center border border-purple-700/30">
           <svg
-            className="h-8 w-8 text-purple-400"
+            className="h-6 w-6 text-purple-700"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -79,13 +79,13 @@ export function QuoteForm() {
             />
           </svg>
         </div>
-        <h3 className="text-xl font-semibold text-white">Thank You!</h3>
-        <p className="mt-2 text-purple-300">{submitMessage}</p>
-        <p className="mt-4 text-sm text-neutral-400">
+        <h3 className="display text-2xl">Thank you</h3>
+        <p className="mt-3 opacity-70">{submitMessage}</p>
+        <p className="mt-4 text-sm opacity-50">
           We&apos;ll be in touch within 24 hours.
         </p>
         <button
-          className="mt-6 rounded-lg border border-purple-500/50 px-6 py-2.5 text-sm font-medium text-purple-300 hover:bg-purple-500/10 transition-colors"
+          className="eyebrow mt-8 rounded-none border border-current px-6 py-3 text-purple-700 transition-colors hover:bg-purple-50"
           onClick={() => setStatus("idle")}
         >
           Submit Another Quote
@@ -98,7 +98,7 @@ export function QuoteForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Error message */}
       {status === "error" && (
-        <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-4 text-red-400">
+        <div className="rounded-none border border-red-500/40 bg-red-50 p-4 text-red-700">
           {submitMessage}
         </div>
       )}
@@ -108,7 +108,7 @@ export function QuoteForm() {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-neutral-300 mb-1.5"
+            className="eyebrow mb-3 block opacity-50"
           >
             First Name *
           </label>
@@ -118,8 +118,8 @@ export function QuoteForm() {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={`block w-full rounded-lg border bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-              errors.name ? "border-red-500" : "border-neutral-700"
+            className={`block w-full rounded-none border bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none ${
+              errors.name ? "border-red-500" : "border-neutral-900/15"
             }`}
             placeholder="John"
           />
@@ -131,7 +131,7 @@ export function QuoteForm() {
         <div>
           <label
             htmlFor="lastname"
-            className="block text-sm font-medium text-neutral-300 mb-1.5"
+            className="eyebrow mb-3 block opacity-50"
           >
             Last Name *
           </label>
@@ -141,8 +141,8 @@ export function QuoteForm() {
             name="lastname"
             value={formData.lastname}
             onChange={handleChange}
-            className={`block w-full rounded-lg border bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-              errors.lastname ? "border-red-500" : "border-neutral-700"
+            className={`block w-full rounded-none border bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none ${
+              errors.lastname ? "border-red-500" : "border-neutral-900/15"
             }`}
             placeholder="Doe"
           />
@@ -157,7 +157,7 @@ export function QuoteForm() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-neutral-300 mb-1.5"
+            className="eyebrow mb-3 block opacity-50"
           >
             Email Address *
           </label>
@@ -167,8 +167,8 @@ export function QuoteForm() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className={`block w-full rounded-lg border bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-              errors.email ? "border-red-500" : "border-neutral-700"
+            className={`block w-full rounded-none border bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none ${
+              errors.email ? "border-red-500" : "border-neutral-900/15"
             }`}
             placeholder="john@example.com"
           />
@@ -180,7 +180,7 @@ export function QuoteForm() {
         <div>
           <label
             htmlFor="phone"
-            className="block text-sm font-medium text-neutral-300 mb-1.5"
+            className="eyebrow mb-3 block opacity-50"
           >
             Phone Number *
           </label>
@@ -190,8 +190,8 @@ export function QuoteForm() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className={`block w-full rounded-lg border bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-              errors.phone ? "border-red-500" : "border-neutral-700"
+            className={`block w-full rounded-none border bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none ${
+              errors.phone ? "border-red-500" : "border-neutral-900/15"
             }`}
             placeholder="(555) 123-4567"
           />
@@ -206,7 +206,7 @@ export function QuoteForm() {
         <div>
           <label
             htmlFor="town"
-            className="block text-sm font-medium text-neutral-300 mb-1.5"
+            className="eyebrow mb-3 block opacity-50"
           >
             City / Town *
           </label>
@@ -216,8 +216,8 @@ export function QuoteForm() {
             name="town"
             value={formData.town}
             onChange={handleChange}
-            className={`block w-full rounded-lg border bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-              errors.town ? "border-red-500" : "border-neutral-700"
+            className={`block w-full rounded-none border bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none ${
+              errors.town ? "border-red-500" : "border-neutral-900/15"
             }`}
             placeholder="Miami"
           />
@@ -229,7 +229,7 @@ export function QuoteForm() {
         <div>
           <label
             htmlFor="street"
-            className="block text-sm font-medium text-neutral-300 mb-1.5"
+            className="eyebrow mb-3 block opacity-50"
           >
             Address
           </label>
@@ -239,7 +239,7 @@ export function QuoteForm() {
             name="street"
             value={formData.street}
             onChange={handleChange}
-            className="block w-full rounded-lg border border-neutral-700 bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="block w-full rounded-none border border-neutral-900/15 bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none"
             placeholder="123 Main St"
           />
         </div>
@@ -248,7 +248,7 @@ export function QuoteForm() {
       <div>
         <label
           htmlFor="postal_code"
-          className="block text-sm font-medium text-neutral-300 mb-1.5"
+          className="eyebrow mb-3 block opacity-50"
         >
           Postal Code
         </label>
@@ -258,14 +258,14 @@ export function QuoteForm() {
           name="postal_code"
           value={formData.postal_code}
           onChange={handleChange}
-          className="block w-full rounded-lg border border-neutral-700 bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 sm:max-w-[50%]"
+          className="block w-full rounded-none border border-neutral-900/15 bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none sm:max-w-[50%]"
           placeholder="33101"
         />
       </div>
 
       {/* Service selection buttons */}
       <div>
-        <label className="block text-sm font-medium text-neutral-300 mb-3">
+        <label className="eyebrow mb-4 block opacity-50">
           Select Service Type *
         </label>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -283,10 +283,10 @@ export function QuoteForm() {
                 setServices(updated);
                 handleServiceSelect(updated.filter((s) => s.isSelected));
               }}
-              className={`rounded-lg border px-4 py-3 text-sm font-medium transition-all ${
+              className={`eyebrow rounded-none border px-4 py-3.5 transition-colors ${
                 service.isSelected
-                  ? "border-purple-500 bg-purple-500/20 text-purple-300"
-                  : "border-neutral-700 bg-neutral-900 text-neutral-300 hover:border-purple-500/50 hover:bg-neutral-800"
+                  ? "border-purple-700 bg-purple-50 text-purple-700"
+                  : "border-neutral-900/15 bg-white text-neutral-600 hover:border-purple-700/50"
               }`}
             >
               {service.name}
@@ -302,7 +302,7 @@ export function QuoteForm() {
       <div>
         <label
           htmlFor="description"
-          className="block text-sm font-medium text-neutral-300 mb-1.5"
+          className="eyebrow mb-3 block opacity-50"
         >
           What do you need painted?
         </label>
@@ -312,8 +312,8 @@ export function QuoteForm() {
           rows={4}
           value={formData.description}
           onChange={handleChange}
-          className={`block w-full rounded-lg border bg-neutral-900 px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-            errors.description ? "border-red-500" : "border-neutral-700"
+          className={`block w-full rounded-none border bg-white px-4 py-3.5 text-neutral-900 placeholder-neutral-400 transition-colors focus:border-purple-700 focus:outline-none ${
+            errors.description ? "border-red-500" : "border-neutral-900/15"
           }`}
           placeholder="Tell us about your project - rooms, colors, timeline..."
         />
@@ -334,7 +334,7 @@ export function QuoteForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-lg bg-purple-600 px-6 py-4 text-base font-semibold text-white shadow-lg shadow-purple-500/25 transition-all hover:bg-purple-500 hover:shadow-purple-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="eyebrow w-full rounded-none bg-neutral-950 px-6 py-4.5 text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {status === "submitting" ? "Submitting..." : "Submit Request"}
       </button>

@@ -83,23 +83,23 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm font-medium text-neutral-300">
+      <label className="eyebrow block opacity-50">
         Upload Pictures (Optional)
       </label>
 
       <div className="flex items-center justify-center w-full">
         <label
           htmlFor="image-upload"
-          className={`flex flex-col items-center justify-center w-full h-32 border-2 border-neutral-700 border-dashed rounded-lg cursor-pointer bg-neutral-900 hover:bg-neutral-800 hover:border-purple-500/50 transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-none border border-dashed border-neutral-900/25 bg-white transition-colors hover:border-purple-700/50 hover:bg-neutral-50 ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg className="w-8 h-8 mb-3 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="mb-3 h-7 w-7 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
-            <p className="mb-2 text-sm text-neutral-400">
-              <span className="font-semibold text-neutral-300">Click to upload</span> or drag and drop
+            <p className="mb-2 text-sm text-neutral-600">
+              <span className="font-medium text-neutral-900">Click to upload</span> or drag and drop
             </p>
-            <p className="text-xs text-neutral-500">PNG, JPG, WebP, HEIC</p>
+            <p className="eyebrow opacity-45">PNG, JPG, WebP, HEIC</p>
           </div>
           <input
             id="image-upload"
@@ -114,7 +114,7 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
       </div>
 
       {uploading && (
-        <div className="flex items-center gap-2 text-sm text-purple-400">
+        <div className="flex items-center gap-2 text-sm text-purple-700">
           <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -132,7 +132,7 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
           {images.map((img, index) => (
             <div
               key={`${img.name}-${index}`}
-              className="relative group aspect-square rounded-lg border border-neutral-700 bg-neutral-900 overflow-hidden"
+              className="group relative aspect-square overflow-hidden rounded-none border border-neutral-900/15 bg-neutral-50"
             >
               {img.previewUrl ? (
                 <img
@@ -148,7 +148,7 @@ export function ImageUpload({ onImagesChange, initialImages = [] }: ImageUploadP
               <button
                 type="button"
                 onClick={() => removeImage(index)}
-                className="absolute top-1 right-1 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 rounded-none bg-neutral-950 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
                 aria-label="Remove image"
               >
                 <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

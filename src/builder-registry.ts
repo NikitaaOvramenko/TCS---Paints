@@ -30,6 +30,7 @@ import {
   Gallery,
   Hero,
   LocationMap,
+  Marquee,
   Reviews,
   Services,
   WhyUs,
@@ -100,7 +101,7 @@ export const builderCustomComponents = [
     ...rscLocationBlock,
     name: "YLP Services",
     component: Services,
-    description: "Painting services grid and animated background.",
+    description: "Numbered painting services list over the animated brush stroke.",
   },
   {
     ...rscPageBlock,
@@ -176,6 +177,25 @@ export const builderCustomComponents = [
   },
   {
     ...rscPageBlock,
+    name: "YLP Marquee",
+    component: Marquee,
+    description: "Continuously scrolling text band.",
+    inputs: [
+      {
+        name: "items",
+        type: "list",
+        subFields: [{ name: "item", type: "string" }],
+        defaultValue: [
+          { item: "Interior Painting" },
+          { item: "Exterior Painting" },
+          { item: "Commercial Painting" },
+        ],
+      },
+      { name: "className", type: "string", advanced: true },
+    ],
+  },
+  {
+    ...rscPageBlock,
     name: "YLP Section",
     component: Section,
     description: "Responsive section wrapper that accepts child blocks.",
@@ -193,8 +213,10 @@ export const builderCustomComponents = [
       {
         name: "background",
         type: "string",
-        enum: ["white", "gray", "dark", "black", "primary", "gradient"],
-        defaultValue: "white",
+        // Legacy names (white/gray/dark/black/primary/gradient) still resolve
+        // in Section, so existing entries keep rendering.
+        enum: ["light", "lightAlt", "tint", "ink", "inkBrand", "transparent"],
+        defaultValue: "light",
       },
     ],
   },
@@ -204,10 +226,10 @@ export const builderCustomComponents = [
     component: SectionHeader,
     description: "Styled section title and subtitle.",
     inputs: [
+      { name: "eyebrow", type: "string", helperText: "Small tracked label, e.g. \"01 — What we do\"" },
       { name: "title", type: "string", defaultValue: "Section heading", required: true },
       { name: "subtitle", type: "longText" },
-      { name: "centered", type: "boolean", defaultValue: true },
-      { name: "light", type: "boolean", defaultValue: false },
+      { name: "centered", type: "boolean", defaultValue: false },
       { name: "className", type: "string", advanced: true },
     ],
   },
@@ -238,7 +260,7 @@ export const builderCustomComponents = [
       {
         name: "variant",
         type: "string",
-        enum: ["primary", "secondary", "outline", "ghost"],
+        enum: ["primary", "accent", "outline", "ghost"],
         defaultValue: "primary",
       },
       {
@@ -248,6 +270,7 @@ export const builderCustomComponents = [
         defaultValue: "md",
       },
       { name: "fullWidth", type: "boolean", defaultValue: false },
+      { name: "arrow", type: "boolean", defaultValue: true },
       { name: "className", type: "string", advanced: true },
     ],
   },
@@ -268,8 +291,8 @@ export const builderCustomComponents = [
       {
         name: "variant",
         type: "string",
-        enum: ["dark", "light", "glass"],
-        defaultValue: "dark",
+        enum: ["outline", "light", "ink"],
+        defaultValue: "outline",
       },
       { name: "className", type: "string", advanced: true },
     ],
@@ -292,10 +315,7 @@ export const builderCustomComponents = [
     name,
     component,
     canHaveChildren: true,
-    inputs: [
-      { name: "light", type: "boolean", defaultValue: true },
-      { name: "className", type: "string", advanced: true },
-    ],
+    inputs: [{ name: "className", type: "string", advanced: true }],
   })),
   ...([
     ["YLP Icon - Shield", ShieldIcon],

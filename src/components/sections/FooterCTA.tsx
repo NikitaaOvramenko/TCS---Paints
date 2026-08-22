@@ -1,6 +1,8 @@
-import { Section, Button, PhoneIcon } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { siteConfig } from "@/data/site";
+import { ctaContent, replaceLocationPlaceholders } from "@/data/content";
 import type { Location } from "@/data/locations";
+import { Marquee } from "./Marquee";
 
 interface FooterCTAProps {
   location?: Location;
@@ -8,30 +10,36 @@ interface FooterCTAProps {
 
 export function FooterCTA({ location }: FooterCTAProps) {
   const title = location
-    ? `Ready to Transform Your ${location.cityName} Home?`
-    : 'Ready to Transform Your Space?';
+    ? replaceLocationPlaceholders(ctaContent.titleWithCity, location)
+    : ctaContent.title;
 
   return (
-    <Section background="gradient">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mx-auto" style={{ fontFamily: "'Lemon/Milk', sans-serif" }}>
-          {title}
-        </h2>
-        <p className="mt-4 text-lg text-white/80">Get a free, no-obligation quote today.</p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Button href="/quote" size="lg" variant="secondary">
-            Get Your Free Quote
-          </Button>
-          <span className="text-white/60">or</span>
-          <a
-            href={`tel:${siteConfig.phone}`}
-            className="flex items-center gap-2 text-lg font-semibold text-white hover:text-white/90"
-          >
-            <PhoneIcon />
-            {siteConfig.phone}
-          </a>
+    <section className="bg-purple-950 text-white">
+      <Marquee
+        items={siteConfig.services.map((service) => service.name)}
+        className="border-t-0"
+      />
+
+      <div className="mx-auto w-full max-w-[1600px] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
+        <h2 className="display-lg max-w-[14ch]">{title}</h2>
+
+        <div className="mt-14 flex flex-col gap-8 border-t border-white/15 pt-10 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-sm leading-relaxed opacity-60">
+            {ctaContent.subtitle}
+          </p>
+          <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <Button href="/quote" variant="accent" size="lg">
+              {ctaContent.buttonText}
+            </Button>
+            <a
+              href={`tel:${siteConfig.phone}`}
+              className="eyebrow opacity-60 transition-opacity hover:opacity-100"
+            >
+              or call {siteConfig.phone}
+            </a>
+          </div>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }

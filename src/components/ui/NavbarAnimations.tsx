@@ -6,29 +6,46 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function NavbarAnimations() {
-  useGSAP(() => {
-    // Create animation that hides navbar
-    const showAnim = gsap.from(".navbar", { 
-      yPercent: -100,
-      paused: true,
-      duration: 0.2,
-      ease: "power2.out"
-    }).progress(1)
+interface Props {
+  /** Fires when the page scrolls past the hero, so the bar can go solid. */
+  onScrolledChange?: (scrolled: boolean) => void
+}
 
-    // ScrollTrigger to detect scroll direction
-    ScrollTrigger.create({
+export default function NavbarAnimations({ onScrolledChange }: Props) {
+  useGSAP(() => {
+    // Hide on scroll down, reveal on scroll up.
+    const showAnim = gsap
+      .from(".navbar", {
+        yPercent: -100,
+        paused: true,
+        duration: 0.3,
+        ease: "power2.out",
+      })
+      .progress(1)
+
+    // Tracked locally so we only push a React state update when the boolean
+    // actually flips — onUpdate fires on every scroll tick.
+    let past = false
+
+    const st = ScrollTrigger.create({
       start: "top top",
       end: "max",
       onUpdate: (self) => {
-        // Show on scroll up, hide on scroll down
         if (self.direction === -1) {
           showAnim.play()
         } else {
           showAnim.reverse()
         }
-      }
+
+        const next = self.scroll() > window.innerHeight * 0.85
+        if (next !== past) {
+          past = next
+          onScrolledChange?.(next)
+        }
+      },
     })
+
+    return () => st.kill()
   }, [])
 
   return null

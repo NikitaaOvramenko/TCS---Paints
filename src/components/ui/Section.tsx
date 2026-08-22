@@ -1,33 +1,56 @@
 import { Container } from "./Container";
 
+type SectionBackground =
+  | "light"
+  | "lightAlt"
+  | "tint"
+  | "ink"
+  | "inkBrand"
+  | "transparent"
+  // Legacy names kept as aliases so existing Builder-authored entries
+  // referencing the old enum keep rendering.
+  | "white"
+  | "gray"
+  | "dark"
+  | "black"
+  | "primary"
+  | "gradient";
+
 interface SectionProps {
   children: React.ReactNode;
   className?: string;
   containerSize?: "sm" | "md" | "lg" | "xl" | "full";
-  background?: "white" | "gray" | "dark" | "black" | "primary" | "gradient";
+  background?: SectionBackground;
   id?: string;
 }
 
-const backgroundStyles = {
-  white: "bg-white",
-  gray: "bg-neutral-50",
-  dark: "bg-neutral-900 text-white",
-  black: "bg-black text-white",
-  primary: "bg-purple-600 text-white",
-  gradient: "bg-gradient-to-br from-purple-600 to-purple-800 text-white",
+const backgroundStyles: Record<SectionBackground, string> = {
+  light: "bg-white text-neutral-900",
+  lightAlt: "bg-neutral-50 text-neutral-900",
+  tint: "bg-purple-50 text-neutral-900",
+  ink: "bg-neutral-950 text-white",
+  inkBrand: "bg-purple-950 text-white",
+  transparent: "bg-transparent",
+
+  white: "bg-white text-neutral-900",
+  gray: "bg-neutral-50 text-neutral-900",
+  dark: "bg-neutral-950 text-white",
+  black: "bg-neutral-950 text-white",
+  primary: "bg-purple-950 text-white",
+  gradient: "bg-purple-950 text-white",
 };
 
 export function Section({
   children,
   className = "",
   containerSize = "xl",
-  background = "white",
+  background = "light",
   id,
 }: SectionProps) {
   return (
     <section
       id={id}
-      className={`py-12 sm:py-20 lg:py-24 ${backgroundStyles[background]} ${className}`}
+      className={`py-20 sm:py-28 lg:py-36 ${backgroundStyles[background]} ${className}`}
     >
       <Container size={containerSize}>{children}</Container>
     </section>
@@ -35,30 +58,31 @@ export function Section({
 }
 
 interface SectionHeaderProps {
+  /** Small tracked label above the heading, e.g. "01 — What we do" */
+  eyebrow?: string;
   title: string;
   subtitle?: string;
+  /** Editorial layouts are left-aligned by default. */
   centered?: boolean;
-  light?: boolean;
   className?: string;
 }
 
 export function SectionHeader({
+  eyebrow,
   title,
   subtitle,
-  centered = true,
-  light = false,
+  centered = false,
   className = "",
 }: SectionHeaderProps) {
   return (
     <div
-      className={`relative z-10 mb-8 md:mb-12 ${centered ? "text-center" : ""} ${className}`}
+      className={`relative z-10 mb-14 lg:mb-20 ${centered ? "text-center" : ""} ${className}`}
     >
-      <h2 className="section-heading text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-        {title}
-      </h2>
+      {eyebrow && <p className="eyebrow mb-6 opacity-50">{eyebrow}</p>}
+      <h2 className="display-md max-w-4xl">{title}</h2>
       {subtitle && (
         <p
-          className={`mt-4 text-lg max-w-3xl mx-auto ${light ? "text-white/70" : "text-neutral-600"}`}
+          className={`mt-6 max-w-xl text-lg leading-relaxed opacity-60 ${centered ? "mx-auto" : ""}`}
         >
           {subtitle}
         </p>

@@ -1,55 +1,80 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { siteConfig } from "@/data/site";
-import { Container } from "./Container";
 import { Button } from "./Button";
 import NavbarAnimations from "./NavbarAnimations";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Logo from "@/assets/logo.svg";
 
-import { locations } from "@/data/locations";
+const navLinks = [
+  { href: "#services", label: "Services" },
+  { href: "#gallery", label: "Work" },
+  { href: "#location", label: "Areas" },
+  { href: "#faq", label: "FAQ" },
+];
 
 export default function Navbar() {
-  const [location, setLocation] = useState<string>("");
   const pathname = usePathname();
   const [homeHref, setHomeHref] = useState<string>("/");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const saved = pathname;
-    if (saved == "/quote") {
-      return;
-    }
-    sessionStorage.setItem("loc", saved);
+    if (pathname === "/quote") return;
+    sessionStorage.setItem("loc", pathname);
   }, [pathname]);
 
   useEffect(() => {
     const saved = sessionStorage.getItem("loc");
-
     if (saved) setHomeHref(saved);
   }, []);
 
-  return (
-    <nav className="navbar fixed top-0 left-0 w-full bg-white shadow-md z-50">
-      <NavbarAnimations />
-      <Container>
-        <div className="flex h-[70px] items-center justify-between">
-          <div className="left flex gap-2">
-            <Logo className="logo h-10 w-10"></Logo>
-            <Link href={homeHref} className="flex items-center gap-2">
-              <span className="text-xl tracking-[9%] leading-none ">
-                {siteConfig.name}
-              </span>
-            </Link>
-          </div>
+  // The quote page has no dark hero behind the nav, so it starts solid.
+  const alwaysSolid = pathname === "/quote";
+  const solid = alwaysSolid || scrolled;
 
-          <Button href="/quote" size="sm">
-            Get a Quote
-          </Button>
+  return (
+    <nav
+      className={`navbar fixed top-0 left-0 z-50 w-full transition-colors duration-500 ${
+        solid
+          ? "bg-white/95 text-neutral-900 backdrop-blur-sm"
+          : "bg-transparent text-white"
+      }`}
+    >
+      <NavbarAnimations onScrolledChange={setScrolled} />
+      <div className="mx-auto flex h-[68px] w-full max-w-[1600px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
+        <Link
+          href={homeHref}
+          className="flex min-w-0 items-center gap-2.5"
+          aria-label={siteConfig.name}
+        >
+          <Logo className="h-7 w-7 shrink-0" />
+          <span className="eyebrow truncate">{siteConfig.name}</span>
+        </Link>
+
+        <div className="hidden items-center gap-9 md:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="eyebrow opacity-70 transition-opacity duration-300 hover:opacity-100"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
-      </Container>
+
+        <Button href="/quote" variant="outline" size="sm" className="shrink-0">
+          Get a Quote
+        </Button>
+      </div>
+
+      <div
+        className={`h-px w-full transition-opacity duration-500 ${
+          solid ? "bg-neutral-900/10 opacity-100" : "opacity-0"
+        }`}
+      />
     </nav>
   );
 }

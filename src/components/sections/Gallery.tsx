@@ -1,4 +1,5 @@
 import { Section, SectionHeader } from "@/components/ui";
+import { galleryContent, replaceLocationPlaceholders } from "@/data/content";
 import type { Location } from "@/data/locations";
 import GalleryAnimations from "./GalleryAnimations";
 import BeforeAfterCard from "./BeforeAfterCard";
@@ -40,18 +41,18 @@ const galleryItems = [
 
 export function Gallery({ location }: GalleryProps) {
   const title = location
-    ? `Our Work in ${location.cityName}`
-    : "Our Recent Work";
+    ? replaceLocationPlaceholders(galleryContent.titleWithCity, location)
+    : galleryContent.title;
 
   return (
-    <Section background="gray" id="gallery">
+    <Section background="light" id="gallery">
       <GalleryAnimations />
       <SectionHeader
+        eyebrow="03 — Selected work"
         title={title}
-        className="self-center"
-        subtitle="Browse our portfolio of completed projects."
+        subtitle="Drag each frame to see the same surface before and after."
       />
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-10 sm:grid-cols-2 lg:gap-14">
         {galleryItems.map((item) => (
           <BeforeAfterCard
             key={item.id}

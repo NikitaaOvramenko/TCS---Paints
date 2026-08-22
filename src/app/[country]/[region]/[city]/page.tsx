@@ -168,8 +168,9 @@ export default async function LocationPage({
       ) : (
         <>
           <Hero location={location} />
-          <WhyUs />
+          {/* Order matches the eyebrow numbering in each section. */}
           <Services location={location} />
+          <WhyUs />
           {/* <Reviews location={location} /> */}
 
           <Gallery location={location} />

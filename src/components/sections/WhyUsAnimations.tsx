@@ -8,23 +8,21 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function WhyUsAnimations() {
   useGSAP(() => {
-    // Set initial state
-    gsap.set(".why-us-card", {
-      x: -40,
-      opacity: 0,
-    })
-
-    // Animate to visible on scroll
-    gsap.to(".why-us-card", {
+    // `from` + immediateRender:false leaves the rows visible until the trigger
+    // actually fires. The navbar anchors jump straight to a section, which can
+    // land past the start point — with a `set`-then-`to` pair that would strand
+    // the rows at opacity 0.
+    gsap.from(".why-us-row", {
       scrollTrigger: {
         trigger: "#why-us",
-        start: "top 85%",
+        start: "top 75%",
       },
-      x: 0,
-      opacity: 1,
-      duration: 0.7,
-      stagger: 0.1,
-      ease: "power2.out",
+      immediateRender: false,
+      y: 40,
+      opacity: 0,
+      duration: 0.9,
+      stagger: 0.08,
+      ease: "power3.out",
     })
   }, [])
 

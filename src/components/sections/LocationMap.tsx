@@ -1,5 +1,8 @@
-import { Section, SectionHeader, MapPinIcon } from "@/components/ui";
+import Link from "next/link";
+import { Section, SectionHeader } from "@/components/ui";
 import { siteConfig } from "@/data/site";
+import { locationMapContent, replaceLocationPlaceholders } from "@/data/content";
+import { locations, getLocationPath } from "@/data/locations";
 import type { Location } from "@/data/locations";
 
 interface LocationMapProps {
@@ -8,76 +11,80 @@ interface LocationMapProps {
 
 export function LocationMap({ location }: LocationMapProps) {
   const title = location
-    ? `Serving ${location.cityName} & Surrounding Areas`
-    : 'Service Area';
-
-  const address = siteConfig.address;
+    ? replaceLocationPlaceholders(locationMapContent.titleWithCity, location)
+    : locationMapContent.title;
 
   return (
-    <Section id="location">
-      <SectionHeader title={title} subtitle="We proudly serve the greater metropolitan area." />
-      <div className="grid gap-8 lg:grid-cols-2">
-        {/* Map placeholder */}
-        <div className="aspect-[4/3] overflow-hidden rounded-xl bg-neutral-200 lg:aspect-auto lg:h-full">
-          <div className="flex h-full items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200">
-            <div className="text-center">
-              <MapPinIcon className="mx-auto h-16 w-16 text-neutral-400" />
-              <p className="mt-4 text-neutral-500">
-                Map embed placeholder
-                <br />
-                <span className="text-sm">Replace with Google Maps or Mapbox</span>
-              </p>
-            </div>
-          </div>
+    <Section id="location" background="lightAlt">
+      <SectionHeader
+        eyebrow="04 — Service area"
+        title={title}
+        subtitle={locationMapContent.subtitle}
+      />
+
+      <div className="grid gap-16 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:gap-24">
+        {/* City index — doubles as internal linking for the location pages. */}
+        <div className="grid grid-cols-2 gap-x-8 sm:grid-cols-3">
+          {locations.map((loc) => {
+            const isCurrent = loc.city === location?.city;
+            return (
+              <Link
+                key={getLocationPath(loc)}
+                href={getLocationPath(loc)}
+                className={`group flex items-center justify-between gap-2 border-b border-neutral-900/10 py-4 transition-opacity duration-300 ${
+                  isCurrent ? "text-purple-700" : "hover:opacity-60"
+                }`}
+              >
+                <span className="text-lg font-normal tracking-[-0.01em]">
+                  {loc.cityName}
+                </span>
+                <svg
+                  className="h-3 w-3 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-50"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M1 8h13M9 3l5 5-5 5"
+                    stroke="currentColor"
+                    strokeWidth="1.25"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Contact info */}
-        <div className="flex flex-col justify-center space-y-6 text-center lg:text-left">
+        {/* Contact block */}
+        <div className="space-y-9">
           <div>
-            <h3 className="text-lg font-semibold text-neutral-900">Address</h3>
-            <p className="mt-2 text-neutral-600">
-              {address.street}
-              <br />
-              {address.city}, {address.region} {address.postalCode}
-            </p>
+            <p className="eyebrow mb-3 opacity-45">Phone</p>
+            <a
+              href={`tel:${siteConfig.phone}`}
+              className="text-xl transition-opacity hover:opacity-60"
+            >
+              {siteConfig.phone}
+            </a>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-neutral-900">Phone</h3>
-            <p className="mt-2">
-              <a
-                href={`tel:${siteConfig.phone}`}
-                className="text-purple-600 hover:text-purple-700"
-              >
-                {siteConfig.phone}
-              </a>
-            </p>
+            <p className="eyebrow mb-3 opacity-45">Email</p>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="text-xl transition-opacity hover:opacity-60"
+            >
+              {siteConfig.email}
+            </a>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-neutral-900">Email</h3>
-            <p className="mt-2">
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="text-purple-600 hover:text-purple-700"
-              >
-                {siteConfig.email}
-              </a>
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-neutral-900">Hours</h3>
-            <div className="mt-2 space-y-1 text-neutral-600">
-              <p>
-                <span className="font-medium">Mon-Fri:</span> {siteConfig.hours.weekdays}
-              </p>
-              <p>
-                <span className="font-medium">Saturday:</span> {siteConfig.hours.saturday}
-              </p>
-              <p>
-                <span className="font-medium">Sunday:</span> {siteConfig.hours.sunday}
-              </p>
+            <p className="eyebrow mb-3 opacity-45">Hours</p>
+            <div className="space-y-1 opacity-60">
+              <p>Mon–Fri &nbsp; {siteConfig.hours.weekdays}</p>
+              <p>Saturday &nbsp; {siteConfig.hours.saturday}</p>
+              <p>Sunday &nbsp; {siteConfig.hours.sunday}</p>
             </div>
           </div>
         </div>

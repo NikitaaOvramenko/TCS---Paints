@@ -1,4 +1,4 @@
-import { Section, Button, PhoneIcon } from "@/components/ui";
+import { Section, Button } from "@/components/ui";
 import { siteConfig } from "@/data/site";
 import type { Location } from "@/data/locations";
 import HeroAnimations from "./HeroAnimations";
@@ -10,15 +10,12 @@ interface HeroProps {
 
 export function Hero({ location }: HeroProps) {
   const cityName = location?.cityName;
-  const headline = cityName
-    ? "Painting Services in"
-    : "Professional Painting Services";
   const subheadline = cityName
-    ? `Transform your ${cityName} home or business with expert painters who deliver stunning results.`
-    : "Transform your space with expert painters who deliver stunning results, on time and on budget.";
+    ? `Interior, exterior and commercial painting across ${cityName} — done once, done properly, and finished when we said it would be.`
+    : "Interior, exterior and commercial painting — done once, done properly, and finished when we said it would be.";
 
   return (
-    <div className="hero relative bg-black min-h-screen overflow-hidden">
+    <div className="hero relative min-h-screen overflow-hidden bg-neutral-950 text-white">
       <AnimationCanvas
         path="/videos/roller-paint-120"
         pads={4}
@@ -29,63 +26,54 @@ export function Hero({ location }: HeroProps) {
         markers={false}
         rotated={false}
         format="webp"
-        className="absolute inset-0 w-full h-full mt-22"
+        className="absolute inset-0 mt-22 h-full w-full lg:left-[42%] lg:w-[58%]"
       />
+      {/* Keeps the headline legible where the roller passes behind it. */}
+      <div className="absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/70 to-transparent lg:via-neutral-950/40" />
 
       <Section
-        background="black"
-        className="relative z-10 flex min-h-screen items-center justify-center !bg-transparent"
+        background="transparent"
+        className="relative z-10 flex min-h-screen items-center"
         containerSize="xl"
       >
         <HeroAnimations />
 
-        <div className="mx-auto max-w-3xl py-5 text-center">
-          <h1
-            className="heroHeader text-4xl  font-bold tracking-tight sm:text-5xl lg:text-6xl"
-            style={{ fontFamily: "'Lemon/Milk', sans-serif" }}
-          >
-            <span className="block ">{headline}</span>
-            {cityName && (
-              <span className="block mt-2 w-fit mx-auto bg-gradient-to-r from-white from-10% to-yellow-400 bg-clip-text text-transparent">
-                {cityName}
-              </span>
-            )}
+        <div className="max-w-4xl lg:max-w-2xl xl:max-w-3xl">
+          <p className="heroEyebrow eyebrow mb-8 opacity-55">
+            {cityName
+              ? `${cityName}, ${location?.regionName}`
+              : siteConfig.tagline}
+          </p>
+
+          <h1 className="heroHeader display-lg">
+            What if your walls looked
+            <br />
+            like this{" "}
+            <span className="text-yellow-400">every morning</span>?
           </h1>
 
-          <p className="heroSubhead mt-6 text-lg text-neutral-200 sm:text-xl">
+          <p className="heroSubhead mt-10 max-w-xl text-lg leading-relaxed opacity-65 sm:text-xl">
             {subheadline}
           </p>
 
-          <div className="heroCta mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              href="/quote"
-              size="lg"
-              className="bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/30"
-            >
+          <div className="heroCta mt-12 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <Button href="/quote" variant="accent" size="lg">
               Get a Free Quote
             </Button>
-            <Button
-              href="#gallery"
-              variant="outline"
-              size="lg"
-              className="border-yellow-400 text-yellow-400 hover:bg-yellow-400/10"
-            >
+            <Button href="#gallery" variant="outline" size="lg">
               View Our Work
             </Button>
           </div>
 
-          <div className="heroPhone mt-4 flex items-center justify-center gap-2 text-neutral-400">
-            <PhoneIcon />
-            <span>
-              Call us:{" "}
-              <a
-                href={`tel:${siteConfig.phone}`}
-                className="hover:text-yellow-400 transition-colors"
-              >
-                {siteConfig.phone}
-              </a>
-            </span>
-          </div>
+          <p className="heroPhone eyebrow mt-12 opacity-50">
+            Or call{" "}
+            <a
+              href={`tel:${siteConfig.phone}`}
+              className="border-b border-current pb-0.5 transition-opacity hover:opacity-70"
+            >
+              {siteConfig.phone}
+            </a>
+          </p>
         </div>
       </Section>
     </div>

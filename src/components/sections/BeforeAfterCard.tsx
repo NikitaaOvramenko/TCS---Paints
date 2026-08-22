@@ -69,7 +69,7 @@ export default function BeforeAfterCard({ title, category, beforeImage, afterIma
   const percentage = value * 100
 
   return (
-    <div className="overflow-hidden rounded-xl bg-neutral-200 gallery-item">
+    <div className="gallery-item border border-neutral-900/10 bg-neutral-100">
       <div
         ref={containerRef}
         className="relative aspect-[4/3] overflow-hidden cursor-ew-resize select-none"
@@ -98,14 +98,14 @@ export default function BeforeAfterCard({ title, category, beforeImage, afterIma
 
         {/* Divider line */}
         <div
-          className="absolute top-0 bottom-0 w-[2px] bg-white z-10"
+          className="absolute top-0 bottom-0 z-10 w-px bg-white"
           style={{ left: `${percentage}%` }}
         />
 
         {/* Drag handle */}
         <div
           ref={circleRef}
-          className="absolute z-20 w-8 h-8 rounded-full border-2 border-white bg-black -translate-x-1/2 -translate-y-1/2 touch-none transition-colors duration-200"
+          className="absolute z-20 h-8 w-8 -translate-x-1/2 -translate-y-1/2 touch-none rounded-none border border-white bg-neutral-950 transition-colors duration-200"
           style={{ left: `${percentage}%`, top: '50%' }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
@@ -125,15 +125,15 @@ export default function BeforeAfterCard({ title, category, beforeImage, afterIma
         />
 
         {/* Labels */}
-        <span className="absolute bottom-2 left-2 text-xs font-bold uppercase tracking-wider text-white bg-black/60 px-2 py-1 rounded z-10">Before</span>
-        <span className="absolute bottom-2 right-2 text-xs font-bold uppercase tracking-wider text-white bg-black/60 px-2 py-1 rounded z-10">After</span>
+        <span className="eyebrow absolute bottom-0 left-0 z-10 bg-neutral-950/70 px-3 py-2 text-white">Before</span>
+        <span className="eyebrow absolute right-0 bottom-0 z-10 bg-neutral-950/70 px-3 py-2 text-white">After</span>
       </div>
 
-      <div className="bg-white px-4 py-3">
-        <span className="text-xs font-medium uppercase tracking-wide text-purple-600">
-          {category}
-        </span>
-        <h3 className="mt-1 text-sm font-bold text-neutral-900">{title}</h3>
+      <div className="border-t border-neutral-900/10 px-5 py-5">
+        <span className="eyebrow text-purple-700">{category}</span>
+        <h3 className="mt-2 text-lg font-normal tracking-[-0.01em] text-neutral-900">
+          {title}
+        </h3>
       </div>
     </div>
   )
